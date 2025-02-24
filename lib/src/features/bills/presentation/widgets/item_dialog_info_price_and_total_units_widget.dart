@@ -62,7 +62,7 @@ class ItemDialogInfoPriceAndTotalUnitsWidget extends StatelessWidget {
                   height: 40,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: context.whiteColor.withOpacity(0.5),
+                    color: context.whiteColor.withAlpha(125),
                   ),
                   child: Center(
                     child: FittedBox(
@@ -152,7 +152,7 @@ class ItemDialogInfoPriceAndTotalUnitsWidget extends StatelessWidget {
                   height: 40,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: context.whiteColor.withOpacity(0.5),
+                    color: context.whiteColor.withAlpha(125),
                   ),
                   child: Center(
                     child: FittedBox(

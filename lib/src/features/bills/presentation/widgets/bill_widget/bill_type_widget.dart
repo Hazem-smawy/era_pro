@@ -19,8 +19,8 @@ class BillTypeWidget extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           color: bill.billType == 8
-              ? context.secondary.withOpacity(0.06)
-              : const Color.fromARGB(255, 198, 3, 117).withOpacity(0.06),
+              ? context.secondary.withAlpha(10)
+              : const Color.fromARGB(255, 198, 3, 117).withAlpha(10),
         ),
         child: Text(
           bill.billType == 8 ? 'بيع' : 'مرتجع',

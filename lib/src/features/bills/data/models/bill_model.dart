@@ -8,6 +8,7 @@ import '../../../../core/utils/date_time_converter.dart';
 part 'bill_model.g.dart';
 
 @JsonSerializable()
+// ignore: must_be_immutable
 class BillModel extends BillEntity {
   BillModel(
       {required super.id,

@@ -1,3 +1,5 @@
+import 'package:era_pro/src/features/exchange_receipt/presentation/getX/exchange_binding.dart';
+
 import '../../../../core/constants/assets.dart';
 import '../../../../core/extensions/context_extensions.dart';
 import '../../domain/entities/account_entity.dart';
@@ -13,8 +15,8 @@ import '../../../exchange_receipt/presentation/pages/add_new_exchange_sheet.dart
 
 class AccountAddOperationSheet extends StatelessWidget {
   AccountAddOperationSheet({super.key, required this.account});
-  AccountEntity account;
-  AccountsController accountsController = Get.find();
+  final AccountEntity account;
+  final AccountsController accountsController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class AccountAddOperationSheet extends StatelessWidget {
         margin: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: context.whiteColor.withOpacity(0.7),
+          color: context.whiteColor.withAlpha(200),
         ),
         child: GestureDetector(
           onTap: () {
@@ -81,7 +83,7 @@ class AccountAddOperationSheet extends StatelessWidget {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: context.secondaryTextColor.withOpacity(0.5),
+                          color: context.secondaryTextColor.withAlpha(125),
                         ),
                       ),
                       child: const FaIcon(
@@ -105,7 +107,9 @@ class AccountAddOperationSheet extends StatelessWidget {
                                 'customerId': account.accNumber
                               })?.then((value) {
                                 accountsController.getOperationForCustomer(
-                                    account.accNumber, account.refNumber);
+                                  account.accNumber,
+                                  account.refNumber,
+                                );
                               });
                             },
                           ),
@@ -130,6 +134,7 @@ class AccountAddOperationSheet extends StatelessWidget {
                             color: Colors.black87,
                             action: () {
                               Get.back();
+                              ExchangeBinding().dependencies();
                               Get.bottomSheet(
                                 AddNewExhangeSheet(
                                   customerId: account.accNumber,

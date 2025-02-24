@@ -59,11 +59,14 @@ class ExchangeReceiptController extends GetxController {
   Rx<DateTime?> dueDate = DateTime.now().obs;
   int? accNumber;
   final formKey = GlobalKey<FormState>();
-  Future<void> initPaymentsMethod() async {
-    updateValue('type', 1);
-    await getLastId(1);
+  Future<void> initPaymentsMethod(
+      ExchangeEntity? exchange, int? customerId) async {
+    if (exchange == null) {
+      await getLastId(2);
+    }
+
     await mainInfoController.getAllPaymentsMethod();
-    await accountsController.getAccountInfo();
+    await mainInfoController.getAllAccounts();
     await mainInfoController.getAllCurenciesInfo();
 
     mainInfoController.selectedPaymentsMethod.value =
@@ -74,8 +77,38 @@ class ExchangeReceiptController extends GetxController {
       mainInfoController.selectedPaymentsMethod.value,
     );
     mainInfoController.selecteCurency.value = mainInfoController.localCurency;
-    await getAllExChange();
+    if (exchange != null) {
+      updateExchange(exchange);
+    } else {
+      reset();
+      if (customerId != null) {
+        accNumber = customerId;
+        updateValue(
+          'name',
+          accountsController.customers.value
+              .firstWhere((e) => e.accNumber == customerId)
+              .accName,
+        );
+      }
+    }
   }
+
+  // Future<void> initExchangesAndDefaultsPayments() async {
+  //   // await getLastId(2);
+  //   // await mainInfoController.getAllPaymentsMethod();
+  //   // await accountsController.getAccountInfo();
+  //   // await mainInfoController.getAllCurenciesInfo();
+
+  //   // mainInfoController.selectedPaymentsMethod.value =
+  //   //     mainInfoController.allPaymentsMethod.value.firstWhere(
+  //   //   (element) => element.id == 1,
+  //   // );
+  //   // mainInfoController.changePaymentMethod(
+  //   //   mainInfoController.selectedPaymentsMethod.value,
+  //   // );
+  //   // mainInfoController.selecteCurency.value = mainInfoController.localCurency;
+  //   // await getAllExChange();
+  // }
 
   Future<void> deleteAllExchange() async {
     await deleteAllExchangeUsecase.call();
@@ -146,7 +179,7 @@ class ExchangeReceiptController extends GetxController {
     moneyTextEditingController.clear();
     numberOfSandTextEditingController.clear();
     detailsTextEditingController.clear();
-    newExchange['type'] = 1;
+    newExchange['type'] = 2;
     newExchange['name'] = null;
     newExchange['date'] = null;
   }
@@ -170,6 +203,9 @@ class ExchangeReceiptController extends GetxController {
   }
 
   Future<void> addNewExchange(ExchangeEntity? ex) async {
+    print(newExchange['type']);
+    print(mainInfoController.selecteCurency.value?.name);
+
     final String title = ex == null ? 'إضافة' : 'تعديل';
     if (newExchange['type'] == null) {
       return;
@@ -186,7 +222,6 @@ class ExchangeReceiptController extends GetxController {
     if (formKey.currentState!.validate()) {
       CustomDialog.loadingProgress();
       await mainInfoController.getBranchInfo();
-      final userId = userController.user.value?.id;
 
       int? branchId = mainInfoController.branch.value?.id;
 
@@ -244,7 +279,7 @@ class ExchangeReceiptController extends GetxController {
           await accountsController.addExchangeOperation(
             type: newExchange['type'],
             customerAccount: accNumber!,
-            sellerAccount: userId!,
+            sellerAccount: fundNumber,
             amount: amount,
             totalAmount: totalAmount,
             isOld: false,
@@ -260,24 +295,12 @@ class ExchangeReceiptController extends GetxController {
       await getAllExChange();
       Get.back();
       Get.back();
-      CustomDialog.showDialog(
-        color: AppColors.primaryColor,
-        icon: FontAwesomeIcons.circleCheck,
-        title: 'اضافة سند',
-        description: 'تم $title السند بنجاح',
-        action: () async {
-          Get.back();
-        },
-      );
 
-      await Future.delayed(
-        const Duration(
-          seconds: 2,
-        ),
+      CustomDialog.customSnackBar(
+        'تم $title السند بنجاح',
+        SnackPosition.TOP,
+        false,
       );
-      if (Get.isDialogOpen != null && Get.isDialogOpen == true) {
-        Get.back();
-      }
     }
   }
 

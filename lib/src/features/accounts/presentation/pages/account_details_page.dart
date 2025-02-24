@@ -24,7 +24,7 @@ class AccountDetailsPage extends StatelessWidget {
     required this.accountEntity,
   });
   final AccountEntity accountEntity;
-  AccountsController accountsController = Get.find();
+  final AccountsController accountsController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -119,8 +119,8 @@ class AccountDetailsPage extends StatelessWidget {
                               padding: const EdgeInsets.all(12),
                               decoration: BoxDecoration(
                                 border: Border.all(
-                                  color: context.secondaryTextColor
-                                      .withOpacity(0.2),
+                                  color:
+                                      context.secondaryTextColor.withAlpha(50),
                                 ),
                                 borderRadius: BorderRadius.circular(12),
                               ),
@@ -148,8 +148,7 @@ class AccountDetailsPage extends StatelessWidget {
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
                               border: Border.all(
-                                color:
-                                    context.secondaryTextColor.withOpacity(0.2),
+                                color: context.secondaryTextColor.withAlpha(50),
                               ),
                               borderRadius: BorderRadius.circular(12),
                             ),
@@ -173,7 +172,7 @@ class AccountDetailsPage extends StatelessWidget {
                         padding: const EdgeInsets.all(5),
                         decoration: BoxDecoration(
                           border: Border.all(
-                            color: context.secondaryTextColor.withOpacity(0.2),
+                            color: context.secondaryTextColor.withAlpha(50),
                           ),
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -212,7 +211,7 @@ class AccountDetailsPage extends StatelessWidget {
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
                       border: Border.all(
-                        color: context.secondaryTextColor.withOpacity(0.2),
+                        color: context.secondaryTextColor.withAlpha(50),
                       ),
                       color: context.backgroundColor,
                       borderRadius: BorderRadius.circular(12),
@@ -245,7 +244,8 @@ class AccountDetailsPage extends StatelessWidget {
                         Text(
                           currencyFormat(
                               number: accountsController.totalAccount
-                                  .toStringAsFixed(2)),
+                                  .abs()
+                                  .toString()),
                           style: context.titleSmall.copyWith(
                             color: context.blackColor,
                           ),

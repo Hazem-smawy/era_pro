@@ -1,3 +1,5 @@
+import 'package:era_pro/src/features/exchange_receipt/presentation/widgets/exchange_details_item_widget.dart';
+
 import '../../../../core/extensions/context_extensions.dart';
 import '../../../../core/extensions/padding_extension.dart';
 import '../../../../core/utils/arabic_date_formater.dart';
@@ -6,12 +8,10 @@ import '../../../../core/widgets/circle_back_btn_widget.dart';
 import '../../../../core/widgets/thin_divider_widget.dart';
 import '../../domain/entities/exchange_entity.dart';
 import '../getX/exchange_receipt_controller.dart';
-import 'exchange_page.dart';
 import '../widgets/exchange_type_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart' as date_formater;
 
 class ExchangeDetailsPage extends StatefulWidget {
   const ExchangeDetailsPage({super.key, required this.exchange});
@@ -75,7 +75,7 @@ class _ExchangeDetailsPageState extends State<ExchangeDetailsPage> {
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
                       border: Border.all(
-                          color: context.secondaryTextColor.withOpacity(0.2)),
+                          color: context.secondaryTextColor.withAlpha(50)),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Column(
@@ -206,7 +206,7 @@ class _ExchangeDetailsPageState extends State<ExchangeDetailsPage> {
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
                       border: Border.all(
-                        color: context.secondaryTextColor.withOpacity(0.2),
+                        color: context.secondaryTextColor.withAlpha(50),
                       ),
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -239,38 +239,6 @@ class _ExchangeDetailsPageState extends State<ExchangeDetailsPage> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class ExchangeDetailsItemWidget extends StatelessWidget {
-  const ExchangeDetailsItemWidget({
-    super.key,
-    required this.label,
-    required this.value,
-  });
-
-  final String label;
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Expanded(
-          child: Text(
-            value,
-            textAlign: TextAlign.start,
-            style: context.bodySmall.copyWith(color: context.blackColor),
-          ),
-        ),
-        context.g8,
-        Text(
-          label,
-          style: context.bodySmall,
-        )
-      ],
     );
   }
 }

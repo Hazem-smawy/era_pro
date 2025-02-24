@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../../../core/utils/date_time_converter.dart';

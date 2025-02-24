@@ -132,7 +132,7 @@ class ItemDetailsPage extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: context.secondaryTextColor.withOpacity(0.2),
+          color: context.secondaryTextColor.withAlpha(50),
         ),
       ),
       child: Column(
@@ -187,7 +187,6 @@ class _ItemStoreImageWidgetState extends State<ItemStoreImageWidget> {
   StoreController storeController = Get.find();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     storeController.getItemImage(widget.storeItemDetailsEntity.item.id).then(
       (value) {
@@ -204,7 +203,7 @@ class _ItemStoreImageWidgetState extends State<ItemStoreImageWidget> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: context.secondaryTextColor.withOpacity(0.3),
+          color: context.secondaryTextColor.withAlpha(50),
         ),
       ),
       child: ClipRRect(
@@ -257,7 +256,7 @@ class ItemUnitsDetailsWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                     // color: MyColors.containerColor,
                     border: Border.all(
-                      color: context.secondaryTextColor.withOpacity(0.2),
+                      color: context.secondaryTextColor.withAlpha(50),
                     ),
                   ),
                   child: Center(
@@ -354,7 +353,7 @@ class PriceDialogWidget extends StatelessWidget {
             border: Border.all(
               color: isSelected
                   ? Colors.transparent
-                  : context.blackColor.withOpacity(0.1),
+                  : context.blackColor.withAlpha(25),
             ),
             color: isSelected ? context.primaryColor : null),
         child: Center(

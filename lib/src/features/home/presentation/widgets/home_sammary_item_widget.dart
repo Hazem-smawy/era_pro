@@ -65,7 +65,7 @@ class HomeSummaryItemWidget extends StatelessWidget {
                 ),
                 CircleAvatar(
                   radius: 3,
-                  backgroundColor: Colors.green.withOpacity(0.2),
+                  backgroundColor: Colors.green.withAlpha(50),
                 )
               ],
             ),
@@ -97,7 +97,7 @@ class HomeSummaryItemWidget extends StatelessWidget {
                 ),
                 CircleAvatar(
                   radius: 3,
-                  backgroundColor: Colors.red.withOpacity(0.2),
+                  backgroundColor: Colors.red.withAlpha(50),
                 )
               ],
             ),

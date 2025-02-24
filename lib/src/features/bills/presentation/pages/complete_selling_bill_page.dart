@@ -1,5 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import 'package:era_pro/src/features/setting/presentation/getX/setting_controller.dart';
+
+import '../../../../core/utils/arabic_date_formater.dart';
 import '../../../../core/utils/currency_format.dart';
 import '../../../accounts/presentation/widgets/search_dropdown_widget.dart';
 import '../../domain/entities/bill_ui_entity.dart';
@@ -50,10 +53,7 @@ class _CompleteSellingBillPageState extends State<CompleteSellingBillPage> {
         billController.newBill.value.netBill,
       ).toStringAsFixed(2));
     }
-    // billController.newBill.value.addedTax =
-    //     (billController.newBill.value.addedTaxPercent *
-    //             (billController.newBill.value.netBill)) /
-    //         100;
+
     billController.newBill.value.addedTax = percentToRate(
         billController.newBill.value.addedTaxPercent,
         billController.newBill.value.netBill);
@@ -61,6 +61,7 @@ class _CompleteSellingBillPageState extends State<CompleteSellingBillPage> {
         billController.newBill.value.addedTaxPercent.toString();
   }
 
+  final SettingController settingController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,27 +82,21 @@ class _CompleteSellingBillPageState extends State<CompleteSellingBillPage> {
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
                 child: Row(
                   children: [
-                    Container(
-                      width: 50,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: context.whiteColor,
-                      ),
-                      child: Center(
-                        child: FaIcon(
-                          FontAwesomeIcons.barcode,
-                          size: 20,
-                          color: context.secondaryTextColor,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 4,
-                    ),
-                    const SizedBox(
-                      width: 4,
-                    ),
+                    // Container(
+                    //   width: 50,
+                    //   height: 50,
+                    //   decoration: BoxDecoration(
+                    //     borderRadius: BorderRadius.circular(15),
+                    //     color: context.whiteColor,
+                    //   ),
+                    //   child: Center(
+                    //     child: FaIcon(
+                    //       FontAwesomeIcons.barcode,
+                    //       size: 20,
+                    //       color: context.secondaryTextColor,
+                    //     ),
+                    //   ),
+                    // ),
                     Expanded(
                         child: SearchDropdownWidget(
                       initialId: billController.newBill.value.customerNumber,
@@ -132,14 +127,61 @@ class _CompleteSellingBillPageState extends State<CompleteSellingBillPage> {
               ),
               const DividerWidget(),
               const AddedTaxAndDiscountWidget(),
-              const SizedBox(
-                height: 20,
+              context.g12,
+              SizedBox(
+                // height: 50,
+                width: context.width - 40,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      formatDateToArabic(
+                          billController.newBill.value.billDate ??
+                              DateTime.now()),
+                      style: context.bodyLarge,
+                    ),
+                    const Spacer(),
+                    GestureDetector(
+                      onTap: () async {
+                        if (settingController.settings.value?.fixedBillDate ??
+                            false) {
+                          billController.newBill.value.billDate =
+                              await pickData(context);
+                          setState(() {});
+                        }
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 0, vertical: 7),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Row(
+                          children: [
+                            Text(
+                              'تأريخ الفاتورة',
+                              style: context.bodySmall
+                                  .copyWith(color: context.primary),
+                            ),
+                            context.g8,
+                            FaIcon(
+                              FontAwesomeIcons.calendar,
+                              size: 20,
+                              color: context.primary,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
+              context.g20,
               Obx(() => Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
-                        color: context.secondaryTextColor.withOpacity(0.2),
+                        color: context.secondaryTextColor.withAlpha(50),
                       ),
                     ),
                     margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -184,6 +226,7 @@ class _CompleteSellingBillPageState extends State<CompleteSellingBillPage> {
                         billController.newBill.value.selectedCurencyId,
                     clearPrice: billController.newBill.value.clearPrice,
                     selectedDate: billController.newBill.value.dueDate,
+                    // isOld: billController.newBill.value.isOld,
                     selectDateAction: () async {
                       DateTime? dueDate = await pickData(context);
                       billController.newBill.value.dueDate = dueDate;
@@ -194,14 +237,31 @@ class _CompleteSellingBillPageState extends State<CompleteSellingBillPage> {
               const DividerWidget(),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    CustomTextFieldWidget(
-                      hint: 'ملاحظة',
-                      controller: billController.billNoteTextEditingController,
-                    ),
-                  ],
+                child: Form(
+                  key: billController.completeFormKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      CustomTextFieldWidget(
+                        validator: (p0) {
+                          if (settingController
+                                  .settings.value?.useBillStatement ??
+                              false) {
+                            if (p0 == null || p0.isEmpty) {
+                              return 'البيان ضروري';
+                            } else {
+                              return null;
+                            }
+                          } else {
+                            return null;
+                          }
+                        },
+                        hint: 'البيان',
+                        controller:
+                            billController.billNoteTextEditingController,
+                      ),
+                    ],
+                  ),
                 ),
               ),
 
@@ -238,7 +298,6 @@ class _CompleteSellingBillPageState extends State<CompleteSellingBillPage> {
     );
   }
 }
-
 
 //1 box
 //2 bank

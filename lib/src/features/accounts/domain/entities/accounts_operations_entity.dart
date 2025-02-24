@@ -14,6 +14,7 @@
 import 'package:equatable/equatable.dart';
 import '../../../../core/utils/date_time_converter.dart';
 
+// ignore: must_be_immutable
 class AccountsOperationsEntity extends Equatable {
   int? id;
   @DateTimeConverter()

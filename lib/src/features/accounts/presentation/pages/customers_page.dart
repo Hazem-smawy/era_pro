@@ -1,3 +1,5 @@
+import 'package:era_pro/src/features/setting/presentation/getX/setting_controller.dart';
+
 import '../../../../core/extensions/context_extensions.dart';
 import '../getX/accounts_controller.dart';
 import 'account_details_page.dart';
@@ -11,7 +13,7 @@ import '../widgets/account_item_widget.dart';
 class AccountsPage extends StatelessWidget {
   AccountsPage({super.key});
   final AccountsController accountsController = Get.find();
-
+  final SettingController settingController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,19 +62,22 @@ class AccountsPage extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: context.primaryColor,
-        onPressed: () {
-          Get.bottomSheet(
-            AddNewAccountSheet(),
-            isScrollControlled: true,
-          );
-        },
-        child: FaIcon(
-          FontAwesomeIcons.plus,
-          color: context.whiteColor,
-        ),
-      ),
+      floatingActionButton:
+          settingController.settings.value?.addNewCustomers ?? false
+              ? FloatingActionButton(
+                  backgroundColor: context.primaryColor,
+                  onPressed: () {
+                    Get.bottomSheet(
+                      AddNewAccountSheet(),
+                      isScrollControlled: true,
+                    );
+                  },
+                  child: FaIcon(
+                    FontAwesomeIcons.plus,
+                    color: context.whiteColor,
+                  ),
+                )
+              : SizedBox(),
     );
   }
 }

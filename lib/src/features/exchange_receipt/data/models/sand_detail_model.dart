@@ -5,6 +5,7 @@ import '../../domain/entities/sand_details_entity.dart';
 part 'sand_detail_model.g.dart';
 
 @JsonSerializable()
+// ignore: must_be_immutable
 class SandDetailModel extends SandDetailEntity {
   SandDetailModel({
     super.id,

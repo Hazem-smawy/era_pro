@@ -28,8 +28,8 @@ class CurenciesInfoPage extends StatelessWidget {
               builder: (context, data) {
                 return ListView.separated(
                   separatorBuilder: (context, index) => Divider(
-                    color: context.secondaryTextColor.withOpacity(
-                      0.2,
+                    color: context.secondaryTextColor.withAlpha(
+                      50,
                     ),
                   ).pv(10),
                   itemCount: data.length,

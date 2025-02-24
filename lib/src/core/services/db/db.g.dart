@@ -3,6 +3,761 @@
 part of 'db.dart';
 
 // ignore_for_file: type=lint
+class $SettingsTableTable extends SettingsTable
+    with TableInfo<$SettingsTableTable, SettingModel> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SettingsTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<int> userId = GeneratedColumn<int>(
+      'user_id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _fixedBillDateMeta =
+      const VerificationMeta('fixedBillDate');
+  @override
+  late final GeneratedColumn<bool> fixedBillDate = GeneratedColumn<bool>(
+      'fixed_bill_date', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("fixed_bill_date" IN (0, 1))'),
+      defaultValue: const Constant(false));
+  static const VerificationMeta _editSalePriceMeta =
+      const VerificationMeta('editSalePrice');
+  @override
+  late final GeneratedColumn<bool> editSalePrice = GeneratedColumn<bool>(
+      'edit_sale_price', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("edit_sale_price" IN (0, 1))'),
+      defaultValue: const Constant(true));
+  static const VerificationMeta _showQrMeta = const VerificationMeta('showQr');
+  @override
+  late final GeneratedColumn<bool> showQr = GeneratedColumn<bool>(
+      'show_qr', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("show_qr" IN (0, 1))'),
+      defaultValue: const Constant(true));
+  static const VerificationMeta _addNewCustomersMeta =
+      const VerificationMeta('addNewCustomers');
+  @override
+  late final GeneratedColumn<bool> addNewCustomers = GeneratedColumn<bool>(
+      'add_new_customers', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("add_new_customers" IN (0, 1))'),
+      defaultValue: const Constant(false));
+  static const VerificationMeta _showSalesManInBillMeta =
+      const VerificationMeta('showSalesManInBill');
+  @override
+  late final GeneratedColumn<bool> showSalesManInBill = GeneratedColumn<bool>(
+      'show_sales_man_in_bill', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("show_sales_man_in_bill" IN (0, 1))'),
+      defaultValue: const Constant(false));
+  static const VerificationMeta _showStoreInBillMeta =
+      const VerificationMeta('showStoreInBill');
+  @override
+  late final GeneratedColumn<bool> showStoreInBill = GeneratedColumn<bool>(
+      'show_store_in_bill', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("show_store_in_bill" IN (0, 1))'),
+      defaultValue: const Constant(false));
+  static const VerificationMeta _saleInNegativeMeta =
+      const VerificationMeta('saleInNegative');
+  @override
+  late final GeneratedColumn<bool> saleInNegative = GeneratedColumn<bool>(
+      'sale_in_negative', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("sale_in_negative" IN (0, 1))'),
+      defaultValue: const Constant(true));
+  static const VerificationMeta _sumItemsInBillMeta =
+      const VerificationMeta('sumItemsInBill');
+  @override
+  late final GeneratedColumn<bool> sumItemsInBill = GeneratedColumn<bool>(
+      'sum_items_in_bill', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("sum_items_in_bill" IN (0, 1))'),
+      defaultValue: const Constant(true));
+  static const VerificationMeta _editTaxMeta =
+      const VerificationMeta('editTax');
+  @override
+  late final GeneratedColumn<bool> editTax = GeneratedColumn<bool>(
+      'edit_tax', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("edit_tax" IN (0, 1))'),
+      defaultValue: const Constant(true));
+  static const VerificationMeta _saleBillNumInReSaleBillMeta =
+      const VerificationMeta('saleBillNumInReSaleBill');
+  @override
+  late final GeneratedColumn<bool> saleBillNumInReSaleBill =
+      GeneratedColumn<bool>('sale_bill_num_in_re_sale_bill', aliasedName, false,
+          type: DriftSqlType.bool,
+          requiredDuringInsert: false,
+          defaultConstraints: GeneratedColumn.constraintIsAlways(
+              'CHECK ("sale_bill_num_in_re_sale_bill" IN (0, 1))'),
+          defaultValue: const Constant(true));
+  static const VerificationMeta _useFreeQtyMeta =
+      const VerificationMeta('useFreeQty');
+  @override
+  late final GeneratedColumn<bool> useFreeQty = GeneratedColumn<bool>(
+      'use_free_qty', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("use_free_qty" IN (0, 1))'),
+      defaultValue: const Constant(false));
+  static const VerificationMeta _useDiscountPerItemMeta =
+      const VerificationMeta('useDiscountPerItem');
+  @override
+  late final GeneratedColumn<bool> useDiscountPerItem = GeneratedColumn<bool>(
+      'use_discount_per_item', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("use_discount_per_item" IN (0, 1))'),
+      defaultValue: const Constant(false));
+  static const VerificationMeta _useSarfSandMeta =
+      const VerificationMeta('useSarfSand');
+  @override
+  late final GeneratedColumn<bool> useSarfSand = GeneratedColumn<bool>(
+      'use_sarf_sand', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("use_sarf_sand" IN (0, 1))'),
+      defaultValue: const Constant(false));
+  static const VerificationMeta _useGabthSandMeta =
+      const VerificationMeta('useGabthSand');
+  @override
+  late final GeneratedColumn<bool> useGabthSand = GeneratedColumn<bool>(
+      'use_gabth_sand', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("use_gabth_sand" IN (0, 1))'),
+      defaultValue: const Constant(false));
+  static const VerificationMeta _useDiscountPerBillMeta =
+      const VerificationMeta('useDiscountPerBill');
+  @override
+  late final GeneratedColumn<bool> useDiscountPerBill = GeneratedColumn<bool>(
+      'use_discount_per_bill', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("use_discount_per_bill" IN (0, 1))'),
+      defaultValue: const Constant(false));
+  static const VerificationMeta _useSalesTaxMeta =
+      const VerificationMeta('useSalesTax');
+  @override
+  late final GeneratedColumn<bool> useSalesTax = GeneratedColumn<bool>(
+      'use_sales_tax', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("use_sales_tax" IN (0, 1))'),
+      defaultValue: const Constant(true));
+  static const VerificationMeta _useBillStatementMeta =
+      const VerificationMeta('useBillStatement');
+  @override
+  late final GeneratedColumn<bool> useBillStatement = GeneratedColumn<bool>(
+      'use_bill_statement', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("use_bill_statement" IN (0, 1))'),
+      defaultValue: const Constant(true));
+  static const VerificationMeta _checkAccLimitMeta =
+      const VerificationMeta('checkAccLimit');
+  @override
+  late final GeneratedColumn<bool> checkAccLimit = GeneratedColumn<bool>(
+      'check_acc_limit', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("check_acc_limit" IN (0, 1))'),
+      defaultValue: const Constant(true));
+  static const VerificationMeta _useExpireDateMeta =
+      const VerificationMeta('useExpireDate');
+  @override
+  late final GeneratedColumn<bool> useExpireDate = GeneratedColumn<bool>(
+      'use_expire_date', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("use_expire_date" IN (0, 1))'),
+      defaultValue: const Constant(true));
+  static const VerificationMeta _useValueAddTaxMeta =
+      const VerificationMeta('useValueAddTax');
+  @override
+  late final GeneratedColumn<bool> useValueAddTax = GeneratedColumn<bool>(
+      'use_value_add_tax', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("use_value_add_tax" IN (0, 1))'),
+      defaultValue: const Constant(false));
+  static const VerificationMeta _billDiscountCalcMeta =
+      const VerificationMeta('billDiscountCalc');
+  @override
+  late final GeneratedColumn<bool> billDiscountCalc = GeneratedColumn<bool>(
+      'bill_discount_calc', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("bill_discount_calc" IN (0, 1))'),
+      defaultValue: const Constant(true));
+  static const VerificationMeta _salesTaxRateMeta =
+      const VerificationMeta('salesTaxRate');
+  @override
+  late final GeneratedColumn<int> salesTaxRate = GeneratedColumn<int>(
+      'sales_tax_rate', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [
+        userId,
+        fixedBillDate,
+        editSalePrice,
+        showQr,
+        addNewCustomers,
+        showSalesManInBill,
+        showStoreInBill,
+        saleInNegative,
+        sumItemsInBill,
+        editTax,
+        saleBillNumInReSaleBill,
+        useFreeQty,
+        useDiscountPerItem,
+        useSarfSand,
+        useGabthSand,
+        useDiscountPerBill,
+        useSalesTax,
+        useBillStatement,
+        checkAccLimit,
+        useExpireDate,
+        useValueAddTax,
+        billDiscountCalc,
+        salesTaxRate
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'settings_table';
+  @override
+  VerificationContext validateIntegrity(Insertable<SettingModel> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('user_id')) {
+      context.handle(_userIdMeta,
+          userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta));
+    }
+    if (data.containsKey('fixed_bill_date')) {
+      context.handle(
+          _fixedBillDateMeta,
+          fixedBillDate.isAcceptableOrUnknown(
+              data['fixed_bill_date']!, _fixedBillDateMeta));
+    }
+    if (data.containsKey('edit_sale_price')) {
+      context.handle(
+          _editSalePriceMeta,
+          editSalePrice.isAcceptableOrUnknown(
+              data['edit_sale_price']!, _editSalePriceMeta));
+    }
+    if (data.containsKey('show_qr')) {
+      context.handle(_showQrMeta,
+          showQr.isAcceptableOrUnknown(data['show_qr']!, _showQrMeta));
+    }
+    if (data.containsKey('add_new_customers')) {
+      context.handle(
+          _addNewCustomersMeta,
+          addNewCustomers.isAcceptableOrUnknown(
+              data['add_new_customers']!, _addNewCustomersMeta));
+    }
+    if (data.containsKey('show_sales_man_in_bill')) {
+      context.handle(
+          _showSalesManInBillMeta,
+          showSalesManInBill.isAcceptableOrUnknown(
+              data['show_sales_man_in_bill']!, _showSalesManInBillMeta));
+    }
+    if (data.containsKey('show_store_in_bill')) {
+      context.handle(
+          _showStoreInBillMeta,
+          showStoreInBill.isAcceptableOrUnknown(
+              data['show_store_in_bill']!, _showStoreInBillMeta));
+    }
+    if (data.containsKey('sale_in_negative')) {
+      context.handle(
+          _saleInNegativeMeta,
+          saleInNegative.isAcceptableOrUnknown(
+              data['sale_in_negative']!, _saleInNegativeMeta));
+    }
+    if (data.containsKey('sum_items_in_bill')) {
+      context.handle(
+          _sumItemsInBillMeta,
+          sumItemsInBill.isAcceptableOrUnknown(
+              data['sum_items_in_bill']!, _sumItemsInBillMeta));
+    }
+    if (data.containsKey('edit_tax')) {
+      context.handle(_editTaxMeta,
+          editTax.isAcceptableOrUnknown(data['edit_tax']!, _editTaxMeta));
+    }
+    if (data.containsKey('sale_bill_num_in_re_sale_bill')) {
+      context.handle(
+          _saleBillNumInReSaleBillMeta,
+          saleBillNumInReSaleBill.isAcceptableOrUnknown(
+              data['sale_bill_num_in_re_sale_bill']!,
+              _saleBillNumInReSaleBillMeta));
+    }
+    if (data.containsKey('use_free_qty')) {
+      context.handle(
+          _useFreeQtyMeta,
+          useFreeQty.isAcceptableOrUnknown(
+              data['use_free_qty']!, _useFreeQtyMeta));
+    }
+    if (data.containsKey('use_discount_per_item')) {
+      context.handle(
+          _useDiscountPerItemMeta,
+          useDiscountPerItem.isAcceptableOrUnknown(
+              data['use_discount_per_item']!, _useDiscountPerItemMeta));
+    }
+    if (data.containsKey('use_sarf_sand')) {
+      context.handle(
+          _useSarfSandMeta,
+          useSarfSand.isAcceptableOrUnknown(
+              data['use_sarf_sand']!, _useSarfSandMeta));
+    }
+    if (data.containsKey('use_gabth_sand')) {
+      context.handle(
+          _useGabthSandMeta,
+          useGabthSand.isAcceptableOrUnknown(
+              data['use_gabth_sand']!, _useGabthSandMeta));
+    }
+    if (data.containsKey('use_discount_per_bill')) {
+      context.handle(
+          _useDiscountPerBillMeta,
+          useDiscountPerBill.isAcceptableOrUnknown(
+              data['use_discount_per_bill']!, _useDiscountPerBillMeta));
+    }
+    if (data.containsKey('use_sales_tax')) {
+      context.handle(
+          _useSalesTaxMeta,
+          useSalesTax.isAcceptableOrUnknown(
+              data['use_sales_tax']!, _useSalesTaxMeta));
+    }
+    if (data.containsKey('use_bill_statement')) {
+      context.handle(
+          _useBillStatementMeta,
+          useBillStatement.isAcceptableOrUnknown(
+              data['use_bill_statement']!, _useBillStatementMeta));
+    }
+    if (data.containsKey('check_acc_limit')) {
+      context.handle(
+          _checkAccLimitMeta,
+          checkAccLimit.isAcceptableOrUnknown(
+              data['check_acc_limit']!, _checkAccLimitMeta));
+    }
+    if (data.containsKey('use_expire_date')) {
+      context.handle(
+          _useExpireDateMeta,
+          useExpireDate.isAcceptableOrUnknown(
+              data['use_expire_date']!, _useExpireDateMeta));
+    }
+    if (data.containsKey('use_value_add_tax')) {
+      context.handle(
+          _useValueAddTaxMeta,
+          useValueAddTax.isAcceptableOrUnknown(
+              data['use_value_add_tax']!, _useValueAddTaxMeta));
+    }
+    if (data.containsKey('bill_discount_calc')) {
+      context.handle(
+          _billDiscountCalcMeta,
+          billDiscountCalc.isAcceptableOrUnknown(
+              data['bill_discount_calc']!, _billDiscountCalcMeta));
+    }
+    if (data.containsKey('sales_tax_rate')) {
+      context.handle(
+          _salesTaxRateMeta,
+          salesTaxRate.isAcceptableOrUnknown(
+              data['sales_tax_rate']!, _salesTaxRateMeta));
+    } else if (isInserting) {
+      context.missing(_salesTaxRateMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {userId};
+  @override
+  SettingModel map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SettingModel(
+      userId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}user_id'])!,
+      fixedBillDate: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}fixed_bill_date'])!,
+      editSalePrice: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}edit_sale_price'])!,
+      showQr: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}show_qr'])!,
+      addNewCustomers: attachedDatabase.typeMapping.read(
+          DriftSqlType.bool, data['${effectivePrefix}add_new_customers'])!,
+      showSalesManInBill: attachedDatabase.typeMapping.read(
+          DriftSqlType.bool, data['${effectivePrefix}show_sales_man_in_bill'])!,
+      showStoreInBill: attachedDatabase.typeMapping.read(
+          DriftSqlType.bool, data['${effectivePrefix}show_store_in_bill'])!,
+      saleInNegative: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}sale_in_negative'])!,
+      sumItemsInBill: attachedDatabase.typeMapping.read(
+          DriftSqlType.bool, data['${effectivePrefix}sum_items_in_bill'])!,
+      editTax: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}edit_tax'])!,
+      saleBillNumInReSaleBill: attachedDatabase.typeMapping.read(
+          DriftSqlType.bool,
+          data['${effectivePrefix}sale_bill_num_in_re_sale_bill'])!,
+      useFreeQty: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}use_free_qty'])!,
+      useDiscountPerItem: attachedDatabase.typeMapping.read(
+          DriftSqlType.bool, data['${effectivePrefix}use_discount_per_item'])!,
+      useSarfSand: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}use_sarf_sand'])!,
+      useGabthSand: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}use_gabth_sand'])!,
+      useDiscountPerBill: attachedDatabase.typeMapping.read(
+          DriftSqlType.bool, data['${effectivePrefix}use_discount_per_bill'])!,
+      useSalesTax: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}use_sales_tax'])!,
+      useBillStatement: attachedDatabase.typeMapping.read(
+          DriftSqlType.bool, data['${effectivePrefix}use_bill_statement'])!,
+      checkAccLimit: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}check_acc_limit'])!,
+      useExpireDate: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}use_expire_date'])!,
+      useValueAddTax: attachedDatabase.typeMapping.read(
+          DriftSqlType.bool, data['${effectivePrefix}use_value_add_tax'])!,
+      billDiscountCalc: attachedDatabase.typeMapping.read(
+          DriftSqlType.bool, data['${effectivePrefix}bill_discount_calc'])!,
+      salesTaxRate: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}sales_tax_rate'])!,
+    );
+  }
+
+  @override
+  $SettingsTableTable createAlias(String alias) {
+    return $SettingsTableTable(attachedDatabase, alias);
+  }
+}
+
+class SettingsTableCompanion extends UpdateCompanion<SettingModel> {
+  final Value<int> userId;
+  final Value<bool> fixedBillDate;
+  final Value<bool> editSalePrice;
+  final Value<bool> showQr;
+  final Value<bool> addNewCustomers;
+  final Value<bool> showSalesManInBill;
+  final Value<bool> showStoreInBill;
+  final Value<bool> saleInNegative;
+  final Value<bool> sumItemsInBill;
+  final Value<bool> editTax;
+  final Value<bool> saleBillNumInReSaleBill;
+  final Value<bool> useFreeQty;
+  final Value<bool> useDiscountPerItem;
+  final Value<bool> useSarfSand;
+  final Value<bool> useGabthSand;
+  final Value<bool> useDiscountPerBill;
+  final Value<bool> useSalesTax;
+  final Value<bool> useBillStatement;
+  final Value<bool> checkAccLimit;
+  final Value<bool> useExpireDate;
+  final Value<bool> useValueAddTax;
+  final Value<bool> billDiscountCalc;
+  final Value<int> salesTaxRate;
+  const SettingsTableCompanion({
+    this.userId = const Value.absent(),
+    this.fixedBillDate = const Value.absent(),
+    this.editSalePrice = const Value.absent(),
+    this.showQr = const Value.absent(),
+    this.addNewCustomers = const Value.absent(),
+    this.showSalesManInBill = const Value.absent(),
+    this.showStoreInBill = const Value.absent(),
+    this.saleInNegative = const Value.absent(),
+    this.sumItemsInBill = const Value.absent(),
+    this.editTax = const Value.absent(),
+    this.saleBillNumInReSaleBill = const Value.absent(),
+    this.useFreeQty = const Value.absent(),
+    this.useDiscountPerItem = const Value.absent(),
+    this.useSarfSand = const Value.absent(),
+    this.useGabthSand = const Value.absent(),
+    this.useDiscountPerBill = const Value.absent(),
+    this.useSalesTax = const Value.absent(),
+    this.useBillStatement = const Value.absent(),
+    this.checkAccLimit = const Value.absent(),
+    this.useExpireDate = const Value.absent(),
+    this.useValueAddTax = const Value.absent(),
+    this.billDiscountCalc = const Value.absent(),
+    this.salesTaxRate = const Value.absent(),
+  });
+  SettingsTableCompanion.insert({
+    this.userId = const Value.absent(),
+    this.fixedBillDate = const Value.absent(),
+    this.editSalePrice = const Value.absent(),
+    this.showQr = const Value.absent(),
+    this.addNewCustomers = const Value.absent(),
+    this.showSalesManInBill = const Value.absent(),
+    this.showStoreInBill = const Value.absent(),
+    this.saleInNegative = const Value.absent(),
+    this.sumItemsInBill = const Value.absent(),
+    this.editTax = const Value.absent(),
+    this.saleBillNumInReSaleBill = const Value.absent(),
+    this.useFreeQty = const Value.absent(),
+    this.useDiscountPerItem = const Value.absent(),
+    this.useSarfSand = const Value.absent(),
+    this.useGabthSand = const Value.absent(),
+    this.useDiscountPerBill = const Value.absent(),
+    this.useSalesTax = const Value.absent(),
+    this.useBillStatement = const Value.absent(),
+    this.checkAccLimit = const Value.absent(),
+    this.useExpireDate = const Value.absent(),
+    this.useValueAddTax = const Value.absent(),
+    this.billDiscountCalc = const Value.absent(),
+    required int salesTaxRate,
+  }) : salesTaxRate = Value(salesTaxRate);
+  static Insertable<SettingModel> custom({
+    Expression<int>? userId,
+    Expression<bool>? fixedBillDate,
+    Expression<bool>? editSalePrice,
+    Expression<bool>? showQr,
+    Expression<bool>? addNewCustomers,
+    Expression<bool>? showSalesManInBill,
+    Expression<bool>? showStoreInBill,
+    Expression<bool>? saleInNegative,
+    Expression<bool>? sumItemsInBill,
+    Expression<bool>? editTax,
+    Expression<bool>? saleBillNumInReSaleBill,
+    Expression<bool>? useFreeQty,
+    Expression<bool>? useDiscountPerItem,
+    Expression<bool>? useSarfSand,
+    Expression<bool>? useGabthSand,
+    Expression<bool>? useDiscountPerBill,
+    Expression<bool>? useSalesTax,
+    Expression<bool>? useBillStatement,
+    Expression<bool>? checkAccLimit,
+    Expression<bool>? useExpireDate,
+    Expression<bool>? useValueAddTax,
+    Expression<bool>? billDiscountCalc,
+    Expression<int>? salesTaxRate,
+  }) {
+    return RawValuesInsertable({
+      if (userId != null) 'user_id': userId,
+      if (fixedBillDate != null) 'fixed_bill_date': fixedBillDate,
+      if (editSalePrice != null) 'edit_sale_price': editSalePrice,
+      if (showQr != null) 'show_qr': showQr,
+      if (addNewCustomers != null) 'add_new_customers': addNewCustomers,
+      if (showSalesManInBill != null)
+        'show_sales_man_in_bill': showSalesManInBill,
+      if (showStoreInBill != null) 'show_store_in_bill': showStoreInBill,
+      if (saleInNegative != null) 'sale_in_negative': saleInNegative,
+      if (sumItemsInBill != null) 'sum_items_in_bill': sumItemsInBill,
+      if (editTax != null) 'edit_tax': editTax,
+      if (saleBillNumInReSaleBill != null)
+        'sale_bill_num_in_re_sale_bill': saleBillNumInReSaleBill,
+      if (useFreeQty != null) 'use_free_qty': useFreeQty,
+      if (useDiscountPerItem != null)
+        'use_discount_per_item': useDiscountPerItem,
+      if (useSarfSand != null) 'use_sarf_sand': useSarfSand,
+      if (useGabthSand != null) 'use_gabth_sand': useGabthSand,
+      if (useDiscountPerBill != null)
+        'use_discount_per_bill': useDiscountPerBill,
+      if (useSalesTax != null) 'use_sales_tax': useSalesTax,
+      if (useBillStatement != null) 'use_bill_statement': useBillStatement,
+      if (checkAccLimit != null) 'check_acc_limit': checkAccLimit,
+      if (useExpireDate != null) 'use_expire_date': useExpireDate,
+      if (useValueAddTax != null) 'use_value_add_tax': useValueAddTax,
+      if (billDiscountCalc != null) 'bill_discount_calc': billDiscountCalc,
+      if (salesTaxRate != null) 'sales_tax_rate': salesTaxRate,
+    });
+  }
+
+  SettingsTableCompanion copyWith(
+      {Value<int>? userId,
+      Value<bool>? fixedBillDate,
+      Value<bool>? editSalePrice,
+      Value<bool>? showQr,
+      Value<bool>? addNewCustomers,
+      Value<bool>? showSalesManInBill,
+      Value<bool>? showStoreInBill,
+      Value<bool>? saleInNegative,
+      Value<bool>? sumItemsInBill,
+      Value<bool>? editTax,
+      Value<bool>? saleBillNumInReSaleBill,
+      Value<bool>? useFreeQty,
+      Value<bool>? useDiscountPerItem,
+      Value<bool>? useSarfSand,
+      Value<bool>? useGabthSand,
+      Value<bool>? useDiscountPerBill,
+      Value<bool>? useSalesTax,
+      Value<bool>? useBillStatement,
+      Value<bool>? checkAccLimit,
+      Value<bool>? useExpireDate,
+      Value<bool>? useValueAddTax,
+      Value<bool>? billDiscountCalc,
+      Value<int>? salesTaxRate}) {
+    return SettingsTableCompanion(
+      userId: userId ?? this.userId,
+      fixedBillDate: fixedBillDate ?? this.fixedBillDate,
+      editSalePrice: editSalePrice ?? this.editSalePrice,
+      showQr: showQr ?? this.showQr,
+      addNewCustomers: addNewCustomers ?? this.addNewCustomers,
+      showSalesManInBill: showSalesManInBill ?? this.showSalesManInBill,
+      showStoreInBill: showStoreInBill ?? this.showStoreInBill,
+      saleInNegative: saleInNegative ?? this.saleInNegative,
+      sumItemsInBill: sumItemsInBill ?? this.sumItemsInBill,
+      editTax: editTax ?? this.editTax,
+      saleBillNumInReSaleBill:
+          saleBillNumInReSaleBill ?? this.saleBillNumInReSaleBill,
+      useFreeQty: useFreeQty ?? this.useFreeQty,
+      useDiscountPerItem: useDiscountPerItem ?? this.useDiscountPerItem,
+      useSarfSand: useSarfSand ?? this.useSarfSand,
+      useGabthSand: useGabthSand ?? this.useGabthSand,
+      useDiscountPerBill: useDiscountPerBill ?? this.useDiscountPerBill,
+      useSalesTax: useSalesTax ?? this.useSalesTax,
+      useBillStatement: useBillStatement ?? this.useBillStatement,
+      checkAccLimit: checkAccLimit ?? this.checkAccLimit,
+      useExpireDate: useExpireDate ?? this.useExpireDate,
+      useValueAddTax: useValueAddTax ?? this.useValueAddTax,
+      billDiscountCalc: billDiscountCalc ?? this.billDiscountCalc,
+      salesTaxRate: salesTaxRate ?? this.salesTaxRate,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (userId.present) {
+      map['user_id'] = Variable<int>(userId.value);
+    }
+    if (fixedBillDate.present) {
+      map['fixed_bill_date'] = Variable<bool>(fixedBillDate.value);
+    }
+    if (editSalePrice.present) {
+      map['edit_sale_price'] = Variable<bool>(editSalePrice.value);
+    }
+    if (showQr.present) {
+      map['show_qr'] = Variable<bool>(showQr.value);
+    }
+    if (addNewCustomers.present) {
+      map['add_new_customers'] = Variable<bool>(addNewCustomers.value);
+    }
+    if (showSalesManInBill.present) {
+      map['show_sales_man_in_bill'] = Variable<bool>(showSalesManInBill.value);
+    }
+    if (showStoreInBill.present) {
+      map['show_store_in_bill'] = Variable<bool>(showStoreInBill.value);
+    }
+    if (saleInNegative.present) {
+      map['sale_in_negative'] = Variable<bool>(saleInNegative.value);
+    }
+    if (sumItemsInBill.present) {
+      map['sum_items_in_bill'] = Variable<bool>(sumItemsInBill.value);
+    }
+    if (editTax.present) {
+      map['edit_tax'] = Variable<bool>(editTax.value);
+    }
+    if (saleBillNumInReSaleBill.present) {
+      map['sale_bill_num_in_re_sale_bill'] =
+          Variable<bool>(saleBillNumInReSaleBill.value);
+    }
+    if (useFreeQty.present) {
+      map['use_free_qty'] = Variable<bool>(useFreeQty.value);
+    }
+    if (useDiscountPerItem.present) {
+      map['use_discount_per_item'] = Variable<bool>(useDiscountPerItem.value);
+    }
+    if (useSarfSand.present) {
+      map['use_sarf_sand'] = Variable<bool>(useSarfSand.value);
+    }
+    if (useGabthSand.present) {
+      map['use_gabth_sand'] = Variable<bool>(useGabthSand.value);
+    }
+    if (useDiscountPerBill.present) {
+      map['use_discount_per_bill'] = Variable<bool>(useDiscountPerBill.value);
+    }
+    if (useSalesTax.present) {
+      map['use_sales_tax'] = Variable<bool>(useSalesTax.value);
+    }
+    if (useBillStatement.present) {
+      map['use_bill_statement'] = Variable<bool>(useBillStatement.value);
+    }
+    if (checkAccLimit.present) {
+      map['check_acc_limit'] = Variable<bool>(checkAccLimit.value);
+    }
+    if (useExpireDate.present) {
+      map['use_expire_date'] = Variable<bool>(useExpireDate.value);
+    }
+    if (useValueAddTax.present) {
+      map['use_value_add_tax'] = Variable<bool>(useValueAddTax.value);
+    }
+    if (billDiscountCalc.present) {
+      map['bill_discount_calc'] = Variable<bool>(billDiscountCalc.value);
+    }
+    if (salesTaxRate.present) {
+      map['sales_tax_rate'] = Variable<int>(salesTaxRate.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SettingsTableCompanion(')
+          ..write('userId: $userId, ')
+          ..write('fixedBillDate: $fixedBillDate, ')
+          ..write('editSalePrice: $editSalePrice, ')
+          ..write('showQr: $showQr, ')
+          ..write('addNewCustomers: $addNewCustomers, ')
+          ..write('showSalesManInBill: $showSalesManInBill, ')
+          ..write('showStoreInBill: $showStoreInBill, ')
+          ..write('saleInNegative: $saleInNegative, ')
+          ..write('sumItemsInBill: $sumItemsInBill, ')
+          ..write('editTax: $editTax, ')
+          ..write('saleBillNumInReSaleBill: $saleBillNumInReSaleBill, ')
+          ..write('useFreeQty: $useFreeQty, ')
+          ..write('useDiscountPerItem: $useDiscountPerItem, ')
+          ..write('useSarfSand: $useSarfSand, ')
+          ..write('useGabthSand: $useGabthSand, ')
+          ..write('useDiscountPerBill: $useDiscountPerBill, ')
+          ..write('useSalesTax: $useSalesTax, ')
+          ..write('useBillStatement: $useBillStatement, ')
+          ..write('checkAccLimit: $checkAccLimit, ')
+          ..write('useExpireDate: $useExpireDate, ')
+          ..write('useValueAddTax: $useValueAddTax, ')
+          ..write('billDiscountCalc: $billDiscountCalc, ')
+          ..write('salesTaxRate: $salesTaxRate')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $UserTableTable extends UserTable
     with TableInfo<$UserTableTable, UserModel> {
   @override
@@ -7896,6 +8651,7 @@ class CheckOperationsTableCompanion
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
+  late final $SettingsTableTable settingsTable = $SettingsTableTable(this);
   late final $UserTableTable userTable = $UserTableTable(this);
   late final $CompanyTableTable companyTable = $CompanyTableTable(this);
   late final $BranchTableTable branchTable = $BranchTableTable(this);
@@ -7933,6 +8689,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities => [
+        settingsTable,
         userTable,
         companyTable,
         branchTable,
@@ -7960,6 +8717,471 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       ];
 }
 
+typedef $$SettingsTableTableCreateCompanionBuilder = SettingsTableCompanion
+    Function({
+  Value<int> userId,
+  Value<bool> fixedBillDate,
+  Value<bool> editSalePrice,
+  Value<bool> showQr,
+  Value<bool> addNewCustomers,
+  Value<bool> showSalesManInBill,
+  Value<bool> showStoreInBill,
+  Value<bool> saleInNegative,
+  Value<bool> sumItemsInBill,
+  Value<bool> editTax,
+  Value<bool> saleBillNumInReSaleBill,
+  Value<bool> useFreeQty,
+  Value<bool> useDiscountPerItem,
+  Value<bool> useSarfSand,
+  Value<bool> useGabthSand,
+  Value<bool> useDiscountPerBill,
+  Value<bool> useSalesTax,
+  Value<bool> useBillStatement,
+  Value<bool> checkAccLimit,
+  Value<bool> useExpireDate,
+  Value<bool> useValueAddTax,
+  Value<bool> billDiscountCalc,
+  required int salesTaxRate,
+});
+typedef $$SettingsTableTableUpdateCompanionBuilder = SettingsTableCompanion
+    Function({
+  Value<int> userId,
+  Value<bool> fixedBillDate,
+  Value<bool> editSalePrice,
+  Value<bool> showQr,
+  Value<bool> addNewCustomers,
+  Value<bool> showSalesManInBill,
+  Value<bool> showStoreInBill,
+  Value<bool> saleInNegative,
+  Value<bool> sumItemsInBill,
+  Value<bool> editTax,
+  Value<bool> saleBillNumInReSaleBill,
+  Value<bool> useFreeQty,
+  Value<bool> useDiscountPerItem,
+  Value<bool> useSarfSand,
+  Value<bool> useGabthSand,
+  Value<bool> useDiscountPerBill,
+  Value<bool> useSalesTax,
+  Value<bool> useBillStatement,
+  Value<bool> checkAccLimit,
+  Value<bool> useExpireDate,
+  Value<bool> useValueAddTax,
+  Value<bool> billDiscountCalc,
+  Value<int> salesTaxRate,
+});
+
+class $$SettingsTableTableFilterComposer
+    extends Composer<_$AppDatabase, $SettingsTableTable> {
+  $$SettingsTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get userId => $composableBuilder(
+      column: $table.userId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get fixedBillDate => $composableBuilder(
+      column: $table.fixedBillDate, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get editSalePrice => $composableBuilder(
+      column: $table.editSalePrice, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get showQr => $composableBuilder(
+      column: $table.showQr, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get addNewCustomers => $composableBuilder(
+      column: $table.addNewCustomers,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get showSalesManInBill => $composableBuilder(
+      column: $table.showSalesManInBill,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get showStoreInBill => $composableBuilder(
+      column: $table.showStoreInBill,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get saleInNegative => $composableBuilder(
+      column: $table.saleInNegative,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get sumItemsInBill => $composableBuilder(
+      column: $table.sumItemsInBill,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get editTax => $composableBuilder(
+      column: $table.editTax, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get saleBillNumInReSaleBill => $composableBuilder(
+      column: $table.saleBillNumInReSaleBill,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get useFreeQty => $composableBuilder(
+      column: $table.useFreeQty, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get useDiscountPerItem => $composableBuilder(
+      column: $table.useDiscountPerItem,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get useSarfSand => $composableBuilder(
+      column: $table.useSarfSand, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get useGabthSand => $composableBuilder(
+      column: $table.useGabthSand, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get useDiscountPerBill => $composableBuilder(
+      column: $table.useDiscountPerBill,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get useSalesTax => $composableBuilder(
+      column: $table.useSalesTax, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get useBillStatement => $composableBuilder(
+      column: $table.useBillStatement,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get checkAccLimit => $composableBuilder(
+      column: $table.checkAccLimit, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get useExpireDate => $composableBuilder(
+      column: $table.useExpireDate, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get useValueAddTax => $composableBuilder(
+      column: $table.useValueAddTax,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get billDiscountCalc => $composableBuilder(
+      column: $table.billDiscountCalc,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get salesTaxRate => $composableBuilder(
+      column: $table.salesTaxRate, builder: (column) => ColumnFilters(column));
+}
+
+class $$SettingsTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $SettingsTableTable> {
+  $$SettingsTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get userId => $composableBuilder(
+      column: $table.userId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get fixedBillDate => $composableBuilder(
+      column: $table.fixedBillDate,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get editSalePrice => $composableBuilder(
+      column: $table.editSalePrice,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get showQr => $composableBuilder(
+      column: $table.showQr, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get addNewCustomers => $composableBuilder(
+      column: $table.addNewCustomers,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get showSalesManInBill => $composableBuilder(
+      column: $table.showSalesManInBill,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get showStoreInBill => $composableBuilder(
+      column: $table.showStoreInBill,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get saleInNegative => $composableBuilder(
+      column: $table.saleInNegative,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get sumItemsInBill => $composableBuilder(
+      column: $table.sumItemsInBill,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get editTax => $composableBuilder(
+      column: $table.editTax, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get saleBillNumInReSaleBill => $composableBuilder(
+      column: $table.saleBillNumInReSaleBill,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get useFreeQty => $composableBuilder(
+      column: $table.useFreeQty, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get useDiscountPerItem => $composableBuilder(
+      column: $table.useDiscountPerItem,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get useSarfSand => $composableBuilder(
+      column: $table.useSarfSand, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get useGabthSand => $composableBuilder(
+      column: $table.useGabthSand,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get useDiscountPerBill => $composableBuilder(
+      column: $table.useDiscountPerBill,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get useSalesTax => $composableBuilder(
+      column: $table.useSalesTax, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get useBillStatement => $composableBuilder(
+      column: $table.useBillStatement,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get checkAccLimit => $composableBuilder(
+      column: $table.checkAccLimit,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get useExpireDate => $composableBuilder(
+      column: $table.useExpireDate,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get useValueAddTax => $composableBuilder(
+      column: $table.useValueAddTax,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get billDiscountCalc => $composableBuilder(
+      column: $table.billDiscountCalc,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get salesTaxRate => $composableBuilder(
+      column: $table.salesTaxRate,
+      builder: (column) => ColumnOrderings(column));
+}
+
+class $$SettingsTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $SettingsTableTable> {
+  $$SettingsTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get userId =>
+      $composableBuilder(column: $table.userId, builder: (column) => column);
+
+  GeneratedColumn<bool> get fixedBillDate => $composableBuilder(
+      column: $table.fixedBillDate, builder: (column) => column);
+
+  GeneratedColumn<bool> get editSalePrice => $composableBuilder(
+      column: $table.editSalePrice, builder: (column) => column);
+
+  GeneratedColumn<bool> get showQr =>
+      $composableBuilder(column: $table.showQr, builder: (column) => column);
+
+  GeneratedColumn<bool> get addNewCustomers => $composableBuilder(
+      column: $table.addNewCustomers, builder: (column) => column);
+
+  GeneratedColumn<bool> get showSalesManInBill => $composableBuilder(
+      column: $table.showSalesManInBill, builder: (column) => column);
+
+  GeneratedColumn<bool> get showStoreInBill => $composableBuilder(
+      column: $table.showStoreInBill, builder: (column) => column);
+
+  GeneratedColumn<bool> get saleInNegative => $composableBuilder(
+      column: $table.saleInNegative, builder: (column) => column);
+
+  GeneratedColumn<bool> get sumItemsInBill => $composableBuilder(
+      column: $table.sumItemsInBill, builder: (column) => column);
+
+  GeneratedColumn<bool> get editTax =>
+      $composableBuilder(column: $table.editTax, builder: (column) => column);
+
+  GeneratedColumn<bool> get saleBillNumInReSaleBill => $composableBuilder(
+      column: $table.saleBillNumInReSaleBill, builder: (column) => column);
+
+  GeneratedColumn<bool> get useFreeQty => $composableBuilder(
+      column: $table.useFreeQty, builder: (column) => column);
+
+  GeneratedColumn<bool> get useDiscountPerItem => $composableBuilder(
+      column: $table.useDiscountPerItem, builder: (column) => column);
+
+  GeneratedColumn<bool> get useSarfSand => $composableBuilder(
+      column: $table.useSarfSand, builder: (column) => column);
+
+  GeneratedColumn<bool> get useGabthSand => $composableBuilder(
+      column: $table.useGabthSand, builder: (column) => column);
+
+  GeneratedColumn<bool> get useDiscountPerBill => $composableBuilder(
+      column: $table.useDiscountPerBill, builder: (column) => column);
+
+  GeneratedColumn<bool> get useSalesTax => $composableBuilder(
+      column: $table.useSalesTax, builder: (column) => column);
+
+  GeneratedColumn<bool> get useBillStatement => $composableBuilder(
+      column: $table.useBillStatement, builder: (column) => column);
+
+  GeneratedColumn<bool> get checkAccLimit => $composableBuilder(
+      column: $table.checkAccLimit, builder: (column) => column);
+
+  GeneratedColumn<bool> get useExpireDate => $composableBuilder(
+      column: $table.useExpireDate, builder: (column) => column);
+
+  GeneratedColumn<bool> get useValueAddTax => $composableBuilder(
+      column: $table.useValueAddTax, builder: (column) => column);
+
+  GeneratedColumn<bool> get billDiscountCalc => $composableBuilder(
+      column: $table.billDiscountCalc, builder: (column) => column);
+
+  GeneratedColumn<int> get salesTaxRate => $composableBuilder(
+      column: $table.salesTaxRate, builder: (column) => column);
+}
+
+class $$SettingsTableTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $SettingsTableTable,
+    SettingModel,
+    $$SettingsTableTableFilterComposer,
+    $$SettingsTableTableOrderingComposer,
+    $$SettingsTableTableAnnotationComposer,
+    $$SettingsTableTableCreateCompanionBuilder,
+    $$SettingsTableTableUpdateCompanionBuilder,
+    (
+      SettingModel,
+      BaseReferences<_$AppDatabase, $SettingsTableTable, SettingModel>
+    ),
+    SettingModel,
+    PrefetchHooks Function()> {
+  $$SettingsTableTableTableManager(_$AppDatabase db, $SettingsTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$SettingsTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$SettingsTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$SettingsTableTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<int> userId = const Value.absent(),
+            Value<bool> fixedBillDate = const Value.absent(),
+            Value<bool> editSalePrice = const Value.absent(),
+            Value<bool> showQr = const Value.absent(),
+            Value<bool> addNewCustomers = const Value.absent(),
+            Value<bool> showSalesManInBill = const Value.absent(),
+            Value<bool> showStoreInBill = const Value.absent(),
+            Value<bool> saleInNegative = const Value.absent(),
+            Value<bool> sumItemsInBill = const Value.absent(),
+            Value<bool> editTax = const Value.absent(),
+            Value<bool> saleBillNumInReSaleBill = const Value.absent(),
+            Value<bool> useFreeQty = const Value.absent(),
+            Value<bool> useDiscountPerItem = const Value.absent(),
+            Value<bool> useSarfSand = const Value.absent(),
+            Value<bool> useGabthSand = const Value.absent(),
+            Value<bool> useDiscountPerBill = const Value.absent(),
+            Value<bool> useSalesTax = const Value.absent(),
+            Value<bool> useBillStatement = const Value.absent(),
+            Value<bool> checkAccLimit = const Value.absent(),
+            Value<bool> useExpireDate = const Value.absent(),
+            Value<bool> useValueAddTax = const Value.absent(),
+            Value<bool> billDiscountCalc = const Value.absent(),
+            Value<int> salesTaxRate = const Value.absent(),
+          }) =>
+              SettingsTableCompanion(
+            userId: userId,
+            fixedBillDate: fixedBillDate,
+            editSalePrice: editSalePrice,
+            showQr: showQr,
+            addNewCustomers: addNewCustomers,
+            showSalesManInBill: showSalesManInBill,
+            showStoreInBill: showStoreInBill,
+            saleInNegative: saleInNegative,
+            sumItemsInBill: sumItemsInBill,
+            editTax: editTax,
+            saleBillNumInReSaleBill: saleBillNumInReSaleBill,
+            useFreeQty: useFreeQty,
+            useDiscountPerItem: useDiscountPerItem,
+            useSarfSand: useSarfSand,
+            useGabthSand: useGabthSand,
+            useDiscountPerBill: useDiscountPerBill,
+            useSalesTax: useSalesTax,
+            useBillStatement: useBillStatement,
+            checkAccLimit: checkAccLimit,
+            useExpireDate: useExpireDate,
+            useValueAddTax: useValueAddTax,
+            billDiscountCalc: billDiscountCalc,
+            salesTaxRate: salesTaxRate,
+          ),
+          createCompanionCallback: ({
+            Value<int> userId = const Value.absent(),
+            Value<bool> fixedBillDate = const Value.absent(),
+            Value<bool> editSalePrice = const Value.absent(),
+            Value<bool> showQr = const Value.absent(),
+            Value<bool> addNewCustomers = const Value.absent(),
+            Value<bool> showSalesManInBill = const Value.absent(),
+            Value<bool> showStoreInBill = const Value.absent(),
+            Value<bool> saleInNegative = const Value.absent(),
+            Value<bool> sumItemsInBill = const Value.absent(),
+            Value<bool> editTax = const Value.absent(),
+            Value<bool> saleBillNumInReSaleBill = const Value.absent(),
+            Value<bool> useFreeQty = const Value.absent(),
+            Value<bool> useDiscountPerItem = const Value.absent(),
+            Value<bool> useSarfSand = const Value.absent(),
+            Value<bool> useGabthSand = const Value.absent(),
+            Value<bool> useDiscountPerBill = const Value.absent(),
+            Value<bool> useSalesTax = const Value.absent(),
+            Value<bool> useBillStatement = const Value.absent(),
+            Value<bool> checkAccLimit = const Value.absent(),
+            Value<bool> useExpireDate = const Value.absent(),
+            Value<bool> useValueAddTax = const Value.absent(),
+            Value<bool> billDiscountCalc = const Value.absent(),
+            required int salesTaxRate,
+          }) =>
+              SettingsTableCompanion.insert(
+            userId: userId,
+            fixedBillDate: fixedBillDate,
+            editSalePrice: editSalePrice,
+            showQr: showQr,
+            addNewCustomers: addNewCustomers,
+            showSalesManInBill: showSalesManInBill,
+            showStoreInBill: showStoreInBill,
+            saleInNegative: saleInNegative,
+            sumItemsInBill: sumItemsInBill,
+            editTax: editTax,
+            saleBillNumInReSaleBill: saleBillNumInReSaleBill,
+            useFreeQty: useFreeQty,
+            useDiscountPerItem: useDiscountPerItem,
+            useSarfSand: useSarfSand,
+            useGabthSand: useGabthSand,
+            useDiscountPerBill: useDiscountPerBill,
+            useSalesTax: useSalesTax,
+            useBillStatement: useBillStatement,
+            checkAccLimit: checkAccLimit,
+            useExpireDate: useExpireDate,
+            useValueAddTax: useValueAddTax,
+            billDiscountCalc: billDiscountCalc,
+            salesTaxRate: salesTaxRate,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$SettingsTableTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $SettingsTableTable,
+    SettingModel,
+    $$SettingsTableTableFilterComposer,
+    $$SettingsTableTableOrderingComposer,
+    $$SettingsTableTableAnnotationComposer,
+    $$SettingsTableTableCreateCompanionBuilder,
+    $$SettingsTableTableUpdateCompanionBuilder,
+    (
+      SettingModel,
+      BaseReferences<_$AppDatabase, $SettingsTableTable, SettingModel>
+    ),
+    SettingModel,
+    PrefetchHooks Function()>;
 typedef $$UserTableTableCreateCompanionBuilder = UserTableCompanion Function({
   Value<int> id,
   required String userName,
@@ -15433,6 +16655,8 @@ typedef $$CheckOperationsTableTableProcessedTableManager
 class $AppDatabaseManager {
   final _$AppDatabase _db;
   $AppDatabaseManager(this._db);
+  $$SettingsTableTableTableManager get settingsTable =>
+      $$SettingsTableTableTableManager(_db, _db.settingsTable);
   $$UserTableTableTableManager get userTable =>
       $$UserTableTableTableManager(_db, _db.userTable);
   $$CompanyTableTableTableManager get companyTable =>

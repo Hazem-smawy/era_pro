@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
+import 'package:era_pro/src/core/services/db/tables/settings_table.dart';
+import 'package:era_pro/src/features/setting/data/models/setting_model.dart';
 import 'tables/account_operation_table.dart';
 import 'tables/bill_details_table.dart';
 import 'tables/bill_table.dart';
@@ -25,15 +27,15 @@ import 'package:flutter/foundation.dart';
 // ignore: depend_on_referenced_packages
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
-// ignore: depend_on_referenced_packages
+// ignore: depend_on_referenced_packages, deprecated_member_use
 import 'package:drift_dev/api/migrations.dart';
-
 import '../../error/error.dart';
 import 'tables/db_tables.dart';
 part 'db.g.dart';
 
 @DriftDatabase(
   tables: [
+    SettingsTable,
     UserTable,
     CompanyTable,
     BranchTable,

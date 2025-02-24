@@ -37,13 +37,15 @@ class ServiceSheet extends StatelessWidget {
                 spacing: context.sp20,
                 runSpacing: context.sp20,
                 children: [
-                  ...ServicesType.values.reversed.take(3).map(
+                  ...ServicesType.values.reversed.take(1).map(
                         (service) => ServiceItemWidget(
                           color: service.color,
                           label: service.name,
                           icon: service.icon,
-                          action: () {
-                            service.action();
+                          action: () async {
+                            final action = await service.action;
+                            action();
+                            // homeController.fetchAll();
                           },
                         ),
                       )

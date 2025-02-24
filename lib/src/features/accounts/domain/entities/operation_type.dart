@@ -24,7 +24,7 @@ class OperationUIType {
       type: 1,
       name: 'سند صرف',
       icon: FontAwesomeIcons.arrowTrendUp,
-      iconColor: Colors.green,
+      iconColor: Colors.red,
       textColor: Colors.purple,
       subName: 'السند',
     ),
@@ -32,7 +32,7 @@ class OperationUIType {
       type: 2,
       name: 'سند قبض',
       icon: FontAwesomeIcons.arrowTrendDown,
-      iconColor: Colors.red,
+      iconColor: Colors.green,
       textColor: Colors.purple,
       subName: 'السند',
     ),
@@ -89,7 +89,7 @@ class OperationUIType {
       name: 'فاتورة مرتجع',
       icon: FontAwesomeIcons.arrowTurnDown,
       iconColor: Colors.red,
-      textColor: AppColors.primaryColor,
+      textColor: Colors.red,
       subName: 'الفاتورة',
     ),
     10: OperationUIType(
@@ -151,7 +151,6 @@ class OperationUIType {
   };
 
   static OperationUIType fromType(int type) {
-    print('type: $type');
     return _operationTypes[type] ?? _operationTypes[1]!;
   }
 }

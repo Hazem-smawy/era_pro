@@ -37,9 +37,7 @@ class UserController extends GetxController {
     );
     if (usersettingCustomergroupKey == null) {
       final res = await getUserSettingsUsecase();
-      res.fold((f) {}, (r) {
-        print('the user setting fetched correctly');
-      });
+      res.fold((f) {}, (r) {});
     }
   }
 }

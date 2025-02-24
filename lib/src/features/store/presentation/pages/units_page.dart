@@ -21,19 +21,34 @@ class UnitsPage extends StatelessWidget {
           child: Column(
         children: [
           const HeaderWidget(title: 'الوحدات').ph(15).pt(10),
-          context.g12,
+          context.g4,
           Expanded(
             child: ReusableFutureBuilder<List<UnitEnitity>>(
               future: storeController.getAllUnits(),
               builder: (context, data) {
-                return ListView.separated(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  separatorBuilder: (context, index) => context.g8,
-                  itemCount: data.length,
-                  itemBuilder: (context, index) => UnitItemWidget(
-                    unitEnitity: data[index],
+                return GridView.builder(
+                  padding: EdgeInsets.all(16),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 1 / 0.25,
+                    mainAxisSpacing: 12,
+                    crossAxisSpacing: 12,
                   ),
+                  itemCount: data.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return UnitItemWidget(
+                      unitEnitity: data[index],
+                    );
+                  },
                 );
+                // separated(
+                //   padding: const EdgeInsets.symmetric(horizontal: 20),
+                //   separatorBuilder: (context, index) => context.g8,
+                //   itemCount: data.length,
+                //   itemBuilder: (context, index) => UnitItemWidget(
+                //     unitEnitity: data[index],
+                //   ),
+                // );
               },
             ),
           ),
@@ -53,7 +68,10 @@ class UnitItemWidget extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: context.surfaceColor,
+        // color: context.surfaceColor,
+        border: Border.all(
+          color: context.secondaryTextColor.withAlpha(50),
+        ),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,

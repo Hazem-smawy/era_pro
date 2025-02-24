@@ -1,3 +1,5 @@
+import 'package:era_pro/src/features/setting/presentation/getX/setting_controller.dart';
+
 import '../../../../core/extensions/context_extensions.dart';
 import '../../../../core/utils/perecent_caculator.dart';
 import '../../../../core/widgets/custom_text_field_with_label_widget.dart';
@@ -18,6 +20,8 @@ class ItemDialogInfoDiscountWidget extends StatelessWidget {
   final ItemController itemController = Get.find();
   final ItemUI item;
 
+  SettingController settingController = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -27,7 +31,8 @@ class ItemDialogInfoDiscountWidget extends StatelessWidget {
           item: item,
         ),
         context.g8,
-        FreeQuantityWidget(item: item, itemController: itemController),
+        if (settingController.settings.value?.useFreeQty ?? false)
+          FreeQuantityWidget(item: item, itemController: itemController),
       ],
     );
   }
@@ -42,11 +47,12 @@ class DiscountWidget extends StatelessWidget {
   final ItemController itemController = Get.find();
   final ItemUI item;
   final isDiscountError = false.obs;
-
+  final SettingController settingController = Get.find();
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      child: item.selectedUnit.preDiscount > 0
+      child: item.selectedUnit.preDiscount > 0 &&
+              (settingController.settings.value?.useDiscountPerItem ?? false)
           ? Obx(
               () => Column(
                 children: [
@@ -167,7 +173,7 @@ class DiscountWidget extends StatelessWidget {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           border: Border.all(
-                            color: context.secondaryTextColor.withOpacity(0.1),
+                            color: context.secondaryTextColor.withAlpha(25),
                           ),
                         ),
                         child: Center(

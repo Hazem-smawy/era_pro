@@ -20,4 +20,5 @@ class EndPoints {
   static String refAccount = 'syncdata/refaccount';
   static String accOperation = 'syncdata/accOperation';
   static String sand = 'syncdata/sand';
+  static String settings = 'syncdata/salemanoptions';
 }

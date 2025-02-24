@@ -81,7 +81,7 @@ class ExchangeCustomTextFiled extends StatelessWidget {
           ),
         if (label.isNotEmpty) Gaps.g8,
         SizedBox(
-          height: 55,
+          // height: 55,
           child: Directionality(
             textDirection: TextDirection.rtl,
             child: TextFormField(

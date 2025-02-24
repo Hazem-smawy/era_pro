@@ -13,11 +13,11 @@ class CircleBackBtnWidget extends StatelessWidget {
     return Container(
       width: 38,
       height: 38,
-      margin: const EdgeInsets.only(right: 5),
+      // margin: const EdgeInsets.only(right: 5),
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(
-          color: context.secondaryTextColor.withOpacity(0.1),
+          color: context.secondaryTextColor.withAlpha(10),
         ),
       ),
       child: Center(

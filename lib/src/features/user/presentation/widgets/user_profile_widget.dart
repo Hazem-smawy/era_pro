@@ -1,3 +1,5 @@
+import 'package:era_pro/src/features/setting/presentation/getX/setting_controller.dart';
+
 import '../../../../core/constants/strings.dart';
 import '../../../../core/extensions/context_extensions.dart';
 import '../../../../core/extensions/image_with_error_extension.dart';
@@ -22,6 +24,7 @@ class UserProfileWidget extends StatefulWidget {
 class _UserProfileWidgetState extends State<UserProfileWidget> {
   final UserController userController = Get.find();
   final AsyncController asyncController = Get.find();
+  final SettingController settingController = Get.find();
 
   @override
   void initState() {
@@ -44,18 +47,19 @@ class _UserProfileWidgetState extends State<UserProfileWidget> {
       () => Row(
         children: [
           GestureDetector(
-              onTap: () async {
-                CustomDialog.showDialog(
-                  color: context.primary,
-                  icon: FontAwesomeIcons.circleCheck,
-                  title: 'اضافة فاتورة',
-                  description: 'تم اضافة الفاتورة بنجاح',
-                  action: () async {
-                    Get.back();
-                  },
-                );
-              },
-              child: _buildNotificationIcon(context)),
+            onTap: () async {
+              CustomDialog.showDialog(
+                color: context.primary,
+                icon: FontAwesomeIcons.circleCheck,
+                title: 'اضافة فاتورة',
+                description: 'تم اضافة الفاتورة بنجاح',
+                action: () async {
+                  Get.back();
+                },
+              );
+            },
+            child: _buildNotificationIcon(context),
+          ),
           const Spacer(),
           _buildUserProfile(context),
         ],
@@ -70,7 +74,7 @@ class _UserProfileWidgetState extends State<UserProfileWidget> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(50),
         border: Border.all(
-          color: context.secondaryTextColor.withOpacity(0.3),
+          color: context.secondaryTextColor.withAlpha(70),
         ),
       ),
       child: Center(
@@ -115,14 +119,17 @@ class _UserProfileWidgetState extends State<UserProfileWidget> {
   Widget _buildUserImage(BuildContext context) {
     return Stack(
       children: [
-        Padding(
-          padding: const EdgeInsets.only(bottom: 8),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(50),
-            child: CustomImage.memoryWithError(
-              userController.user.value?.image,
-              w: 50,
-              h: 50,
+        Obx(
+          () => Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(50),
+              child: CustomImage.memoryWithError(
+                settingController.myAccount.value?.image ??
+                    userController.user.value?.image,
+                w: 50,
+                h: 50,
+              ),
             ),
           ),
         ),

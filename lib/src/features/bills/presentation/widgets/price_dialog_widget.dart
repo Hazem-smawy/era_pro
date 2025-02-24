@@ -27,7 +27,7 @@ class PriceDialogWidget extends StatelessWidget {
             border: Border.all(
               color: isSelected
                   ? Colors.transparent
-                  : context.blackColor.withOpacity(0.1),
+                  : context.blackColor.withAlpha(25),
             ),
             color: isSelected ? context.primaryColor : null),
         child: Center(
@@ -78,7 +78,7 @@ class PriceDialogWidget extends StatelessWidget {
 //           filled: true,
 //           border: OutlineInputBorder(
 //             borderSide: BorderSide(
-//               color: context.secondaryTextColor.withOpacity(0.2),
+//               color: context.secondaryTextColor.withAlpha(50),
 //               width: 0,
 //             ),
 //             borderRadius: BorderRadius.circular(20),
@@ -86,7 +86,7 @@ class PriceDialogWidget extends StatelessWidget {
 //           enabledBorder: OutlineInputBorder(
 //             // width: 0.0 produces a thin "hairline" border
 //             borderSide: BorderSide(
-//               color: context.secondaryTextColor.withOpacity(0.2),
+//               color: context.secondaryTextColor.withAlpha(50),
 //               width: 0,
 //             ),
 //             borderRadius: BorderRadius.circular(20),

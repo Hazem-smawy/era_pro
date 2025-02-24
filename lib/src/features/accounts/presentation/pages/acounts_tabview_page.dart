@@ -56,7 +56,7 @@ class _AcountsTabviewPageState extends State<AcountsTabviewPage> {
               ],
             ),
             bottom: TabBar(
-              dividerColor: context.secondaryTextColor.withOpacity(0.3),
+              dividerColor: context.secondaryTextColor.withAlpha(50),
               labelStyle: context.titleMedium.copyWith(color: context.primary),
               unselectedLabelColor: context.secondaryTextColor,
               tabs: const [

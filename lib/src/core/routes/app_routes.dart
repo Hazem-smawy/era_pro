@@ -17,4 +17,5 @@ abstract class Routes {
   static const ALLBILLS = '/allBills';
   static const EXCHANGE = '/exchange';
   static const LOADING = '/loadingScreen';
+  static const SETTINGS = '/settings';
 }

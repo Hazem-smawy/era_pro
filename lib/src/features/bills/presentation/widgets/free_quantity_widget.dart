@@ -35,7 +35,7 @@ class _FreeQuantityWidgetState extends State<FreeQuantityWidget> {
           //   decoration: BoxDecoration(
           //     borderRadius: BorderRadius.circular(10),
           //     border: Border.all(
-          //       color: context.secondaryTextColor.withOpacity(0.2),
+          //       color: context.secondaryTextColor.withAlpha(50),
           //     ),
           //   ),
           //   child: Center(
@@ -60,7 +60,7 @@ class _FreeQuantityWidgetState extends State<FreeQuantityWidget> {
           //     decoration: BoxDecoration(
           //       borderRadius: BorderRadius.circular(20),
           //       border: Border.all(
-          //         color: context.secondaryTextColor.withOpacity(0.5),
+          //         color: context.secondaryTextColor.withAlpha(0.5),
           //       ),
           //     ),
           //     child: DropdownButton<int>(

@@ -1,5 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import 'package:era_pro/src/core/utils/currency_format.dart';
+
 import '../../../../core/extensions/context_extensions.dart';
 import '../../../../core/extensions/padding_extension.dart';
 import '../../../../core/widgets/header_widget.dart';
@@ -194,7 +196,7 @@ class CompleteSellingFooterWidget extends StatelessWidget {
               boxShadow: [
                 BoxShadow(
                   offset: const Offset(0, 0),
-                  color: context.blackColor.withOpacity(0.03),
+                  color: context.blackColor.withAlpha(7),
                   spreadRadius: 20,
                   blurRadius: 10,
                 )
@@ -215,8 +217,10 @@ class CompleteSellingFooterWidget extends StatelessWidget {
                         ),
                         FittedBox(
                           child: Text(
-                            itemController.card.value?.totalPrice.toString() ??
-                                "0",
+                            currencyFormat(
+                                number: itemController.card.value?.totalPrice
+                                        .toString() ??
+                                    "0"),
                             style: context.titleSmall.copyWith(
                               fontWeight: FontWeight.bold,
                               color: context.blackColor,
@@ -231,7 +235,7 @@ class CompleteSellingFooterWidget extends StatelessWidget {
               Container(
                 height: 40,
                 width: 1,
-                color: context.secondaryTextColor.withOpacity(0.5),
+                color: context.secondaryTextColor.withAlpha(125),
               ),
               Expanded(
                 child: FittedBox(

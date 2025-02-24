@@ -18,7 +18,6 @@ class HttpMethod {
 
   final SharedPreferencesService _sharedPreferencesService = Get.find();
   Future<T> post<T>(Map<String, dynamic> body, String url) async {
-    print('body : $body');
     try {
       final token =
           _sharedPreferencesService.getString(SharedPrefKeys.TOKEN_KEY);
@@ -40,8 +39,8 @@ class HttpMethod {
             onTimeout: () => throw TimeoutException("Request timed out"),
           );
 
-      // print('response : ${response.statusCode}');
-      // print('response : ${response.body}');
+      print('response : ${response.statusCode}');
+      print('response : ${response.body}');
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         if (data is List || data is Map) {

@@ -40,7 +40,7 @@ class _SellingFooterWidgetState extends State<SellingFooterWidget> {
                   boxShadow: [
                     BoxShadow(
                       offset: const Offset(0, 0),
-                      color: context.blackColor.withOpacity(0.03),
+                      color: context.blackColor.withAlpha(7),
                       spreadRadius: 20,
                       blurRadius: 10,
                     )
@@ -80,7 +80,7 @@ class _SellingFooterWidgetState extends State<SellingFooterWidget> {
                   Container(
                     height: 50,
                     width: 1,
-                    color: context.secondaryTextColor.withOpacity(0.5),
+                    color: context.secondaryTextColor.withAlpha(125),
                   ),
                   Expanded(
                     child: FittedBox(

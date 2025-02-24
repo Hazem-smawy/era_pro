@@ -31,10 +31,10 @@ class MainInfoItemWidget extends StatelessWidget {
             // width: Get.width / 2 - 20,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              color: context.whiteColor.withOpacity(0.5),
-              border: Border.all(
-                color: color.withOpacity(0.3),
-              ),
+              color: color.withAlpha(25),
+              // border: Border.all(
+              //   color: color.withAlpha(70),
+              // ),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -74,8 +74,8 @@ class MainInfoItemWidget extends StatelessWidget {
             child: FaIcon(
               icon,
               size: 70,
-              color: Colors.black.withOpacity(
-                0.08,
+              color: Colors.black.withAlpha(
+                20,
               ),
             ),
           ),
@@ -85,8 +85,8 @@ class MainInfoItemWidget extends StatelessWidget {
             child: FaIcon(
               FontAwesomeIcons.star,
               size: 30,
-              color: color.withOpacity(
-                0.2,
+              color: color.withAlpha(
+                50,
               ),
             ),
           ),

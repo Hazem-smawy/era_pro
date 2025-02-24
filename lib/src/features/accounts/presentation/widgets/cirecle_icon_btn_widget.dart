@@ -19,7 +19,7 @@ class CircleIconBtnWidget extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(
-          color: context.secondaryTextColor.withOpacity(0.1),
+          color: context.secondaryTextColor.withAlpha(10),
         ),
       ),
       child: Center(

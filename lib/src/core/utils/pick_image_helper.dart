@@ -1,7 +1,6 @@
 import 'package:image_picker/image_picker.dart';
 
 Future<XFile?> pickImage() async {
-  print('start image picker');
   try {
     final ImagePicker picker = ImagePicker();
 
@@ -18,7 +17,6 @@ Future<XFile?> pickImage() async {
     return pickedFile;
   } catch (e) {
     // Log error if any exception occurs
-    print("Error picking image: $e");
     return null;
   }
 }

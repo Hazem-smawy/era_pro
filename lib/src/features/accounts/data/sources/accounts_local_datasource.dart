@@ -1,3 +1,5 @@
+// ignore_for_file: empty_catches
+
 import 'package:drift/drift.dart';
 import '../../../../core/constants/share_pref_keys.dart';
 import '../../../../core/services/shared_preferences.dart';
@@ -7,7 +9,6 @@ import '../models/mid_account_model.dart';
 import '../models/ref_account_model.dart';
 import '../../domain/entities/account_entity.dart';
 import '../../domain/usecases/delete_account_operation_usecase.dart';
-import '../../../user/domain/entities/user_setting_entity.dart';
 import 'package:get/get.dart' as getx;
 
 import '../../../../core/services/db/db.dart';
@@ -170,9 +171,7 @@ class AccountsLocalDatasourceImpl implements AccountsLocalDatasource {
           );
         }
       });
-    } catch (e) {
-      print(e);
-    }
+    } catch (e) {}
   }
 
   @override
@@ -222,9 +221,6 @@ class AccountsLocalDatasourceImpl implements AccountsLocalDatasource {
       db.accountOperationTable,
       items.map((item) => item.toCompanion()).toList(),
     );
-
-    final numberOfoperations = await db.select(db.accountOperationTable).get();
-    print("number of operations in the database: ${numberOfoperations.length}");
   }
 
   @override

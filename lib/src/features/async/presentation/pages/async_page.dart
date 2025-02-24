@@ -1,9 +1,7 @@
 import '../../../../core/extensions/context_extensions.dart';
-import '../../../../core/extensions/elvated_btn_extension.dart';
 import '../../../../core/extensions/padding_extension.dart';
 import '../getX/async_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 import '../../../user/presentation/widgets/user_profile_widget.dart';
@@ -37,7 +35,7 @@ class _AsyncPageState extends State<AsyncPage> {
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: context.secondaryTextColor.withOpacity(0.2),
+                  color: context.secondaryTextColor.withAlpha(50),
                 ),
                 borderRadius: BorderRadius.circular(12),
               ),
@@ -157,7 +155,7 @@ class AsyncItemWidget extends StatelessWidget {
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           border: Border.all(
-            color: context.secondaryTextColor.withOpacity(0.2),
+            color: context.secondaryTextColor.withAlpha(50),
           ),
           borderRadius: BorderRadius.circular(12),
         ),
@@ -184,7 +182,7 @@ class AsyncItemWidget extends StatelessWidget {
             Icon(
               icon,
               size: 20,
-              color: context.blackColor.withOpacity(0.7),
+              color: context.blackColor.withAlpha(200),
             )
           ],
         ),

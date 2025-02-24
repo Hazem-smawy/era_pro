@@ -22,7 +22,7 @@ class CustomOutLineBtnWidget extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
           side: BorderSide(
-            color: context.containerColor.withOpacity(0.5),
+            color: context.containerColor.withAlpha(125),
           ),
         ),
         minimumSize: const Size.fromHeight(40),

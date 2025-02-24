@@ -5,6 +5,7 @@ import 'package:equatable/equatable.dart';
 
 import '../../../../core/utils/image_converter.dart';
 
+// ignore: must_be_immutable
 class AccountEntity extends Equatable with CustomDropdownListFilter {
   int? id;
   final int accNumber;

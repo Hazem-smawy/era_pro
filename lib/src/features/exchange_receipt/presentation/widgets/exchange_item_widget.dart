@@ -1,5 +1,4 @@
 import '../../../../core/extensions/context_extensions.dart';
-import '../../../../core/extensions/padding_extension.dart';
 import '../../../../core/utils/arabic_date_formater.dart';
 import '../../../../core/utils/currency_format.dart';
 import '../../domain/entities/exchange_entity.dart';
@@ -21,7 +20,6 @@ class ExchangeSubItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final iconColor = context.blackColor.withOpacity(0.8);
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
@@ -47,7 +45,7 @@ class ExchangeSubItemWidget extends StatelessWidget {
               ),
             ],
           ),
-          context.g8,
+          context.g4,
           Row(
             children: [
               Row(
@@ -82,7 +80,7 @@ class ExchangeSubItemWidget extends StatelessWidget {
               ),
             ],
           ),
-          context.g12,
+          context.g4,
           Row(
             // crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -140,18 +138,18 @@ class ExchangeItemWidget extends StatelessWidget {
         motion: const ScrollMotion(),
 
         // A pane can dismiss the Slidable.
-        dismissible: DismissiblePane(onDismissed: () {}),
+        // dismissible: DismissiblePane(onDismissed: () {}),
 
         // All actions are defined in the children parameter.
         children: [
           // A SlidableAction can have an icon and/or a label.
-          SlidableAction(
-            onPressed: (context) {},
-            // backgroundColor: context.containerColor,
-            foregroundColor: Colors.black,
-            icon: FontAwesomeIcons.arrowTurnDown,
-            label: 'مرتجع',
-          ),
+          // SlidableAction(
+          //   onPressed: (context) {},
+          //   // backgroundColor: context.containerColor,
+          //   foregroundColor: Colors.black,
+          //   icon: FontAwesomeIcons.arrowTurnDown,
+          //   label: 'مرتجع',
+          // ),
           SlidableAction(
             onPressed: (context) {
               Get.bottomSheet(

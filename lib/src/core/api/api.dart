@@ -90,7 +90,7 @@
 //       );
 // }
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-library api;
+library;
 
 import '../services/shared_preferences.dart';
 import 'package:get/get.dart';
@@ -172,5 +172,9 @@ class ApiConnection extends GetxController {
   String get sandUrl => '$getBaseUrl/api/{endpoints}'.replaceFirst(
         '{endpoints}',
         EndPoints.sand,
+      );
+  String get settingsUrl => '$getBaseUrl/api/{endpoints}'.replaceFirst(
+        '{endpoints}',
+        EndPoints.settings,
       );
 }

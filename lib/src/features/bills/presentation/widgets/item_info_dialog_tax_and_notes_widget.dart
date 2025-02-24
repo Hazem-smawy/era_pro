@@ -124,7 +124,7 @@ class _ItemInfoDialogTaxAndNotesWidgetState
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
-              color: context.secondaryTextColor.withOpacity(0.2),
+              color: context.secondaryTextColor.withAlpha(50),
             ),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -163,7 +163,7 @@ class _ItemInfoDialogTaxAndNotesWidgetState
               },
               decoration: InputDecoration(
                 border: InputBorder.none,
-                fillColor: context.whiteColor.withOpacity(0.7),
+                fillColor: context.whiteColor.withAlpha(180),
                 filled: true,
                 hintStyle: context.bodySmall,
                 hintText: 'ملاحطة',

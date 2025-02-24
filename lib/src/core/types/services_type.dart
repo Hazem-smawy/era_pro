@@ -1,7 +1,10 @@
+import 'package:era_pro/src/features/home/presentation/getX/home_controller.dart';
+import 'package:era_pro/src/features/home/presentation/pages/statistic_page.dart';
+import 'package:get/get.dart';
+
 import '../constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/route_manager.dart';
 
 import '../routes/app_pages.dart';
 
@@ -10,9 +13,10 @@ enum ServicesType {
   exchange,
   backInvoice,
   salesInvoice,
-  statistics,
+
   reports,
   box,
+  statistics,
 }
 
 extension CustomIconExtension on ServicesType {
@@ -76,28 +80,64 @@ extension CustomIconExtension on ServicesType {
     }
   }
 
-  Function get action {
+  // Function get action {
+  //   switch (this) {
+  //     case ServicesType.exchange:
+  //       return () {
+  //         Get.toNamed(Routes.EXCHANGE);
+  //       };
+  //     // case ServicesType.receipt:
+  //     //   return () {};
+  //     case ServicesType.backInvoice:
+  //       return () {
+  //         Get.toNamed(Routes.SELLINGPAGE, arguments: {'type': 9});
+  //       };
+  //     case ServicesType.salesInvoice:
+  //       return () {
+  //         Get.toNamed(Routes.SELLINGPAGE, arguments: {'type': 8});
+  //       };
+  //     case ServicesType.statistics:
+  //       return () {
+  //         Get.to(() => StatisticPage());
+  //       };
+  //     case ServicesType.reports:
+  //       return () {};
+  //     case ServicesType.box:
+  //       return () {};
+  //   }
+  // }
+  Future<Function> get action async {
     switch (this) {
       case ServicesType.exchange:
-        return () {
-          Get.toNamed(Routes.EXCHANGE);
-        };
-      // case ServicesType.receipt:
-      //   return () {};
+        return () => Get.toNamed(Routes.EXCHANGE)?.then((_) {
+              onBackAction();
+            });
       case ServicesType.backInvoice:
-        return () {
-          Get.toNamed(Routes.SELLINGPAGE, arguments: {'type': 9});
-        };
+        return () =>
+            Get.toNamed(Routes.SELLINGPAGE, arguments: {'type': 9})?.then((_) {
+              onBackAction();
+            });
       case ServicesType.salesInvoice:
-        return () {
-          Get.toNamed(Routes.SELLINGPAGE, arguments: {'type': 8});
-        };
+        return () =>
+            Get.toNamed(Routes.SELLINGPAGE, arguments: {'type': 8})?.then((_) {
+              onBackAction();
+            });
       case ServicesType.statistics:
-        return () {};
+        return () => Get.to(() => StatisticPage())?.then((_) {
+              onBackAction();
+            });
       case ServicesType.reports:
-        return () {};
       case ServicesType.box:
-        return () {};
+        return () async {
+          onBackAction(); // You can add specific back actions here as well.
+        };
     }
+  }
+
+  /// Define your onBackAction function
+  void onBackAction() {
+    HomeController homeController = Get.find();
+    homeController.fetchAll();
+    // Add any additional logic you want when navigating back
   }
 }

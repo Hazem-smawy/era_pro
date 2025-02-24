@@ -68,7 +68,7 @@ class CategoriesWidget<T> extends StatelessWidget {
                 borderRadius: BorderRadius.circular(30),
                 color: selectedId == 0 ? context.secondary : context.whiteColor,
                 border: Border.all(
-                  color: context.secondaryTextColor.withOpacity(0.2),
+                  color: context.secondaryTextColor.withAlpha(50),
                 ),
               ),
               child: Center(

@@ -22,7 +22,6 @@ import '../../domain/usecases/get_all_accounts_operation_usecase.dart';
 import '../../domain/usecases/get_all_accounts_usecase.dart';
 import '../../domain/usecases/get_all_mid_account_usecase.dart';
 import '../../domain/usecases/get_all_ref_account_usecase.dart';
-import 'package:image_picker/image_picker.dart';
 
 enum CustomerOperationStatus {
   loading,
@@ -136,7 +135,11 @@ class AccountsController extends GetxController {
   void getTotalMoneyForAccount(List<AccountsOperationsEntity> operations) {
     totalAccount.value = 0;
     totalAccount.value = operations.fold(
-        0, (pre, op) => pre + (op.operationDebit - op.operationCredit));
+        0,
+        (pre, op) =>
+            pre +
+            (op.operationDebit * op.currencyValue -
+                op.operationCredit * op.currencyValue));
   }
 
   Future<void> filterdOperationForCustomer(int id) async {
@@ -223,8 +226,6 @@ class AccountsController extends GetxController {
       usecase: getAllAccountsOperationUsecase.call,
       target: accountsOperation,
     );
-
-    print(accountsOperation.value.length);
 
     return accountsOperation.value;
   }
@@ -327,7 +328,8 @@ class AccountsController extends GetxController {
   }
 
   Future<void> addListOfAccountOperation({
-    required CurencyEntity currency,
+    required CurencyEntity storeCurency,
+    required CurencyEntity selectedCurency,
     required int debitAccount,
     required double amount,
     required int type,
@@ -390,7 +392,7 @@ class AccountsController extends GetxController {
               type,
               billId,
               now,
-              currency,
+              selectedCurency,
             ),
           if (salesCost != 0)
             _createOperation(
@@ -400,7 +402,7 @@ class AccountsController extends GetxController {
               type,
               billId,
               now,
-              currency,
+              storeCurency,
             ),
           if (freQTYConst != 0)
             _createOperation(
@@ -410,7 +412,7 @@ class AccountsController extends GetxController {
               type,
               billId,
               now,
-              currency,
+              storeCurency,
             ),
           if (totalDiscount != 0)
             _createOperation(
@@ -420,9 +422,9 @@ class AccountsController extends GetxController {
               type,
               billId,
               now,
-              currency,
+              storeCurency,
             ),
-          if (totalAverageCost + freQTYConst != 0)
+          if ((totalAverageCost + freQTYConst) != 0)
             _createOperation(
               accountMap['storeAccount']!,
               totalAverageCost + freQTYConst,
@@ -430,7 +432,7 @@ class AccountsController extends GetxController {
               type,
               billId,
               now,
-              currency,
+              storeCurency,
             ),
           if (earnings != 0)
             _createOperation(
@@ -440,7 +442,7 @@ class AccountsController extends GetxController {
               type,
               billId,
               now,
-              currency,
+              storeCurency,
             ),
           if (totalVat != 0)
             _createOperation(
@@ -450,9 +452,9 @@ class AccountsController extends GetxController {
               type,
               billId,
               now,
-              currency,
+              storeCurency,
             ),
-          if (salesTaxValue != 0)
+          if (salesTaxValue != 0.0)
             _createOperation(
               accountMap['salesCostTaxAccount']!,
               salesTaxValue,
@@ -460,7 +462,7 @@ class AccountsController extends GetxController {
               type,
               billId,
               now,
-              currency,
+              storeCurency,
             ),
         ]);
       } else {
@@ -474,7 +476,7 @@ class AccountsController extends GetxController {
               type,
               billId,
               now,
-              currency,
+              storeCurency,
             ),
             if (totalAverageCost + freQTYConst != 0)
               _createOperation(
@@ -484,7 +486,7 @@ class AccountsController extends GetxController {
                 type,
                 billId,
                 now,
-                currency,
+                storeCurency,
               ),
             if (totalVat != 0)
               _createOperation(
@@ -494,7 +496,7 @@ class AccountsController extends GetxController {
                 type,
                 billId,
                 now,
-                currency,
+                storeCurency,
               ),
             if (salesTaxValue != 0)
               _createOperation(
@@ -504,7 +506,7 @@ class AccountsController extends GetxController {
                 type,
                 billId,
                 now,
-                currency,
+                storeCurency,
               ),
             if (amount != 0)
               _createOperation(
@@ -514,7 +516,7 @@ class AccountsController extends GetxController {
                 type,
                 billId,
                 now,
-                currency,
+                selectedCurency,
               ),
             if (salesCost != 0)
               _createOperation(
@@ -524,7 +526,7 @@ class AccountsController extends GetxController {
                 type,
                 billId,
                 now,
-                currency,
+                storeCurency,
               ),
             if (freQTYConst != 0)
               _createOperation(
@@ -534,7 +536,7 @@ class AccountsController extends GetxController {
                 type,
                 billId,
                 now,
-                currency,
+                storeCurency,
               ),
             if (totalDiscount != 0)
               _createOperation(
@@ -544,7 +546,7 @@ class AccountsController extends GetxController {
                 type,
                 billId,
                 now,
-                currency,
+                storeCurency,
               ),
           ]);
         }
@@ -554,13 +556,9 @@ class AccountsController extends GetxController {
           await addListAccountsOperationsUsecase.call(Params(operations));
       // print(operations.length);
       res.fold(
-        (failure) {
-          print(failure.message);
-        },
+        (failure) {},
         (_) {
-          print('success add operation : ${operations.length}');
-          print('account id: ${operations.length}');
-          print('success add operation : ${operations.length}');
+          operations.clear();
         },
       );
     } else {}

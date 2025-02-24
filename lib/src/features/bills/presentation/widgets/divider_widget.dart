@@ -13,7 +13,7 @@ class DividerWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Divider(
-        color: context.secondaryTextColor.withOpacity(0.2),
+        color: context.secondaryTextColor.withAlpha(50),
       ),
     );
   }

@@ -1,3 +1,7 @@
+import 'package:era_pro/src/core/utils/dialogs.dart';
+import 'package:era_pro/src/features/bills/domain/repositories/bill_repository.dart';
+import 'package:era_pro/src/features/main_info/presentation/getX/main_info_controller.dart';
+
 import '../../../../core/extensions/context_extensions.dart';
 import '../../../../core/extensions/padding_extension.dart';
 import '../../../../core/utils/arabic_date_formater.dart';
@@ -16,14 +20,11 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart' as date_formater;
 
 class BillDetailsPage extends StatefulWidget {
-  const BillDetailsPage(
-      {super.key,
-      required this.billEntity,
-      required this.customer,
-      required this.curencyEntity});
-  final BillEntity billEntity;
-  final String? customer;
-  final CurencyEntity? curencyEntity;
+  const BillDetailsPage({
+    super.key,
+    required this.bill,
+  });
+  final BillEntity bill;
 
   @override
   State<BillDetailsPage> createState() => _BillDetailsPageState();
@@ -31,11 +32,21 @@ class BillDetailsPage extends StatefulWidget {
 
 class _BillDetailsPageState extends State<BillDetailsPage> {
   BillController billController = Get.find();
+  MainInfoController mainInfoController = Get.find();
+  late BillWithDetailsUI billWidthDetails;
+
   @override
   void initState() {
     super.initState();
+    billController.billDetails.value = [];
+    billController.getBillDetailsUI(widget.bill.id);
+    getBill();
+  }
 
-    billController.getBillDetailsUI(widget.billEntity.id);
+  getBill() {
+    billWidthDetails =
+        billController.allBills.firstWhere((e) => e.bill.id == widget.bill.id);
+    setState(() {});
   }
 
   @override
@@ -55,12 +66,14 @@ class _BillDetailsPageState extends State<BillDetailsPage> {
                   child: IconButton(
                     onPressed: () async {
                       await billController.updateOldBill(
-                        widget.billEntity,
-                        widget.billEntity.billType,
+                        billWidthDetails.bill,
+                        billWidthDetails.bill.billType,
                         'e',
                       );
+                      getBill();
                       setState(() {
-                        billController.getBillDetailsUI(widget.billEntity.id);
+                        billController
+                            .getBillDetailsUI(billWidthDetails.bill.id);
                       });
                     },
                     icon: Icon(
@@ -70,14 +83,15 @@ class _BillDetailsPageState extends State<BillDetailsPage> {
                     ),
                   ),
                 ),
-                if (widget.billEntity.billType == 8) context.g8,
-                if (widget.billEntity.billType == 8)
+                if (billWidthDetails.bill.billType == 8) context.g8,
+                if (billWidthDetails.bill.billType == 8)
                   SizedBox(
                     width: 40,
                     height: 40,
                     child: IconButton(
                       onPressed: () async {
-                        billController.updateOldBill(widget.billEntity, 9, 'a');
+                        billController.updateOldBill(
+                            billWidthDetails.bill, 9, 'a');
                       },
                       icon: FaIcon(
                         FontAwesomeIcons.arrowTurnDown,
@@ -91,9 +105,15 @@ class _BillDetailsPageState extends State<BillDetailsPage> {
                   width: 40,
                   height: 40,
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      CustomDialog.customSnackBar(
+                        'تحقق من ان الطابعة متصلة',
+                        SnackPosition.TOP,
+                        true,
+                      );
+                    },
                     icon: Icon(
-                      FontAwesomeIcons.trashCan,
+                      FontAwesomeIcons.print,
                       size: 20,
                       color: context.secondaryTextColor,
                     ),
@@ -112,7 +132,7 @@ class _BillDetailsPageState extends State<BillDetailsPage> {
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
                       border: Border.all(
-                          color: context.secondaryTextColor.withOpacity(0.2)),
+                          color: context.secondaryTextColor.withAlpha(50)),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Column(
@@ -121,12 +141,12 @@ class _BillDetailsPageState extends State<BillDetailsPage> {
                           children: [
                             Text(
                               date_formater.DateFormat.MEd()
-                                  .format(widget.billEntity.billDate),
+                                  .format(billWidthDetails.bill.billDate),
                               style: context.bodySmall,
                             ),
                             const Spacer(),
                             Text(
-                              widget.billEntity.billNumber.toString(),
+                              billWidthDetails.bill.billNumber.toString(),
                               style: context.titleMedium,
                             ),
                             const SizedBox(
@@ -145,12 +165,31 @@ class _BillDetailsPageState extends State<BillDetailsPage> {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Text(
-                                  'العملة',
+                                  'الإجمالي ب عملة البيع',
                                   style: context.bodySmall,
                                 ),
-                                Text(
-                                  widget.curencyEntity?.name ?? '',
-                                  style: context.titleMedium,
+                                Row(
+                                  children: [
+                                    Text(
+                                      billWidthDetails.curencyEntity.symbol,
+                                      style: context.bodyLarge.copyWith(
+                                        color: context.blackColor,
+                                      ),
+                                    ),
+                                    context.g8,
+                                    Text(
+                                      currencyFormat(
+                                        number: (billWidthDetails
+                                                    .bill.billFinalCost /
+                                                billWidthDetails
+                                                    .curencyEntity.value)
+                                            .toString(),
+                                      ),
+                                      style: context.titleMedium.copyWith(
+                                        color: context.primary,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
@@ -163,7 +202,7 @@ class _BillDetailsPageState extends State<BillDetailsPage> {
                                   style: context.bodySmall,
                                 ),
                                 Text(
-                                  widget.customer ?? '',
+                                  billWidthDetails.customer.accName,
                                   style: context.titleMedium,
                                 ),
                               ],
@@ -178,9 +217,9 @@ class _BillDetailsPageState extends State<BillDetailsPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      PymentMethodWidget(bill: widget.billEntity),
+                      PymentMethodWidget(bill: billWidthDetails.bill),
                       context.g8,
-                      BillTypeWidget(bill: widget.billEntity),
+                      BillTypeWidget(bill: billWidthDetails.bill),
                       const Spacer(),
                       context.g8,
                       Text(
@@ -212,7 +251,7 @@ class _BillDetailsPageState extends State<BillDetailsPage> {
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
                       border: Border.all(
-                          color: context.secondaryTextColor.withOpacity(0.2)),
+                          color: context.secondaryTextColor.withAlpha(50)),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Column(
@@ -226,7 +265,7 @@ class _BillDetailsPageState extends State<BillDetailsPage> {
                         Row(
                           children: [
                             Text(
-                              widget.billEntity.billDiscount.toString(),
+                              billWidthDetails.bill.billDiscount.toString(),
                               style: context.titleMedium,
                             ),
                             context.g8,
@@ -237,7 +276,7 @@ class _BillDetailsPageState extends State<BillDetailsPage> {
                             ),
                             const Spacer(),
                             Text(
-                              widget.billEntity.itemsDiscount.toString(),
+                              billWidthDetails.bill.itemsDiscount.toString(),
                               style: context.titleMedium,
                             ),
                             context.g8,
@@ -252,7 +291,7 @@ class _BillDetailsPageState extends State<BillDetailsPage> {
                         Row(
                           children: [
                             Text(
-                              '%${widget.billEntity.salesTaxRate.toStringAsFixed(2)}',
+                              '%${billWidthDetails.bill.salesTaxRate.toStringAsFixed(2)}',
                               style: context.titleMedium,
                             ),
                             context.g8,
@@ -263,7 +302,7 @@ class _BillDetailsPageState extends State<BillDetailsPage> {
                             ),
                             const Spacer(),
                             Text(
-                              '${widget.billEntity.totalVat}',
+                              '${billWidthDetails.bill.totalVat}',
                               style: context.titleMedium,
                             ),
                             context.g8,
@@ -283,14 +322,14 @@ class _BillDetailsPageState extends State<BillDetailsPage> {
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
                       border: Border.all(
-                        color: context.secondaryTextColor.withOpacity(0.2),
+                        color: context.secondaryTextColor.withAlpha(50),
                       ),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Row(
                       children: [
                         Text(
-                          formatDateToArabic(widget.billEntity.dueDate),
+                          formatDateToArabic(billWidthDetails.bill.dueDate),
                           style: context.bodySmall,
                         ),
                         const Spacer(),
@@ -307,16 +346,21 @@ class _BillDetailsPageState extends State<BillDetailsPage> {
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
                       border: Border.all(
-                        color: context.secondaryTextColor.withOpacity(0.2),
+                        color: context.secondaryTextColor.withAlpha(50),
                       ),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Row(
                       children: [
                         Text(
+                          mainInfoController.storCurency?.symbol ?? '',
+                          style: context.bodyLarge,
+                        ),
+                        context.g8,
+                        Text(
                           currencyFormat(
-                              number:
-                                  widget.billEntity.billFinalCost.toString()),
+                              number: billWidthDetails.bill.billFinalCost
+                                  .toString()),
                           style: context.displayLarge.copyWith(
                             color: context.primary,
                             fontWeight: FontWeight.bold,

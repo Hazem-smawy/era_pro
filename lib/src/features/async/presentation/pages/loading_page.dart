@@ -38,7 +38,7 @@ class _LoadingPageState extends State<LoadingPage> {
                 Stack(
                   children: [
                     CircularProgressIndicator(
-                      color: context.primary.withOpacity(0.1),
+                      color: context.primary.withAlpha(20),
                     ),
                     CircularProgressIndicator(
                       value: progress,

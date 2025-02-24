@@ -23,7 +23,7 @@ class CancelBtnWidget extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
-          color: Colors.red.withOpacity(0.08),
+          color: Colors.red.withAlpha(18),
         ),
         child: Center(
           child: Text(

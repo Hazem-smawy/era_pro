@@ -1,11 +1,15 @@
-library text_style;
-
 import 'colors.dart';
 import 'package:flutter/material.dart';
 
 //
 class AppTextStyle {
   static const String fontFamily = 'Cairo';
+  static TextStyle get displayMediumNumber => const TextStyle(
+        fontSize: 22,
+        color: AppColors.blackColor,
+        fontFamily: 'Montserrat',
+        fontWeight: FontWeight.bold,
+      );
 
   static TextStyle get displayLarge => const TextStyle(
         fontSize: 24,
@@ -19,6 +23,7 @@ class AppTextStyle {
         fontFamily: fontFamily,
         fontWeight: FontWeight.normal,
       );
+
   static TextStyle get displaySmall => const TextStyle(
         fontSize: 17,
         fontFamily: fontFamily,

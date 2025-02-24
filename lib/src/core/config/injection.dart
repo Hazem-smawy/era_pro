@@ -1,4 +1,12 @@
-library dependency_injection;
+library;
+
+import 'package:era_pro/src/features/setting/data/implements/implements.dart';
+import 'package:era_pro/src/features/setting/data/sources/setting_local_datasource.dart';
+import 'package:era_pro/src/features/setting/data/sources/setting_remote_datasource.dart';
+import 'package:era_pro/src/features/setting/domain/repositories/repositories.dart';
+import 'package:era_pro/src/features/setting/domain/usecases/fetch_settings_usecase.dart';
+import 'package:era_pro/src/features/setting/domain/usecases/get_settings_usecase.dart';
+import 'package:era_pro/src/features/setting/presentation/getX/setting_controller.dart';
 
 import '../api/api.dart';
 import '../api/methods.dart';
@@ -187,98 +195,8 @@ class DependencyInjection {
     );
 
 //! Features - store
-    //?controller
     Get.lazyPut(
-      () => StoreController(
-        deleteStoreOperationUsecase: Get.find(),
-        getAllItemWithDetailsUsecase: Get.find(),
-        getAllStoreOperationUsecase: Get.find(),
-        getUserStoreInfoUsecase: Get.find(),
-        getAllItemGroupsUsecase: Get.find(),
-        getAllItemAlterUsecase: Get.find(),
-        getAllItemBarcodeUsecase: Get.find(),
-        getAllItemUnitsUsecase: Get.find(),
-        getAllUnitsUsecase: Get.find(),
-        getAllItemsUsecase: Get.find(),
-        saveStoreOperationUsecase: Get.find(),
-        getItemImageUsecase: Get.find(),
-      ),
-      fenix: true,
-    );
-
-    //?usecase
-    Get.lazyPut(
-      () => GetItemImageUsecase(
-        storeRepository: Get.find(),
-      ),
-      fenix: true,
-    );
-    Get.lazyPut(
-      () => DeleteStoreOperationUsecase(
-        storeRepository: Get.find(),
-      ),
-      fenix: true,
-    );
-    Get.lazyPut(
-      () => SaveStoreOperationUsecase(
-        storeRepository: Get.find(),
-      ),
-      fenix: true,
-    );
-    Get.lazyPut(
-      () => GetAllItemWithDetailsUsecase(
-        storeRepository: Get.find(),
-      ),
-      fenix: true,
-    );
-    Get.lazyPut(
-      () => GetAllStoreOperationUsecase(
-        storeRepository: Get.find(),
-      ),
-      fenix: true,
-    );
-    Get.lazyPut(
-      () => GetUserStoreInfoUsecase(
-        storeRepository: Get.find(),
-      ),
-      fenix: true,
-    );
-    Get.lazyPut(
-      () => GetAllItemGroupsUsecase(
-        storeRepository: Get.find(),
-      ),
-      fenix: true,
-    );
-    Get.lazyPut(
-      () => GetAllItemUnitsUsecase(
-        storeRepository: Get.find(),
-      ),
-      fenix: true,
-    );
-    Get.lazyPut(
-      () => GetAllItemAlterUsecase(
-        storeRepository: Get.find(),
-      ),
-      fenix: true,
-    );
-    Get.lazyPut(
-      () => GetAllItemBarcodeUsecase(
-        storeRepository: Get.find(),
-      ),
-      fenix: true,
-    );
-
-    Get.lazyPut(
-      () => GetAllUnitsUsecase(
-        storeRepository: Get.find(),
-      ),
-      fenix: true,
-    );
-
-    Get.lazyPut(
-      () => GetAllItemsUsecase(
-        storeRepository: Get.find(),
-      ),
+      () => FetchAllStoreFromRemoteUsecase(storeRepository: Get.find()),
       fenix: true,
     );
     //?repository
@@ -428,55 +346,55 @@ class DependencyInjection {
     );
 
     //! Features - bills
-    //controller
-    Get.lazyPut(
-        () => BillController(
-              getLastIdUsecase: Get.find(),
-              addNewBillUsecase: Get.find(),
-              addBillDetailsUsecase: Get.find(),
-              getAllBillsUsecase: Get.find(),
-              getBillDetailsUsecase: Get.find(),
-              getBillDetailsUiUsecase: Get.find(),
-              deleteBillDetailsUsecase: Get.find(),
-              getRecentBillsUsecase: Get.find(),
-            ),
-        fenix: true);
-    Get.lazyPut(
-        () => ItemController(
-              getItemImageUsecase: Get.find(),
-            ),
-        fenix: true);
-    //Usecases
-    Get.lazyPut(
-      () => GetLastIdUsecase(billsRepository: Get.find()),
-      fenix: true,
-    );
-    Get.lazyPut(
-      () => DeleteBillDetailsUsecase(billsRepository: Get.find()),
-      fenix: true,
-    );
-    Get.lazyPut(
-      () => GetBillDetailsUIUsecase(billsRepository: Get.find()),
-      fenix: true,
-    );
-    Get.lazyPut(
-      () => GetBillDetailsUsecase(billsRepository: Get.find()),
-      fenix: true,
-    );
-    Get.lazyPut(
-      () => GetAllBillsUsecase(billsRepository: Get.find()),
-      fenix: true,
-    );
-    Get.lazyPut(
-      () => AddBillDetailsUsecase(billsRepository: Get.find()),
-      fenix: true,
-    );
-    Get.lazyPut(
-      () => AddNewBillUsecase(billsRepository: Get.find()),
-      fenix: true,
-    );
+    // //controller
+    // Get.lazyPut(
+    //     () => BillController(
+    //           getLastIdUsecase: Get.find(),
+    //           addNewBillUsecase: Get.find(),
+    //           addBillDetailsUsecase: Get.find(),
+    //           getAllBillsUsecase: Get.find(),
+    //           getBillDetailsUsecase: Get.find(),
+    //           getBillDetailsUiUsecase: Get.find(),
+    //           deleteBillDetailsUsecase: Get.find(),
+    //           getRecentBillsUsecase: Get.find(),
+    //         ),
+    //     fenix: true);
+    // Get.lazyPut(
+    //     () => ItemController(
+    //           getItemImageUsecase: Get.find(),
+    //         ),
+    //     fenix: true);
+    // //Usecases
+    // Get.lazyPut(
+    //   () => GetLastIdUsecase(billsRepository: Get.find()),
+    //   fenix: true,
+    // );
+    // Get.lazyPut(
+    //   () => DeleteBillDetailsUsecase(billsRepository: Get.find()),
+    //   fenix: true,
+    // );
+    // Get.lazyPut(
+    //   () => GetBillDetailsUIUsecase(billsRepository: Get.find()),
+    //   fenix: true,
+    // );
+    // Get.lazyPut(
+    //   () => GetBillDetailsUsecase(billsRepository: Get.find()),
+    //   fenix: true,
+    // );
+    // Get.lazyPut(
+    //   () => GetAllBillsUsecase(billsRepository: Get.find()),
+    //   fenix: true,
+    // );
+    // Get.lazyPut(
+    //   () => AddBillDetailsUsecase(billsRepository: Get.find()),
+    //   fenix: true,
+    // );
+    // Get.lazyPut(
+    //   () => AddNewBillUsecase(billsRepository: Get.find()),
+    //   fenix: true,
+    // );
 
-    //Repository
+    // //Repository
     Get.lazyPut<BillsRepository>(
       () => BillRepositoryImp(
         billLocalDatasource: Get.find(),
@@ -484,7 +402,7 @@ class DependencyInjection {
       fenix: true,
     );
 
-    //Datasources
+    // //Datasources
 
     Get.lazyPut<BillLocalDatasource>(
       () => BillLocalDatasourceImp(),
@@ -494,31 +412,8 @@ class DependencyInjection {
     //! snads
     //controller
     Get.lazyPut(
-        () => ExchangeReceiptController(
-              getLastIdUsecase: Get.find(),
-              saveExchangeUsecase: Get.find(),
-              getAllExchangeUsecase: Get.find(),
-              deleteAllExchangeUsecase: Get.find(),
-            ),
-        fenix: true);
-    //Usecases
-    Get.lazyPut(
-      () => GetLastCategoryUsecase(receiptRepository: Get.find()),
-      fenix: true,
-    );
-    Get.lazyPut(
-      () => DeleteAllExchangeUsecase(receiptRepository: Get.find()),
-      fenix: true,
-    );
-    Get.lazyPut(
       () => GetAllExchangeUsecase(receiptRepository: Get.find()),
-      fenix: true,
     );
-    Get.lazyPut(
-      () => SaveExchangeUsecase(receiptRepository: Get.find()),
-      fenix: true,
-    );
-
     //Repository
     Get.lazyPut<ExchangeReceiptRepository>(
       () => ExchangeReceiptRepositoryImp(localDatasource: Get.find()),
@@ -573,6 +468,50 @@ class DependencyInjection {
     //usecase
     Get.lazyPut(
       () => GetRecentBillsUsecase(billsRepository: Get.find()),
+      fenix: true,
+    );
+
+    //! setting - feature
+    //controllers
+    Get.lazyPut(
+        () => SettingController(
+              fetchSettingsUsecase: Get.find(),
+              getSettingsUsecase: Get.find(),
+            ),
+        fenix: true);
+
+    //usecase
+    Get.lazyPut(
+      () => FetchSettingsUsecase(settingRepository: Get.find()),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => GetSettingsUsecase(settingRepository: Get.find()),
+      fenix: true,
+    );
+
+    //Repository
+    Get.lazyPut<SettingRepository>(
+      () => SettingRepositoryImp(
+        localDatasource: Get.find(),
+        remoteDataSource: Get.find(),
+        sharedPreferencesService: Get.find(),
+      ),
+      fenix: true,
+    );
+
+    //Datasources
+
+    Get.lazyPut<SettingLocalDatasource>(
+      () => SettingLocalDatasourceImp(),
+      fenix: true,
+    );
+    Get.lazyPut<SettingRemoteDataSource>(
+      () => SettingRemoteDatasourceImp(
+        httpMethod: Get.find(),
+        apiConnection: Get.find(),
+        sharedPreferencesService: Get.find(),
+      ),
       fenix: true,
     );
   }

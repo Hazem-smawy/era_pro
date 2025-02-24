@@ -112,7 +112,11 @@ class MainInfoRepositoryImp implements MainInfoRepository {
 
       return const Right(true);
     } catch (e) {
-      return Left(ServerFailures(message: e.toString()));
+      return Left(
+        ServerFailures(
+          message: e.toString(),
+        ),
+      );
     }
   }
 }

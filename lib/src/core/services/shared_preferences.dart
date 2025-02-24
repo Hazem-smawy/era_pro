@@ -29,4 +29,12 @@ class SharedPreferencesService {
     }
     return null;
   }
+
+  Future<void> clearAll() async {
+    await _preferences.clear();
+  }
+
+  Future<void> clearKey(String key) async {
+    await _preferences.remove(key);
+  }
 }

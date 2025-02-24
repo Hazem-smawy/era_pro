@@ -90,7 +90,7 @@ class _SellingBillItemWigetState extends State<SellingBillItemWiget> {
                             ),
                             ItemInfoDetailsShowBolletsWidget(
                               isShowing: widget.item.selectedUnit.tax > 0,
-                              color: Colors.purple.withOpacity(0.5),
+                              color: Colors.purple.withAlpha(125),
                             ),
                             context.g4,
                           ],
@@ -109,8 +109,8 @@ class _SellingBillItemWigetState extends State<SellingBillItemWiget> {
                         child: Container(
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: context.secondaryTextColor.withOpacity(
-                              0.2,
+                            color: context.secondaryTextColor.withAlpha(
+                              50,
                             ),
                           ),
                           child: Center(
@@ -265,7 +265,7 @@ class ItemPriceAndCounterWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                     color: const Color(0xffEBEEF3),
                     border: Border.all(
-                      color: context.secondaryTextColor.withOpacity(0.2),
+                      color: context.secondaryTextColor.withAlpha(50),
                       width: 0.5,
                     ),
                   ),
@@ -291,7 +291,7 @@ class ItemPriceAndCounterWidget extends StatelessWidget {
                         shape: BoxShape.circle,
                         // color: const Color(0xffEBEEF3),
                         border: Border.all(
-                          color: context.secondary.withOpacity(0.3),
+                          color: context.secondary.withAlpha(60),
                         ),
                       ),
                       child: IconButton(
@@ -326,7 +326,7 @@ class ItemPriceAndCounterWidget extends StatelessWidget {
                         shape: BoxShape.circle,
                         // color: const Color(0xffEBEEF3),
                         border: Border.all(
-                          color: context.secondary.withOpacity(0.3),
+                          color: context.secondary.withAlpha(60),
                         ),
                       ),
                       child: IconButton(
@@ -407,7 +407,9 @@ class ItemNameAndQuantityWidget extends StatelessWidget {
           padding: const EdgeInsets.all(5),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: Colors.green.withOpacity(0.2),
+            color: widget.item.selectedUnit.quantityRemaining >= 0
+                ? Colors.green.withAlpha(50)
+                : Colors.red.withAlpha(50),
           ),
           child: Center(
             child: FittedBox(
@@ -478,7 +480,7 @@ class ItemShortcutsBtnsWidget extends StatelessWidget {
               ),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.09),
+                  color: Colors.black.withAlpha(20),
                   offset: const Offset(0, 0),
                   spreadRadius: 0,
                   blurRadius: 5,
@@ -500,7 +502,7 @@ class ItemShortcutsBtnsWidget extends StatelessWidget {
 class GlassContainer extends StatelessWidget {
   final Widget child;
   final double blur;
-  final double opacity;
+  final int opacity;
   final double borderRadius;
   final double borderWidth;
   final Color borderColor;
@@ -513,7 +515,7 @@ class GlassContainer extends StatelessWidget {
     super.key,
     required this.child,
     this.blur = 15,
-    this.opacity = 0.1,
+    this.opacity = 25,
     this.borderRadius = 18,
     this.borderWidth = 1.5,
     this.borderColor = Colors.white,
@@ -543,10 +545,10 @@ class GlassContainer extends StatelessWidget {
           filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
           child: Container(
             decoration: decoration.copyWith(
-              color: decoration.color?.withOpacity(opacity),
+              color: decoration.color?.withAlpha(opacity),
               borderRadius: BorderRadius.circular(borderRadius),
               border: Border.all(
-                color: borderColor.withOpacity(0.2),
+                color: borderColor.withAlpha(50),
                 width: borderWidth,
               ),
             ),

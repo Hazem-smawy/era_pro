@@ -28,7 +28,7 @@ class _AllExhangePageState extends State<AllExhangePage> {
   @override
   void initState() {
     super.initState();
-    exchangeReceiptController.initPaymentsMethod();
+    exchangeReceiptController.getAllExChange();
   }
 
   @override
@@ -110,9 +110,11 @@ class ExchangeListViewWidget extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               return GestureDetector(
                 onTap: () {
-                  Get.to(ExchangeDetailsPage(
-                    exchange: exchange[index],
-                  ));
+                  Get.to(
+                    () => ExchangeDetailsPage(
+                      exchange: exchange[index],
+                    ),
+                  );
                 },
                 child: ExchangeItemWidget(
                   exchangeEntity: exchange[index],

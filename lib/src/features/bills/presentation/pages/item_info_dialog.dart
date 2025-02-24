@@ -47,7 +47,7 @@ class ItemInfoDialg extends StatelessWidget {
                   ),
                   context.g4,
                   Divider(
-                    color: context.secondaryTextColor.withOpacity(0.1),
+                    color: context.secondaryTextColor.withAlpha(25),
                   ),
                   context.g4,
                   ItemDialogInfoPriceAndTotalUnitsWidget(
@@ -56,12 +56,12 @@ class ItemInfoDialg extends StatelessWidget {
                   context.g4,
                   if (item.selectedUnit.preDiscount > 0)
                     Divider(
-                      color: context.secondaryTextColor.withOpacity(0.1),
+                      color: context.secondaryTextColor.withAlpha(25),
                     ),
                   ItemDialogInfoDiscountWidget(item: item),
                   if (item.hasTax)
                     Divider(
-                      color: context.secondaryTextColor.withOpacity(0.1),
+                      color: context.secondaryTextColor.withAlpha(25),
                     ),
                   context.g4,
                   ItemInfoDialogTaxAndNotesWidget(
@@ -120,7 +120,7 @@ class DialogInfoTotalPriceForItemWidget extends StatelessWidget {
                               padding: const EdgeInsets.all(5),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
-                                color: Colors.green.withOpacity(0.07),
+                                color: Colors.green.withAlpha(15),
                               ),
                               child: Row(
                                 children: [

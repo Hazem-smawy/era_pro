@@ -6,7 +6,6 @@ import '../../../../core/utils/dialogs.dart';
 import '../../../accounts/presentation/getX/accounts_controller.dart';
 import '../../domain/usecases/usecases.dart';
 import '../../../main_info/presentation/getX/main_info_controller.dart';
-import '../../../store/presentation/getX/store_controller.dart';
 import '../../../user/presentation/getX/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,8 +15,6 @@ import '../../../../core/routes/app_pages.dart';
 class AuthController extends GetxController {
   //controllers
   MainInfoController mainInfoController = Get.find();
-  StoreController storeController = Get.find();
-  AccountsController accountsController = Get.find();
   UserController userController = Get.find();
 
   final nameController = TextEditingController().obs;
@@ -44,7 +41,7 @@ class AuthController extends GetxController {
 
   void auth() async {
     errorMessage.value = '';
-    if (formKey.currentState!.validate()) {
+    if (formKey.currentState?.validate() ?? false) {
       authState.value = Status.LOADING;
 
       apiConnection.setIp = ipController.text.trim();
@@ -64,19 +61,19 @@ class AuthController extends GetxController {
           SnackPosition.TOP,
           true,
         );
-      }, (r) async {
-        try {
-          authState.value = Status.SUCCESS;
-          Get.offAllNamed(Routes.LOADING);
-        } catch (e) {
-          authState.value = Status.ERROR;
-          errorMessage.value = e.toString();
-          CustomDialog.customSnackBar(
-            '  تأكد من اتصالك ب الإنترنت و كتابة كل الحقول بطريقة صحيحة',
-            SnackPosition.TOP,
-            true,
-          );
-        }
+      }, (r) {
+        // try {
+        authState.value = Status.SUCCESS;
+        Get.offAllNamed(Routes.LOADING);
+        // } catch (e) {
+        //   authState.value = Status.ERROR;
+        //   errorMessage.value = e.toString();
+        //   CustomDialog.customSnackBar(
+        //     '  تأكد من اتصالك ب الإنترنت و كتابة كل الحقول بطريقة صحيحة',
+        //     SnackPosition.TOP,
+        //     true,
+        //   );
+        // }
       });
     }
   }

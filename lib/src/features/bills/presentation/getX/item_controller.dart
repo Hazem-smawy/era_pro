@@ -2,13 +2,14 @@
 // import 'dart:nativewrappers/_internal/vm/lib/core_patch.dart';
 // import 'dart:typed_data';
 
+import 'package:era_pro/src/features/setting/presentation/getX/setting_controller.dart';
+
 import '../../../../core/usecases/usecases.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:typed_data';
 
 import '../../../../core/types/status_types.dart';
-import '../../../../core/utils/dialogs.dart';
 import '../../../../core/utils/perecent_caculator.dart';
 import '../../../accounts/presentation/getX/accounts_controller.dart';
 import '../../domain/entities/bill_entity.dart';
@@ -27,6 +28,7 @@ class ItemController extends GetxController {
   UserController userController = Get.find();
   AccountsController accountsController = Get.find();
   StoreController storeController = Get.find();
+  SettingController settingController = Get.find();
 
   // locals
   var items = <ItemUI>[].obs;
@@ -488,18 +490,20 @@ class ItemController extends GetxController {
   }
 
   void updateQuantity(int itemId, int quantity, int freeQuntity) {
+    final updateWithMinus =
+        settingController.settings.value?.saleInNegative ?? false;
     ItemUI updatedItem = items.firstWhere((e) => e.id == itemId);
     freeQuntity = billType.value == 8 ? freeQuntity : -freeQuntity;
 
     if (quantity == 1) {
-      if (updatedItem.selectedUnit.quantityRemaining > 0 &&
+      if ((updateWithMinus || updatedItem.selectedUnit.quantityRemaining > 0) &&
           billType.value != 9) {
         updatedItem.selectedUnit.updatedQuantity += quantity;
         updatedItem.selectedUnit.quantityRemaining -= quantity;
 
         // //update
         updatedQuantitiesForItem(
-            quantity, updatedItem, updatedItem.selectedUnit);
+            quantity, updatedItem, updatedItem.selectedUnit, updateWithMinus);
         refreshItemCardInfo(updatedItem);
         // }
       } else if (billType.value == 9) {
@@ -547,7 +551,7 @@ class ItemController extends GetxController {
     }
 
     if (freeQuntity == 1) {
-      if (updatedItem.selectedUnit.quantityRemaining > 0) {
+      if (updateWithMinus || updatedItem.selectedUnit.quantityRemaining > 0) {
         updatedItem.selectedUnit.freeQuantity += billType.value == 8 ? 1 : -1;
 
         // updatedItem.selectedUnit.freeQuantity += freeQuntity;
@@ -555,7 +559,11 @@ class ItemController extends GetxController {
 
         //update quantities
         updatedQuantitiesForItem(
-            freeQuntity, updatedItem, updatedItem.selectedUnit);
+          freeQuntity,
+          updatedItem,
+          updatedItem.selectedUnit,
+          updateWithMinus,
+        );
         refreshItemCardInfo(updatedItem);
       }
     } else if (freeQuntity == -1) {
@@ -568,6 +576,7 @@ class ItemController extends GetxController {
         freeQuntity,
         updatedItem,
         updatedItem.selectedUnit,
+        false,
       );
       refreshItemCardInfo(updatedItem);
     }
@@ -606,9 +615,10 @@ class ItemController extends GetxController {
     }
   }
 
-  void updatedQuantitiesForItem(
-      int quantity, ItemUI updatedItem, UnitDetailsUI selectedUnit) {
-    if (updatedItem.allQuantityOfItem >= selectedUnit.unitFactor) {
+  void updatedQuantitiesForItem(int quantity, ItemUI updatedItem,
+      UnitDetailsUI selectedUnit, bool updateWithMinus) {
+    if (updateWithMinus ||
+        updatedItem.allQuantityOfItem >= selectedUnit.unitFactor) {
       updatedItem.allQuantityOfItem =
           updatedItem.allQuantityOfItem - quantity * selectedUnit.unitFactor;
 

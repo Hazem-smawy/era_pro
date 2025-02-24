@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dartz/dartz.dart';
+import 'package:era_pro/src/features/setting/presentation/getX/setting_controller.dart';
 import '../../../accounts/domain/entities/account_entity.dart';
 import '../../../accounts/domain/usecases/get_all_accounts_usecase.dart';
 import 'package:flutter/material.dart';
@@ -73,6 +74,13 @@ class MainInfoController extends GetxController {
     super.onInit();
     getAllCurenciesInfo();
   }
+
+  @override
+  onReady() {
+    paymentType.value = settingController.isNotCash;
+  }
+
+  SettingController settingController = Get.find();
 
   Future<void> changeSelectedPaymentMethodsDetails(List list) async {
     paymentsMethodDetails.value = list;

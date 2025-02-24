@@ -1,5 +1,8 @@
 import 'dart:async';
 
+import 'package:era_pro/src/features/bills/presentation/widgets/bill_widget/pyment_method_widget.dart';
+import 'package:era_pro/src/features/setting/presentation/getX/setting_controller.dart';
+
 import '../../../../core/constants/colors.dart';
 import '../../../../core/types/status_types.dart';
 import '../../../../core/usecases/usecases.dart';
@@ -20,7 +23,6 @@ import '../../../../core/routes/app_pages.dart';
 import '../../domain/usecases/get_all_bills_usecase.dart';
 import 'item_controller.dart';
 import '../../../store/presentation/getX/store_controller.dart';
-import 'package:http/http.dart';
 
 import '../../../../core/utils/dialogs.dart';
 import '../../../accounts/presentation/getX/accounts_controller.dart';
@@ -57,6 +59,7 @@ class BillController extends GetxController {
 
   // Controllers
   final MainInfoController mainInfoController = Get.find();
+  final SettingController settingController = Get.find();
   final UserController user = Get.find();
   final AccountsController accountsController = Get.find();
   final StoreController storeController = Get.find();
@@ -69,6 +72,8 @@ class BillController extends GetxController {
   final TextEditingController billTaxRate = TextEditingController();
   final TextEditingController billNoteTextEditingController =
       TextEditingController();
+
+  final completeFormKey = GlobalKey<FormState>();
 
   // Observables
   final errorMessage = ''.obs;
@@ -90,6 +95,11 @@ class BillController extends GetxController {
   //     print(e);
   //   }
   // }
+  @override
+  onInit() {
+    super.onInit();
+    mainInfoController.paymentType.value = settingController.isNotCash;
+  }
 
   Future<void> getAllBills() async {
     try {
@@ -161,34 +171,23 @@ class BillController extends GetxController {
       newBill.value.billNumber = bill.billNumber;
       newBill.value.customerNumber = bill.customerNumber;
       newBill.value.addedDiscount = bill.billDiscount;
-      newBill.value.selectedCurencyId = bill.currencyId;
 
       newBill.value.addedTaxPercent = bill.salesTaxRate;
 
       newBill.value.dueDate = bill.dueDate;
+      newBill.value.billDate = bill.billDate;
 
       newBill.value.isOld = true;
       billTypeForTitle.value = 1;
-      await mainInfoController.getAllAccounts();
-      await mainInfoController.getAllPaymentsMethod();
-      mainInfoController.paymentType.value =
-          bill.paymentMethed == 0 ? true : false;
 
-      var payment = mainInfoController.allPaymentsMethod.value
-          .firstWhereOrNull((e) => e.id == bill.paymentMethed);
-      await mainInfoController.changePaymentMethod(payment);
-
-      mainInfoController.selectedPaymentsMethodDetails.value =
-          mainInfoController.allAccount.value.firstWhereOrNull(
-        (e) => e.id == bill.fundNumber,
-      );
-
+      await initPaymentMethod(bill);
       // for new back bill
     } else if (tag == 'a') {
       newBill.value.customerNumber = bill.customerNumber;
       newBill.value.addedDiscount = bill.billDiscount;
       newBill.value.addedTaxPercent = bill.salesTaxRate;
       billTypeForTitle.value = 0;
+      await initPaymentMethod(bill);
     }
 
     await Get.toNamed(
@@ -201,6 +200,23 @@ class BillController extends GetxController {
     )?.then((onValue) {
       resetBillState();
     });
+  }
+
+  Future<void> initPaymentMethod(BillEntity bill) async {
+    await mainInfoController.getAllAccounts();
+    await mainInfoController.getAllPaymentsMethod();
+    newBill.value.selectedCurencyId = bill.currencyId;
+
+    mainInfoController.paymentType.value =
+        bill.paymentMethed == 0 ? true : false;
+    var payment = mainInfoController.allPaymentsMethod.value
+        .firstWhereOrNull((e) => e.id == bill.paymentMethed);
+    await mainInfoController.changePaymentMethod(payment);
+    print(payment);
+    mainInfoController.selectedPaymentsMethodDetails.value =
+        mainInfoController.allAccount.value.firstWhereOrNull(
+      (e) => e.id == bill.fundNumber,
+    );
   }
 
   Future<List<ItemUI>> getItemsInOldBill(
@@ -253,20 +269,21 @@ class BillController extends GetxController {
       );
 
       return ItemUI(
-          id: item.id,
-          name: details.itemName,
-          image: item.itemImage,
-          clearPrice: 0,
-          unitDetails: [unitDetailsUI],
-          selectedUnit: unitDetailsUI,
-          allQuantityOfItem: (quantity +
-                  details.billDetailsEntity.quantity +
-                  details.billDetailsEntity.freeQty) *
-              unitDetailsUI.unitFactor,
-          indexOfUnitDetails: 0,
-          groupId: 0,
-          preTax: item.taxRate,
-          hasTax: item.hasTax);
+        id: item.id,
+        name: details.itemName,
+        image: item.itemImage,
+        clearPrice: 0,
+        unitDetails: [unitDetailsUI],
+        selectedUnit: unitDetailsUI,
+        allQuantityOfItem: (quantity +
+                details.billDetailsEntity.quantity +
+                details.billDetailsEntity.freeQty) *
+            unitDetailsUI.unitFactor,
+        indexOfUnitDetails: 0,
+        groupId: 0,
+        preTax: item.taxRate,
+        hasTax: item.hasTax,
+      );
     }).toList();
     List<ItemUI> itemWithListUnits = groupItemsByUnit(allItemsUISelected);
 
@@ -354,8 +371,6 @@ class BillController extends GetxController {
 
     if (bill.addedTax > 0) {
       billTaxRate.text = bill.addedTax.toString();
-      // billTaxPercent.text =
-      //     (bill.addedTax / bill.netBill * 100).toStringAsFixed(2);
 
       billTaxPercent.text =
           rateToPercent(bill.addedTax, bill.netBill).toString();
@@ -378,131 +393,129 @@ class BillController extends GetxController {
 
   // add new bill
   Future<void> addNewBill() async {
-    try {
-      await mainInfoController.getAllCurenciesInfo();
-      if (newBill.value.customerNumber == 0) {
-        CustomDialog.customSnackBar(
-          'يرجى ادخال اسم العميل',
-          SnackPosition.TOP,
-          true,
-        );
-        return;
-      }
-      if (mainInfoController.storCurency == null) {
-        return;
-      }
-      if (itemController.card.value?.items.isEmpty ?? false) {
-        CustomDialog.customSnackBar(
-          'لاتوجد بيانات ',
-          SnackPosition.TOP,
-          true,
-        );
-        return;
-      }
-      CustomDialog.loadingProgress();
+    if (completeFormKey.currentState?.validate() ?? false) {
+      try {
+        await mainInfoController.getAllCurenciesInfo();
+        if (newBill.value.customerNumber == 0) {
+          CustomDialog.customSnackBar(
+            'يرجى ادخال اسم العميل',
+            SnackPosition.TOP,
+            true,
+          );
+          return;
+        }
+        if (mainInfoController.storCurency == null) {
+          return;
+        }
+        if (itemController.card.value?.items.isEmpty ?? false) {
+          CustomDialog.customSnackBar(
+            'لاتوجد بيانات ',
+            SnackPosition.TOP,
+            true,
+          );
+          return;
+        }
+        CustomDialog.loadingProgress();
 
-      final selectedItems = itemController.card.value!.itemsWithOneUnit;
-      final billDetails = createBillDetails(selectedItems);
-      final newSellingBill =
-          createNewSellingBill(billDetails, newBill.value.billId);
+        final selectedItems = itemController.card.value!.itemsWithOneUnit;
+        final billDetails = createBillDetails(selectedItems);
+        final newSellingBill =
+            createNewSellingBill(billDetails, newBill.value.billId);
 
-      final result = await getLastIdUsecase.call(newBill.value.type);
-      result.fold(
-        (failure) => errorMessage.value = failure.message,
-        (lastId) async {
-          newSellingBill.billNumber =
-              newBill.value.isOld ? newBill.value.billNumber! : lastId + 1;
+        final result = await getLastIdUsecase.call(newBill.value.type);
+        result.fold(
+          (failure) => errorMessage.value = failure.message,
+          (lastId) async {
+            newSellingBill.billNumber =
+                newBill.value.isOld ? newBill.value.billNumber! : lastId + 1;
 
-          final addBillResult = await addNewBillUsecase.call(newSellingBill);
-          addBillResult.fold(
-            (failure) => errorMessage.value = failure.message,
-            (billId) async {
-              //add account operation
+            final addBillResult = await addNewBillUsecase.call(newSellingBill);
+            addBillResult.fold(
+              (failure) => errorMessage.value = failure.message,
+              (billId) async {
+                //add account operation
 
-              await addAccountOperations(
-                newSellingBill,
-                newBill.value.billId ?? billId ?? 0,
-                newBill.value.isOld,
-              );
+                await addAccountOperations(
+                  newSellingBill,
+                  newBill.value.billId ?? billId ?? 0,
+                  newBill.value.isOld,
+                );
 
-              if (newBill.value.billId != null) {
-                await deleteBillDetailsUsecase
-                    .call(Params(newBill.value.billId));
-              }
-              final updatedBillDetails = billDetails
-                  .map((detail) =>
-                      detail.copyWith(billID: newBill.value.billId ?? billId))
-                  .toList();
+                if (newBill.value.billId != null) {
+                  await deleteBillDetailsUsecase
+                      .call(Params(newBill.value.billId));
+                }
+                final updatedBillDetails = billDetails
+                    .map((detail) =>
+                        detail.copyWith(billID: newBill.value.billId ?? billId))
+                    .toList();
 
-              final storeOperationList = createStoreOperations(
-                updatedBillDetails,
-              );
-              await storeController.saveStoreOperations(
-                storeOperationList,
-                newBill.value.billId,
-                OperationType(
-                  id: newBill.value.billId ?? 0,
-                  type: newSellingBill.billType,
-                ),
-              );
+                final storeOperationList = createStoreOperations(
+                  updatedBillDetails,
+                );
+                await storeController.saveStoreOperations(
+                  storeOperationList,
+                  newBill.value.billId,
+                  OperationType(
+                    id: newBill.value.billId ?? 0,
+                    type: newSellingBill.billType,
+                  ),
+                );
 
-              final addDetailsResult =
-                  await addBillDetailsUsecase(updatedBillDetails);
+                final addDetailsResult =
+                    await addBillDetailsUsecase(updatedBillDetails);
 
-              addDetailsResult.fold(
-                (failure) => errorMessage.value = failure.message,
-                (_) async {
-                  final String title = itemController.billType.value == 8
-                      ? billTypeForTitle.value == 0
-                          ? 'فاتورة بيع'
-                          : 'تعديل فاتورة بيع'
-                      : billTypeForTitle.value == 0
-                          ? 'فاتورة مرتجع'
-                          : 'تعديل فاتورة مرتجع';
+                addDetailsResult.fold(
+                  (failure) => errorMessage.value = failure.message,
+                  (_) async {
+                    final String title = itemController.billType.value == 8
+                        ? billTypeForTitle.value == 0
+                            ? 'فاتورة بيع'
+                            : 'تعديل فاتورة بيع'
+                        : billTypeForTitle.value == 0
+                            ? 'فاتورة مرتجع'
+                            : 'تعديل فاتورة مرتجع';
 
-                  final isOld = newBill.value.isOld;
-                  resetBillState();
-                  await storeController.getAllItems();
-                  await storeController.getStoreOperations();
-                  await itemController.getItems();
-                  await getAllBills();
-                  Get.until((route) => Get.currentRoute == Routes.SELLINGPAGE);
-
-                  CustomDialog.showDialog(
-                    color: AppColors.primaryColor,
-                    icon: FontAwesomeIcons.circleCheck,
-                    title: title,
-                    description: 'تم $title بنجاح',
-                    action: () async {
-                      Get.back();
-                    },
-                  );
-
-                  await Future.delayed(
-                    const Duration(
-                      seconds: 2,
-                    ),
-                  );
-                  if (Get.isDialogOpen != null && Get.isDialogOpen == true) {
-                    Get.back();
-                  }
-                  if (isOld) {
+                    final isOld = newBill.value.isOld;
+                    resetBillState();
+                    await storeController.getAllItems();
+                    await storeController.getStoreOperations();
+                    await itemController.getItems();
+                    await getAllBills();
                     Get.until(
                         (route) => Get.currentRoute == Routes.SELLINGPAGE);
-                    Get.back();
-                  }
-                },
-              );
-            },
-          );
-        },
-      );
-    } catch (e) {
-      CustomDialog.customSnackBar(
-        'حدث خطأ',
-        SnackPosition.TOP,
-        true,
-      );
+
+                    CustomDialog.customSnackBar(
+                      'تم $title بنجاح',
+                      SnackPosition.TOP,
+                      false,
+                    );
+                    await Future.delayed(
+                      const Duration(
+                        seconds: 2,
+                      ),
+                    );
+                    if (Get.isDialogOpen != null && Get.isDialogOpen == true) {
+                      Get.back();
+                    }
+                    if (isOld) {
+                      Get.until(
+                          (route) => Get.currentRoute == Routes.SELLINGPAGE);
+                      Get.back();
+                    }
+                  },
+                );
+              },
+            );
+          },
+        );
+      } catch (e) {
+        CustomDialog.customSnackBar(
+          'حدث خطأ',
+          SnackPosition.TOP,
+          true,
+        );
+      }
     }
   }
 
@@ -532,13 +545,15 @@ class BillController extends GetxController {
         .accNumber;
     double netBill = newBill.value.totalPrice -
         newBill.value.discount -
+        newBill.value.tax -
         newBill.value.addedDiscount;
+
     return BillEntity(
       id: billId ?? -1,
       branchId: branchId,
       billNumber: 0,
       billType: newBill.value.type,
-      billDate: DateTime.now(),
+      billDate: newBill.value.billDate ?? DateTime.now(),
       refNumber: '0',
       customerNumber: newBill.value.customerNumber,
       currencyId: currencyId,
@@ -597,13 +612,21 @@ class BillController extends GetxController {
       BillEntity newSellingBill, int billId, bool isOld) async {
     // final salesTaxValue =
     //     newSellingBill.salesTaxRate * newSellingBill.netBill / 100;
-    final salesTaxValue =
-        percentToRate(newSellingBill.salesTaxRate, newSellingBill.netBill);
-
+    final salesTaxValue = percentToRate(
+      newSellingBill.salesTaxRate,
+      newSellingBill.netBill,
+    );
+    // print('start');
+    // print(newSellingBill.totalVat);
+    // print(salesTaxValue);
+    // print(newSellingBill.netBill);
+    // print('end');
     final amount =
         (newSellingBill.netBill + newSellingBill.totalVat + salesTaxValue) *
             mainInfoController.storCurency!.value /
             mainInfoController.selecteCurency.value!.value;
+//
+    // print('amount: $amount');
 
     final salesCost =
         newSellingBill.totalAvragCost + newSellingBill.freeQtyCost;
@@ -615,7 +638,8 @@ class BillController extends GetxController {
         newSellingBill.billDiscount + newSellingBill.itemsDiscount;
 
     await accountsController.addListOfAccountOperation(
-      currency: mainInfoController.selecteCurency.value ??
+      storeCurency: mainInfoController.storCurency!,
+      selectedCurency: mainInfoController.selecteCurency.value ??
           mainInfoController.storCurency!,
       debitAccount: mainInfoController.paymentType.value
           ? newBill.value.customerNumber
@@ -678,8 +702,9 @@ class BillController extends GetxController {
 
   void resetBillState() {
     itemController.card.value?.items.clear();
-    newBill.value = BillUI();
-    itemController.billType.value = 0;
+    newBill.value = BillUI(
+      type: newBill.value.type,
+    );
     billTypeForTitle.value = 0;
     billDiscountPercent.clear();
     billDiscountRate.clear();

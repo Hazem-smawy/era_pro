@@ -2,7 +2,6 @@ import '../../../../core/utils/arabic_date_formater.dart';
 import '../../../../core/utils/currency_format.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/extensions/context_extensions.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../domain/entities/operation_type.dart';
 
@@ -41,13 +40,13 @@ class DetailsOperationItemWidget extends StatelessWidget {
                 children: [
                   Icon(
                     price > 0 ? Icons.arrow_downward : Icons.arrow_upward,
-                    color: price > 0 ? Colors.red : Colors.green,
+                    color: price > 0 ? Colors.green : Colors.red,
                     size: 18,
                   ),
                   context.g8,
                   Text(
                     currencySymbole,
-                    style: context.titleLarge.copyWith(
+                    style: context.bodyLarge.copyWith(
                       fontWeight: FontWeight.normal,
                     ),
                   ),
@@ -94,7 +93,7 @@ class DetailsOperationItemWidget extends StatelessWidget {
           context.g12,
           CircleAvatar(
             radius: 25,
-            backgroundColor: operationType.iconColor.withOpacity(0.1),
+            backgroundColor: operationType.iconColor.withAlpha(15),
             child: Icon(
               operationType.icon,
               color: operationType.iconColor,
@@ -125,7 +124,7 @@ class OperationTypeWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          color: operationType.textColor.withOpacity(0.06),
+          color: operationType.textColor.withAlpha(15),
         ),
         child: Text(
           operationType.name,

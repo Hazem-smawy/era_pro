@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 import '../../../../core/extensions/context_extensions.dart';
 import '../../domain/entities/curency_entity.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +20,7 @@ class CurencyItemWidget extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         // border: Border.all(
-        //     // color: context.secondaryTextColor.withOpacity(0.2),
+        //     // color: context.secondaryTextColor.withAlpha(50),
         //     ),
       ),
       child: Column(
@@ -52,7 +54,7 @@ class CurencyItemWidget extends StatelessWidget {
             children: [
               CurencyAttributeWidget(
                 label: 'سعر الصرف',
-                value: curency.equivelant.toString(),
+                value: curency.value.toString(),
               ),
             ],
           ),
@@ -75,12 +77,13 @@ class CurencyItemWidget extends StatelessWidget {
             height: 15,
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               CurencyCheckBoxWidget(
                 isChecked: curency.storeCurrency,
                 label: 'عملة مخزون',
               ),
+              context.g28,
               CurencyCheckBoxWidget(
                 label: 'عملة محلية',
                 isChecked: curency.localCurrency,
@@ -147,12 +150,9 @@ class CurencyAttributeWidget extends StatelessWidget {
                 vertical: 7,
               ),
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: context.surfaceColor
-                  // border: Border.all(
-                  //   color: context.secondaryTextColor.withOpacity(0.5),
-                  // ),
-                  ),
+                borderRadius: BorderRadius.circular(8),
+                color: context.containerColor.withAlpha(200),
+              ),
               child: Text(
                 value,
                 style: context.bodyMedium.copyWith(
@@ -164,9 +164,16 @@ class CurencyAttributeWidget extends StatelessWidget {
           const SizedBox(
             width: 10,
           ),
-          Text(
-            label,
-            style: context.bodySmall,
+          SizedBox(
+            width: context.width / 7,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                label,
+                textAlign: TextAlign.end,
+                style: context.bodySmall,
+              ),
+            ),
           ),
         ],
       ),

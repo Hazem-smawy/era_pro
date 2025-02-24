@@ -49,7 +49,7 @@ class TitleInfoWidget extends StatelessWidget {
           ),
           if (withDivider)
             Divider(
-              color: context.containerColor.withOpacity(0.5),
+              color: context.containerColor.withAlpha(125),
             ).pt(10)
         ],
       ).pb(!withDivider ? 10 : 0),

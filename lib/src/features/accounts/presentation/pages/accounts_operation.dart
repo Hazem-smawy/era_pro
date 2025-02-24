@@ -18,7 +18,6 @@ class _AllAccountsOperationState extends State<AllAccountsOperation> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     accountsController.getAllAccountsOperation();
@@ -47,7 +46,10 @@ class _AllAccountsOperationState extends State<AllAccountsOperation> {
                         itemBuilder: (BuildContext context, int index) {
                           final operation =
                               accountsController.accountsOperation.value[index];
-
+                          final currency =
+                              accountsController.currencies.value.firstWhere(
+                            (e) => e.id == operation.currencyId,
+                          );
                           String? account = accountsController.allAccounts.value
                               .firstWhereOrNull((e) =>
                                   e.accNumber == operation.accountNumber ||
@@ -65,21 +67,20 @@ class _AllAccountsOperationState extends State<AllAccountsOperation> {
                               ?.accName;
                           return Column(
                             children: [
-                              Text(
-                                account ?? refAccount ?? minNumber ?? '',
-                                style: context.titleSmall,
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: Text(
+                                  account ?? refAccount ?? minNumber ?? '',
+                                  style: context.titleSmall,
+                                ),
                               ),
                               context.g4,
                               DetailsOperationItemWidget(
                                 type: operation.operationType,
-                                price: operation.operationDebit -
-                                    operation.operationCredit,
+                                price: (operation.operationDebit -
+                                    operation.operationCredit),
                                 date: operation.operationDate,
-                                currencySymbole: accountsController
-                                    .currencies.value
-                                    .firstWhere(
-                                        (e) => e.id == operation.currencyId)
-                                    .symbol,
+                                currencySymbole: currency.symbol,
                                 number: operation.operationId,
                               ),
                             ],

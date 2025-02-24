@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:era_pro/src/core/utils/currency_format.dart';
+
 import '../../../../core/extensions/context_extensions.dart';
 import '../../../../core/utils/arabic_date_formater.dart';
 import '../../../accounts/domain/entities/account_entity.dart';
@@ -41,6 +43,23 @@ class _TypeOfPaidWidgetState extends State<TypeOfPaidWidget> {
         : mainInfoController.allCurencies.value.firstWhere(
             (curency) => curency.id == widget.selectedCurencyId,
           );
+
+    if (mainInfoController.paymentType.value == false &&
+        mainInfoController.selectedPaymentsMethodDetails.value == null) {
+      initPaymentMethond();
+    }
+  }
+
+  Future<void> initPaymentMethond() async {
+    mainInfoController.selectedPaymentsMethodDetails.value = mainInfoController
+        .allAccount.value
+        .firstWhere((e) => e.accCatagory == 1);
+
+    var payment = mainInfoController.allPaymentsMethod.value
+        .firstWhereOrNull((e) => e.id == 1);
+    await mainInfoController.changePaymentMethod(payment);
+
+    setState(() {});
   }
 
   @override
@@ -54,7 +73,8 @@ class _TypeOfPaidWidgetState extends State<TypeOfPaidWidget> {
             _buildPaymentTypeSelection(context),
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 200),
-              child: !mainInfoController.paymentType.value
+              child: mainInfoController.paymentsMethodDetails.isNotEmpty &&
+                      mainInfoController.paymentType.value == false
                   ? _buildCashPayment(context)
                   : const SizedBox(),
             ),
@@ -117,7 +137,7 @@ class _TypeOfPaidWidgetState extends State<TypeOfPaidWidget> {
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: context.whiteColor.withOpacity(0.1),
+          color: context.whiteColor.withAlpha(25),
         ),
         child: Row(
           children: [
@@ -165,11 +185,12 @@ class _TypeOfPaidWidgetState extends State<TypeOfPaidWidget> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
-                      color: context.secondaryTextColor.withOpacity(0.2),
+                      color: context.secondaryTextColor.withAlpha(50),
                     ),
                   ),
                   child: _buildDropdown<AccountEntity>(
                     context,
+                    // ignore: invalid_use_of_protected_member
                     mainInfoController.paymentsMethodDetails.value
                         as List<AccountEntity>,
                     mainInfoController.selectedPaymentsMethodDetails.value,
@@ -190,19 +211,22 @@ class _TypeOfPaidWidgetState extends State<TypeOfPaidWidget> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
-                  color: context.secondaryTextColor.withOpacity(0.2),
+                  color: context.secondaryTextColor.withAlpha(50),
                 ),
               ),
-              child: _buildDropdown<PaymentEntity>(
-                context,
-                mainInfoController.allPaymentsMethod.value
-                    .where((value) => value.id != 0)
-                    .toList(),
-                mainInfoController.selectedPaymentsMethod.value,
-                (value) => mainInfoController.changePaymentMethod(value),
-                mainInfoController.selectedPaymentsMethod.value?.methodName ??
-                    '',
-              ),
+              child: mainInfoController.allPaymentsMethod.value.length <= 1
+                  ? SizedBox()
+                  : _buildDropdown<PaymentEntity>(
+                      context,
+                      mainInfoController.allPaymentsMethod.value
+                          .where((value) => value.id != 0)
+                          .toList(),
+                      mainInfoController.selectedPaymentsMethod.value,
+                      (value) => mainInfoController.changePaymentMethod(value),
+                      mainInfoController
+                              .selectedPaymentsMethod.value?.methodName ??
+                          '',
+                    ),
             ),
           ],
         ),
@@ -270,9 +294,10 @@ class _TypeOfPaidWidgetState extends State<TypeOfPaidWidget> {
                 ),
                 context.g8,
                 Text(
-                  (widget.clearPrice /
-                          mainInfoController.selecteCurency.value!.value)
-                      .toStringAsFixed(3),
+                  currencyFormat(
+                      number: (widget.clearPrice /
+                              mainInfoController.selecteCurency.value!.value)
+                          .toString()),
                   style: context.titleMedium,
                 ),
               ],
@@ -293,7 +318,7 @@ class _TypeOfPaidWidgetState extends State<TypeOfPaidWidget> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(
-                    color: context.secondaryTextColor.withOpacity(0.2),
+                    color: context.secondaryTextColor.withAlpha(50),
                   ),
                 ),
                 child: _buildDropdown<CurencyEntity>(

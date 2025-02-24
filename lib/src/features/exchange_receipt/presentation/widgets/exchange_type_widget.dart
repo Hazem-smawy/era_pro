@@ -18,8 +18,8 @@ class ExchangeTypeWidget extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           color: type == 2
-              ? context.secondary.withOpacity(0.06)
-              : const Color.fromARGB(255, 19, 3, 198).withOpacity(0.06),
+              ? context.secondary.withAlpha(10)
+              : const Color.fromARGB(255, 19, 3, 198).withAlpha(10),
         ),
         child: Text(
           type == 2 ? 'سند قبض' : 'سند صرف',

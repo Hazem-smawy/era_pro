@@ -13,6 +13,7 @@ part 'exchange_model.g.dart';
 
 // ExchangeModel extending ExchangeEntity
 @JsonSerializable(explicitToJson: true)
+// ignore: must_be_immutable
 class ExchangeModel extends ExchangeEntity {
   ExchangeModel({
     super.id,

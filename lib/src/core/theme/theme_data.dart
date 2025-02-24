@@ -18,7 +18,7 @@ class AppThemData {
       inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(
           borderSide: BorderSide(
-            color: AppColors.secondaryTextColor.withOpacity(0.2),
+            color: AppColors.secondaryTextColor.withAlpha(50),
             width: 0,
           ),
           borderRadius: BorderRadius.circular(20),
@@ -26,7 +26,7 @@ class AppThemData {
         enabledBorder: OutlineInputBorder(
           // width: 0.0 produces a thin "hairline" border
           borderSide: BorderSide(
-            color: AppColors.secondaryTextColor.withOpacity(0.2),
+            color: AppColors.secondaryTextColor.withAlpha(50),
             width: 0,
           ),
           borderRadius: BorderRadius.circular(20),

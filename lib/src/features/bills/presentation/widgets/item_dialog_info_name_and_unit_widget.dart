@@ -43,7 +43,14 @@ class ItemDialogInfoNameAndUnitWidget extends StatelessWidget {
               constraints: const BoxConstraints(minWidth: 40),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
-                color: context.secondary,
+                color: Get.find<ItemController>()
+                            .items
+                            .firstWhere((e) => e.id == item.id)
+                            .selectedUnit
+                            .quantityRemaining >=
+                        0
+                    ? context.secondary
+                    : Colors.red,
               ),
               child: Center(
                 child: Text(
@@ -68,7 +75,7 @@ class ItemDialogInfoNameAndUnitWidget extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
-                  color: context.secondaryTextColor.withOpacity(0.5),
+                  color: context.secondaryTextColor.withAlpha(125),
                 ),
               ),
               child: DropdownButton<UnitDetailsUI>(

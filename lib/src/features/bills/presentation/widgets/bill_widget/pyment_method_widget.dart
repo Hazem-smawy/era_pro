@@ -19,8 +19,8 @@ class PymentMethodWidget extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           color: bill.paymentMethed != 0
-              ? const Color(0xff37BD6D).withOpacity(0.1)
-              : Colors.red.withOpacity(0.1),
+              ? const Color(0xff37BD6D).withAlpha(10)
+              : Colors.red.withAlpha(10),
         ),
         child: Text(
           bill.paymentMethed != 0 ? 'نقداً' : 'اجل',

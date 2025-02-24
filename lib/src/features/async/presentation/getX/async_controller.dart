@@ -4,7 +4,7 @@ import '../../../../core/routes/app_pages.dart';
 import '../../../../core/utils/dialogs.dart';
 import '../../../accounts/presentation/getX/accounts_controller.dart';
 import '../../../auth/presentation/getX/auth_getx.dart';
-import '../../../store/presentation/getX/store_controller.dart';
+import '../../../setting/presentation/getX/setting_controller.dart';
 import '../../../user/presentation/getX/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -31,9 +31,10 @@ class AsyncController extends GetxController {
   // controllers
   MainInfoController mainInfoController = Get.find();
   UserController userController = Get.find();
-  StoreController storeController = Get.find();
-  AccountsController accountsController = Get.find();
+  // StoreController storeController = Get.find();
+  // AccountsController accountsController = Get.find();
   AuthController authController = Get.find();
+  SettingController settingController = Get.find();
   // vars
   final ValueNotifier<int> currentStep = ValueNotifier<int>(0);
   final int totalSteps = 4; // Number of tasks
@@ -54,7 +55,7 @@ class AsyncController extends GetxController {
   }
 
   Future<void> getStoreItem() async {
-    await storeController.getAllItems();
+    await fetchAllStoreFromRemoteUsecase();
   }
 
   Future<bool> login() async {
@@ -73,6 +74,7 @@ class AsyncController extends GetxController {
     currentStep.value = 0; // Reset the progress to the start
     try {
       // Step 1: Fetch user info
+      await settingController.fetchSettings();
       await _executeStep(
         stepFunction: fetchUserInfoUsecase.call,
         errorMessage: "فشل في تحميل معلومات المستخدم",
@@ -99,9 +101,10 @@ class AsyncController extends GetxController {
       // Navigate to the main screen upon successful completion
       if (isStart != null && !isStart) {
         await userController.getUser();
+        await settingController.fetchSettings();
         await mainInfoController.getAllMainInfo();
-        await accountsController.getAccountInfo();
-        await storeController.getAllStoreInfo();
+        await fetchAccountsUsecase();
+        await fetchAllStoreFromRemoteUsecase();
       } else {
         Get.offAllNamed(Routes.BOTTOMNAVIGATIONBAR);
       }

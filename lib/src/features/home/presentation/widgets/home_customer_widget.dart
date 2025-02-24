@@ -80,8 +80,6 @@ class _HomeCustomerWidgetState extends State<HomeCustomerWidget> {
                     children: (() {
                       // Set the total width minus 40
 
-                      int fittingAccountsCount = 0;
-
                       // Calculate the fitting accounts
                       final accountWidgets = accounts?.map((e) {
                             // Estimate the width of each account widget
@@ -106,7 +104,7 @@ class _HomeCustomerWidgetState extends State<HomeCustomerWidget> {
                                         w: 40,
                                         h: 40,
                                       ),
-                                    )
+                                    ).pl(12)
                                   : Container(
                                       constraints: const BoxConstraints(
                                         minWidth: 70,
@@ -141,7 +139,6 @@ class _HomeCustomerWidgetState extends State<HomeCustomerWidget> {
                           [];
 
                       // Print or display the number of fitting accounts
-                      print('Fitting accounts count: $fittingAccountsCount');
 
                       return accountWidgets;
                     })(),

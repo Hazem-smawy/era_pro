@@ -1,7 +1,12 @@
+import 'package:era_pro/src/features/setting/presentation/getX/setting_controller.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 String currencyFormat({required String number}) {
-  
-  return NumberFormat.currency(symbol: '', decimalDigits: 2)
-      .format(double.parse(number));
+  SettingController settingController = Get.find();
+
+  return NumberFormat.currency(
+    symbol: '',
+    decimalDigits: settingController.numbersAfterPercent,
+  ).format(double.parse(number));
 }

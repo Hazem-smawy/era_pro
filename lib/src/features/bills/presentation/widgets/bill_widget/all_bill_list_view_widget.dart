@@ -32,9 +32,8 @@ class AllBillListViewWidget extends StatelessWidget {
               return GestureDetector(
                 onTap: () {
                   Get.to(() => BillDetailsPage(
-                      billEntity: billDetails.bill,
-                      customer: billDetails.customer.accName,
-                      curencyEntity: billDetails.curencyEntity));
+                        bill: billDetails.bill,
+                      ));
                 },
                 child: BillItemWidget(
                   billWithDetailsUI: billDetails,

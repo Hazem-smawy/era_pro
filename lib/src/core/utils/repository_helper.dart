@@ -12,6 +12,7 @@ Future<Either<Failure, T>> fetchSingleDataFromLocalStorage<T>({
 }) async {
   try {
     var id = sharedPreferencesService.getString(sharedPrefKey);
+
     if (id != null) {
       final data = await fetchLocalData(int.parse(id));
 

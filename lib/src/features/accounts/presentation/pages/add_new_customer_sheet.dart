@@ -71,7 +71,7 @@
 //                     decoration: BoxDecoration(
 //                       borderRadius: BorderRadius.circular(25),
 //                       border: Border.all(
-//                         color: context.secondaryTextColor.withOpacity(0.4),
+//                         color: context.secondaryTextColor.withAlpha(0.4),
 //                       ),
 //                     ),
 //                     child: const Center(child: Text('تعديل')),
@@ -185,7 +185,6 @@ class AddNewAccountSheet extends StatelessWidget {
                   onTap: () async {
                     try {
                       // Log the action
-                      print('Image picker activated');
 
                       // Pick image using the helper function
                       XFile? image = await pickImage();
@@ -198,14 +197,11 @@ class AddNewAccountSheet extends StatelessWidget {
                             await accountsController.fileToUint8List(imageFile);
 
                         // Optionally log success
-                        print('Image picked successfully: ${image.path}');
                       } else {
                         // No image selected
-                        print('No image selected');
                       }
                     } catch (e) {
                       // Handle any exceptions
-                      print('Error picking image: $e');
                     }
                   },
                   child: Stack(

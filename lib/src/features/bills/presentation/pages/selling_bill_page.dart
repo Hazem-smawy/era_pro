@@ -200,7 +200,6 @@ class _SellingBillPageState extends State<SellingBillPage>
       itemController.billType.value = type;
 
       if (arguments["customerId"] != null) {
-        print(arguments["customerId"]);
         billController.newBill.value.customerNumber = arguments["customerId"];
       }
     }

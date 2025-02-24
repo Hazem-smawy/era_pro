@@ -17,7 +17,6 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
   List<Widget> pages = [
     HomePage(),
     const MainInfoPage(),
-    SettingPage(),
     const AsyncPage(),
   ];
   late int index;

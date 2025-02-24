@@ -22,7 +22,7 @@ class ItemWidget extends StatelessWidget {
             Container(
               decoration: BoxDecoration(boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.07),
+                  color: Colors.black.withAlpha(17),
                   offset: const Offset(0, 0),
                   spreadRadius: 3,
                   blurRadius: 15,
@@ -74,7 +74,7 @@ class ItemWidget extends StatelessWidget {
               // decoration: BoxDecoration(
               //   borderRadius: BorderRadius.circular(12),
               //   border: Border.all(
-              //     color: context.secondaryTextColor.withOpacity(0.3),
+              //     color: context.secondaryTextColor.withAlpha(0.3),
               //   ),
               // ),
               alignment: Alignment.centerRight,
@@ -100,7 +100,7 @@ class ItemWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               color: context.containerColor,
               border: Border.all(
-                color: context.secondaryTextColor.withOpacity(0.2),
+                color: context.secondaryTextColor.withAlpha(50),
               ),
             ),
 
@@ -135,7 +135,6 @@ class _StoreItemImageWidgetState extends State<StoreItemImageWidget> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     storeController.getItemImage(widget.itemEntity.item.id).then((value) {
       setState(() {
@@ -153,13 +152,7 @@ class _StoreItemImageWidgetState extends State<StoreItemImageWidget> {
         h: 120,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: context.whiteColor.withOpacity(0.7),
-          // image: const DecorationImage(
-          //   // image: AssetImage(
-          //   //   'assets/images/avatar1.jpg',
-          //   // ),
-          //   fit: BoxFit.fitWidth,
-          // ),
+          color: context.whiteColor.withAlpha(200),
         ),
       ),
     );

@@ -17,19 +17,17 @@ class ExchangeHeaderWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: Row(
         children: [
-          IconButton(
-            onPressed: () {
-              Get.back();
-            },
-            icon: Icon(
-              Icons.filter_alt_outlined,
-              size: 27,
-              color: context.secondaryTextColor,
-            ),
-          ),
-          const SizedBox(
-            width: 10,
-          ),
+          // IconButton(
+          //   onPressed: () {
+          //     Get.back();
+          //   },
+          //   icon: Icon(
+          //     Icons.filter_alt_outlined,
+          //     size: 27,
+          //     color: context.secondaryTextColor,
+          //   ),
+          // ),
+          context.g12,
           Expanded(
             child: AnimatedContainer(
               duration: const Duration(microseconds: 200),

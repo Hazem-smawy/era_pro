@@ -1,5 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import 'package:era_pro/src/features/setting/presentation/getX/setting_controller.dart';
+
 import '../../../../core/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,9 +24,21 @@ class _AddedTaxAndDiscountWidgetState extends State<AddedTaxAndDiscountWidget> {
   @override
   void initState() {
     super.initState();
+
+    if (billController.newBill.value.isOld == false) {
+      int percent = settingController.settings.value?.salesTaxRate ?? 0;
+
+      billController.newBill.value.addedTax =
+          (percent * billController.newBill.value.netBill) / 100;
+      billController.billTaxRate.text =
+          (percent * billController.newBill.value.netBill / 100).toString();
+      billController.newBill.value.addedTaxPercent = percent.toDouble();
+      billController.updateBill();
+    }
     billController.refreshBillTextEditingControllers();
   }
 
+  final SettingController settingController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Column(children: [
@@ -36,6 +50,7 @@ class _AddedTaxAndDiscountWidgetState extends State<AddedTaxAndDiscountWidget> {
               child: SizedBox(
                 height: 40,
                 child: CustomTextFieldWithLabelWidget(
+                  enabled: settingController.settings.value?.useDiscountPerBill,
                   controller: billController.billDiscountRate,
                   textHint: '0.0',
                   label: 'مبلغ',
@@ -66,6 +81,7 @@ class _AddedTaxAndDiscountWidgetState extends State<AddedTaxAndDiscountWidget> {
               child: SizedBox(
                 height: 40,
                 child: CustomTextFieldWithLabelWidget(
+                  enabled: settingController.settings.value?.useDiscountPerBill,
                   controller: billController.billDiscountPercent,
                   textHint: '0.0%',
                   label: 'نسبة %',
@@ -107,7 +123,8 @@ class _AddedTaxAndDiscountWidgetState extends State<AddedTaxAndDiscountWidget> {
             Expanded(
               child: SizedBox(
                 height: 40,
-                child: CustomTextFieldQuantityWidget(
+                child: CustomTextFieldWithLabelWidget(
+                  enabled: settingController.settings.value?.useSalesTax,
                   controller: billController.billTaxRate,
                   textHint: '0.0',
                   label: 'مبلغ',
@@ -138,6 +155,7 @@ class _AddedTaxAndDiscountWidgetState extends State<AddedTaxAndDiscountWidget> {
               child: SizedBox(
                 height: 40,
                 child: CustomTextFieldWithLabelWidget(
+                  enabled: settingController.settings.value?.useSalesTax,
                   controller: billController.billTaxPercent,
                   textHint: '0.0%',
                   label: 'نسبة %',
@@ -161,9 +179,26 @@ class _AddedTaxAndDiscountWidgetState extends State<AddedTaxAndDiscountWidget> {
                 ),
               ),
             ),
-            const SizedBox(
-              width: 16,
+            context.g4,
+            Container(
+              width: 40,
+              height: 50,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: context.secondaryTextColor.withAlpha(25),
+                ),
+              ),
+              child: Center(
+                child: FittedBox(
+                  child: Text(
+                    '${settingController.settings.value?.salesTaxRate}%',
+                    style: context.bodySmall,
+                  ),
+                ),
+              ),
             ),
+            context.g8,
             Text(
               'ضريبة المبيعات',
               style: context.titleMedium,

@@ -1,12 +1,16 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:era_pro/src/core/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../core/extensions/context_extensions.dart';
 import 'package:get/get.dart';
 
+import '../../../accounts/presentation/getX/accounts_controller.dart';
+import '../../../setting/presentation/getX/setting_controller.dart';
+
 class NavigationTapsWidget extends StatelessWidget {
-  const NavigationTapsWidget({
+  NavigationTapsWidget({
     super.key,
     required this.pageController,
     required this.index,
@@ -14,6 +18,9 @@ class NavigationTapsWidget extends StatelessWidget {
 
   final PageController pageController;
   final int index;
+
+  SettingController settingController = Get.find();
+  AccountsController accountsController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -27,31 +34,32 @@ class NavigationTapsWidget extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {
-                pageController.animateToPage(
-                  3,
-                  duration: const Duration(milliseconds: 200),
-                  curve: Curves.easeInOut,
+                settingController.myAccount.value =
+                    accountsController.allAccounts.value.firstWhere(
+                  (e) => e.accCatagory == 10,
                 );
+                Get.toNamed(Routes.SETTINGS);
               },
               child: Container(
                 width: 50,
                 height: 50,
                 decoration: BoxDecoration(
                   border: Border.all(
-                      color: context.secondaryTextColor.withOpacity(
-                    0.2,
+                      color: context.secondaryTextColor.withAlpha(
+                    50,
                   )),
                   color: index == 3 ? context.primary : context.whiteColor,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Icon(
-                  Icons.cloud_outlined,
+                  Icons.settings_outlined,
                   color: index == 3
                       ? context.whiteColor
                       : context.secondaryTextColor,
                 ),
               ),
             ),
+            Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -63,8 +71,8 @@ class NavigationTapsWidget extends StatelessWidget {
                     color: context.whiteColor,
                     borderRadius: BorderRadius.circular(25),
                     border: Border.all(
-                        color: context.secondaryTextColor.withOpacity(
-                      0.2,
+                        color: context.secondaryTextColor.withAlpha(
+                      50,
                     )),
                     boxShadow: const [],
                   ),
@@ -75,7 +83,7 @@ class NavigationTapsWidget extends StatelessWidget {
                       NavigationTapWidget(
                         pageController: pageController,
                         index: index,
-                        icon: Icons.settings_outlined,
+                        icon: Icons.cloud_outlined,
                         animateToPage: 2,
                       ),
                       const SizedBox(
@@ -140,7 +148,7 @@ class NavigationTapWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(18),
           color: index == animateToPage
               ? context.primaryColor
-              : context.containerColor.withOpacity(0),
+              : context.containerColor.withAlpha(0),
         ),
         child: Center(
           child: FaIcon(

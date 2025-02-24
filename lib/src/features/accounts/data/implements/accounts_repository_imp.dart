@@ -13,7 +13,6 @@ import '../sources/accounts_remote_datasource.dart';
 import '../../domain/entities/account_entity.dart';
 import '../../domain/entities/accounts_operations_entity.dart';
 import '../../domain/usecases/delete_account_operation_usecase.dart';
-import '../../../user/domain/entities/user_setting_entity.dart';
 
 import '../../domain/repositories/repositories.dart';
 import '../models/account_operation_model.dart';

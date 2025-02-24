@@ -20,9 +20,10 @@ class BillUI {
   // double clearPrice;
   double tax;
   double discount;
-  int typeOfPay;
+  // int typeOfPay;
   String note;
   DateTime? dueDate;
+  DateTime? billDate;
   int type;
   bool isOld;
   int? selectedCurencyId;
@@ -38,7 +39,7 @@ class BillUI {
     this.addedDiscount = 0,
     this.tax = 0,
     this.discount = 0,
-    this.typeOfPay = 0,
+    // this.typeOfPay = 0,
     this.note = '',
     this.dueDate,
     this.type = 0,
@@ -76,7 +77,7 @@ class BillUI {
       addedDiscount: addedDiscount ?? this.addedDiscount,
       tax: tax ?? this.tax,
       discount: discount ?? this.discount,
-      typeOfPay: typeOfPay ?? this.typeOfPay,
+      // typeOfPay: typeOfPay ?? this.typeOfPay,
       note: note ?? this.note,
       dueDate: dueDate ?? this.dueDate,
       type: type ?? this.type,
@@ -97,7 +98,7 @@ class BillUI {
       'addedDiscount': addedDiscount,
       'tax': tax,
       'discount': discount,
-      'typeOfPay': typeOfPay,
+      // 'typeOfPay': typeOfPay,
       'note': note,
       'dueDate': dueDate?.millisecondsSinceEpoch,
       'type': type,
@@ -118,7 +119,7 @@ class BillUI {
       addedDiscount: map['addedDiscount'] as double,
       tax: map['tax'] as double,
       discount: map['discount'] as double,
-      typeOfPay: map['typeOfPay'] as int,
+      // typeOfPay: map['typeOfPay'] as int,
       note: map['note'] as String,
       dueDate: map['dueDate'] != null
           ? DateTime.fromMillisecondsSinceEpoch(map['dueDate'] as int)
@@ -138,7 +139,7 @@ class BillUI {
 
   @override
   String toString() {
-    return 'BillUI(billId: $billId, billNumber: $billNumber, numberOfItems: $numberOfItems, totalPrice: $totalPrice, customerNumber: $customerNumber, addedTax: $addedTax, addedTaxPercent: $addedTaxPercent, addedDiscount: $addedDiscount, tax: $tax, discount: $discount, typeOfPay: $typeOfPay, note: $note, dueDate: $dueDate, type: $type, isOld: $isOld, selectedCurencyId: $selectedCurencyId)';
+    return 'BillUI(billId: $billId, billNumber: $billNumber, numberOfItems: $numberOfItems, totalPrice: $totalPrice, customerNumber: $customerNumber, addedTax: $addedTax, addedTaxPercent: $addedTaxPercent, addedDiscount: $addedDiscount, tax: $tax, discount: $discount, note: $note, dueDate: $dueDate, type: $type, isOld: $isOld, selectedCurencyId: $selectedCurencyId)';
   }
 
   @override
@@ -155,7 +156,6 @@ class BillUI {
         other.addedDiscount == addedDiscount &&
         other.tax == tax &&
         other.discount == discount &&
-        other.typeOfPay == typeOfPay &&
         other.note == note &&
         other.dueDate == dueDate &&
         other.type == type &&
@@ -175,7 +175,6 @@ class BillUI {
         addedDiscount.hashCode ^
         tax.hashCode ^
         discount.hashCode ^
-        typeOfPay.hashCode ^
         note.hashCode ^
         dueDate.hashCode ^
         type.hashCode ^

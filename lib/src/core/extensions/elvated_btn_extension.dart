@@ -11,7 +11,7 @@ extension ElevatedButtonExtension on ElevatedButton {
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(20),
       side: BorderSide(
-        color: AppColors.containerColor.withOpacity(0.5),
+        color: AppColors.containerColor.withAlpha(125),
       ),
     ),
   );
@@ -27,7 +27,7 @@ extension ElevatedButtonExtension on ElevatedButton {
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(20),
       side: BorderSide(
-        color: AppColors.containerColor.withOpacity(0.5),
+        color: AppColors.containerColor.withAlpha(125),
       ),
     ),
   );
@@ -43,7 +43,7 @@ extension ElevatedButtonExtension on ElevatedButton {
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(20),
       side: BorderSide(
-        color: AppColors.containerColor.withOpacity(0.5),
+        color: AppColors.containerColor.withAlpha(125),
       ),
     ),
   );

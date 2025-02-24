@@ -1,6 +1,5 @@
 import 'package:era_pro/era_pro_app.dart';
-
-import 'src/core/config/config.dart';
+import 'package:era_pro/src/core/config/config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -24,37 +23,3 @@ Future<void> main() async {
     runApp(const EraProApp());
   });
 }
-
-// import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
-// import 'package:flutter/material.dart';
-
-// void main() => runApp(const MyApp());
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Welcome to Flutter',
-//       home: Scaffold(
-//         appBar: AppBar(
-//           title: const Text('Welcome to Flutter'),
-//         ),
-//         body: Center(
-//           child: Padding(
-//             padding: const EdgeInsets.all(30),
-//             child: TextField(
-//               // inputFormatters: [CurrencyTextInputFormatter.currency()],
-//               inputFormatters: [
-//                 CurrencyTextInputFormatter.simpleCurrency()
-//               ], // < for simple
-//               // inputFormatters: [CurrencyTextInputFormatter()], < for basic
-//               keyboardType: TextInputType.number,
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }

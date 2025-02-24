@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart' as date_formater;
 
 class BillSubItemWidget extends StatelessWidget {
   BillSubItemWidget({
@@ -22,7 +21,7 @@ class BillSubItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final iconColor = context.blackColor.withOpacity(0.8);
+    // final iconColor = context.blackColor.withAlpha(200);
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
@@ -58,7 +57,10 @@ class BillSubItemWidget extends StatelessWidget {
               context.g4,
               Text(
                 currencyFormat(
-                    number: billWithDetailsUI.bill.billFinalCost.toString()),
+                  number: (billWithDetailsUI.bill.billFinalCost /
+                          billWithDetailsUI.curencyEntity.value)
+                      .toString(),
+                ),
                 style: context.titleMedium.copyWith(
                   color: context.primary,
                   fontWeight: FontWeight.w700,
@@ -129,7 +131,9 @@ class BillItemWidget extends StatelessWidget {
         motion: const ScrollMotion(),
 
         // A pane can dismiss the Slidable.
-        dismissible: DismissiblePane(onDismissed: () {}),
+        // dismissible: DismissiblePane(onDismissed: () {
+
+        // }),
 
         // All actions are defined in the children parameter.
         children: [
@@ -272,7 +276,7 @@ class BillItemWidget extends StatelessWidget {
 
 //   @override
 //   Widget build(BuildContext context) {
-//     final iconColor = context.blackColor.withOpacity(0.8);
+//     final iconColor = context.blackColor.withAlpha(0.8);
 //     return Container(
 //       margin: const EdgeInsets.symmetric(horizontal: 20),
 //       decoration: BoxDecoration(

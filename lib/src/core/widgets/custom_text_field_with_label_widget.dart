@@ -80,7 +80,7 @@ class _CustomTextFieldQuantityWidgetState
           filled: true,
           border: OutlineInputBorder(
             borderSide: BorderSide(
-              color: context.secondaryTextColor.withOpacity(0.2),
+              color: context.secondaryTextColor.withAlpha(50),
               width: 0,
             ),
             borderRadius: BorderRadius.circular(20),
@@ -88,7 +88,7 @@ class _CustomTextFieldQuantityWidgetState
           enabledBorder: OutlineInputBorder(
             // width: 0.0 produces a thin "hairline" border
             borderSide: BorderSide(
-              color: context.secondaryTextColor.withOpacity(0.2),
+              color: context.secondaryTextColor.withAlpha(50),
               width: 0,
             ),
             borderRadius: BorderRadius.circular(20),
@@ -224,7 +224,7 @@ class _CustomTextFieldWithLabelWidgetState
           filled: true,
           border: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.2),
+              color: Theme.of(context).colorScheme.onSurface.withAlpha(50),
             ),
             borderRadius: BorderRadius.circular(20),
           ),
@@ -234,7 +234,7 @@ class _CustomTextFieldWithLabelWidgetState
                   ? widget.isError
                       ? context.errorColor
                       : context.primary
-                  : context.secondaryTextColor.withOpacity(0.2),
+                  : context.secondaryTextColor.withAlpha(50),
             ),
             borderRadius: BorderRadius.circular(20),
           ),
@@ -373,7 +373,7 @@ class _CustomTextFieldWithLabelWidgetState
 //           filled: true,
 //           border: OutlineInputBorder(
 //             borderSide: BorderSide(
-//               color: context.secondaryTextColor.withOpacity(0.2),
+//               color: context.secondaryTextColor.withAlpha(50),
 //               width: 0,
 //             ),
 //             borderRadius: BorderRadius.circular(20),
@@ -381,7 +381,7 @@ class _CustomTextFieldWithLabelWidgetState
 //           enabledBorder: OutlineInputBorder(
 //             // width: 0.0 produces a thin "hairline" border
 //             borderSide: BorderSide(
-//               color: context.secondaryTextColor.withOpacity(0.2),
+//               color: context.secondaryTextColor.withAlpha(50),
 //               width: 0,
 //             ),
 //             borderRadius: BorderRadius.circular(20),

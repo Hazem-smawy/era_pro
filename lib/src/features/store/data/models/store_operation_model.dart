@@ -8,6 +8,7 @@ import '../../../../core/utils/date_time_converter.dart';
 part 'store_operation_model.g.dart';
 
 @JsonSerializable()
+// ignore: must_be_immutable
 class StoreOperationModel extends StoreOperationEntity {
   StoreOperationModel({
     super.id,

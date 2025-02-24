@@ -1,3 +1,9 @@
+// ignore_for_file: invalid_use_of_protected_member
+
+import 'package:era_pro/src/features/exchange_receipt/presentation/widgets/light_border_row_widget.dart';
+import 'package:era_pro/src/features/exchange_receipt/presentation/widgets/toggle_option_widget.dart';
+import 'package:era_pro/src/features/setting/presentation/getX/setting_controller.dart';
+
 import '../../../../core/extensions/context_extensions.dart';
 import '../../../../core/extensions/elvated_btn_extension.dart';
 import '../../../../core/extensions/padding_extension.dart';
@@ -36,52 +42,19 @@ class _AddNewExhangeSheetState extends State<AddNewExhangeSheet> {
   @override
   void initState() {
     super.initState();
-
-    initPaymentsMethod();
+    exchangeReceiptController.initPaymentsMethod(
+        widget.exchange, widget.customerId);
   }
 
-  Future<void> initPaymentsMethod() async {
-    if (widget.exchange == null) {
-      await exchangeReceiptController.getLastId(1);
-    }
-
-    await mainInfoController.getAllPaymentsMethod();
-    // // await mainInfoController.getAllAccounts();
-    await mainInfoController.getAllAccounts();
-    // await accountsController.getAccountInfo();
-    await mainInfoController.getAllCurenciesInfo();
-
-    mainInfoController.selectedPaymentsMethod.value =
-        mainInfoController.allPaymentsMethod.value.firstWhere(
-      (element) => element.id == 1,
-    );
-    mainInfoController.changePaymentMethod(
-      mainInfoController.selectedPaymentsMethod.value,
-    );
-    mainInfoController.selecteCurency.value = mainInfoController.localCurency;
-    if (widget.exchange != null) {
-      exchangeReceiptController.updateExchange(widget.exchange!);
-    } else {
-      exchangeReceiptController.reset();
-      if (widget.customerId != null) {
-        exchangeReceiptController.accNumber = widget.customerId;
-        exchangeReceiptController.updateValue(
-          'name',
-          accountsController.customers.value
-              .firstWhere((e) => e.accNumber == widget.customerId)
-              .accName,
-        );
-      }
-    }
-  }
-
+  SettingController settingController = Get.find();
   @override
   Widget build(BuildContext context) {
+    // print(exchangeReceiptController)
     return Container(
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(15),
-          topRight: Radius.circular(15),
+          topLeft: Radius.circular(12),
+          topRight: Radius.circular(12),
         ),
         color: context.backgroundColor,
       ),
@@ -94,7 +67,12 @@ class _AddNewExhangeSheetState extends State<AddNewExhangeSheet> {
               context.g20,
               ToggleOptionWidget(
                 enable: widget.exchange == null,
-                options: const ['سند قبض', 'سند صرف'],
+                options: [
+                  if (settingController.settings.value?.useGabthSand ?? false)
+                    'سند قبض',
+                  if (settingController.settings.value?.useSarfSand ?? false)
+                    'سند صرف',
+                ],
                 icons: const [
                   FontAwesomeIcons.arrowTrendDown,
                   FontAwesomeIcons.arrowTrendUp,
@@ -113,9 +91,9 @@ class _AddNewExhangeSheetState extends State<AddNewExhangeSheet> {
                     ? widget.exchange?.sandType == 2
                         ? 0
                         : 1
-                    : 1,
+                    : 0,
                 selectedColor: context.secondary,
-                unselectedColor: Colors.grey[300]!,
+                unselectedColor: context.whiteColor.withAlpha(200),
                 selectedTextColor: Colors.white,
                 unselectedTextColor: Colors.black,
               ),
@@ -214,7 +192,7 @@ class _AddNewExhangeSheetState extends State<AddNewExhangeSheet> {
                               child: DropdownButton<CurencyEntity>(
                                 isExpanded: true,
                                 dropdownColor: context.whiteColor,
-                                elevation: 1,
+                                elevation: 0,
                                 borderRadius: BorderRadius.circular(15),
                                 items: mainInfoController.allCurencies.value
                                     .map((CurencyEntity value) {
@@ -239,9 +217,9 @@ class _AddNewExhangeSheetState extends State<AddNewExhangeSheet> {
                                 ),
                                 value: mainInfoController.selecteCurency.value,
                                 underline: const SizedBox(),
-                                icon: FaIcon(
-                                  FontAwesomeIcons.chevronDown,
-                                  size: 15,
+                                icon: Icon(
+                                  Icons.money,
+                                  size: 20,
                                   color: context.secondaryTextColor,
                                 ),
                                 alignment: AlignmentDirectional.center,
@@ -410,73 +388,76 @@ class _AddNewExhangeSheetState extends State<AddNewExhangeSheet> {
   }
 
   Widget _buildCashPayment(BuildContext context) {
-    return Obx(() => Column(
-          children: [
-            context.g16,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                if (mainInfoController.selectedPaymentsMethodDetails.value ==
-                    null)
-                  const Spacer(),
-                if (mainInfoController.selectedPaymentsMethodDetails.value !=
-                    null)
-                  Expanded(
-                    child: Container(
-                      height: 40,
-                      width: Get.width / 2.5,
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                          color: context.secondaryTextColor.withOpacity(0.2),
+    return Obx(() => mainInfoController.paymentsMethodDetails.value.isEmpty
+        ? SizedBox()
+        : Column(
+            children: [
+              context.g16,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  if (mainInfoController.selectedPaymentsMethodDetails.value ==
+                      null)
+                    const Spacer(),
+                  if (mainInfoController.selectedPaymentsMethodDetails.value !=
+                      null)
+                    Expanded(
+                      child: Container(
+                        height: 50,
+                        width: Get.width / 2.5,
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(
+                            color: context.secondaryTextColor.withAlpha(50),
+                          ),
+                        ),
+                        child: _buildDropdown<AccountEntity>(
+                          context,
+                          mainInfoController.paymentsMethodDetails.value
+                              as List<AccountEntity>,
+                          mainInfoController
+                              .selectedPaymentsMethodDetails.value,
+                          (value) => mainInfoController
+                              .selectedPaymentsMethodDetails.value = value,
+                          mainInfoController.selectedPaymentsMethodDetails.value
+                                  ?.accName ??
+                              '',
                         ),
                       ),
-                      child: _buildDropdown<AccountEntity>(
-                        context,
-                        mainInfoController.paymentsMethodDetails.value
-                            as List<AccountEntity>,
-                        mainInfoController.selectedPaymentsMethodDetails.value,
-                        (value) => mainInfoController
-                            .selectedPaymentsMethodDetails.value = value,
-                        mainInfoController
-                                .selectedPaymentsMethodDetails.value?.accName ??
-                            '',
+                    ),
+                  const SizedBox(width: 10),
+                  Container(
+                    height: 50,
+                    width: Get.width / 2.5,
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: context.secondaryTextColor.withAlpha(50),
                       ),
                     ),
+                    child: mainInfoController.allPaymentsMethod.value.isNotEmpty
+                        ? _buildDropdown<PaymentEntity>(
+                            context,
+                            mainInfoController.allPaymentsMethod.value
+                                .where((value) => value.id != 0)
+                                .toList(),
+                            mainInfoController.selectedPaymentsMethod.value,
+                            (value) =>
+                                mainInfoController.changePaymentMethod(value),
+                            mainInfoController
+                                    .selectedPaymentsMethod.value?.methodName ??
+                                '',
+                          )
+                        : const SizedBox(),
                   ),
-                const SizedBox(width: 10),
-                Container(
-                  height: 40,
-                  width: Get.width / 2.5,
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                      color: context.secondaryTextColor.withOpacity(0.2),
-                    ),
-                  ),
-                  child: mainInfoController.allPaymentsMethod.value.isNotEmpty
-                      ? _buildDropdown<PaymentEntity>(
-                          context,
-                          mainInfoController.allPaymentsMethod.value
-                              .where((value) => value.id != 0)
-                              .toList(),
-                          mainInfoController.selectedPaymentsMethod.value,
-                          (value) =>
-                              mainInfoController.changePaymentMethod(value),
-                          mainInfoController
-                                  .selectedPaymentsMethod.value?.methodName ??
-                              '',
-                        )
-                      : const SizedBox(),
-                ),
-              ],
-            ),
-          ],
-        ));
+                ],
+              ),
+            ],
+          ));
   }
 
   Widget _buildDropdown<T>(
@@ -525,140 +506,6 @@ class _AddNewExhangeSheetState extends State<AddNewExhangeSheet> {
         ),
       ),
       alignment: AlignmentDirectional.center,
-    );
-  }
-}
-
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
-class LightBorderRowWidget extends StatelessWidget {
-  const LightBorderRowWidget({
-    super.key,
-    required this.label,
-    required this.value,
-  });
-  final String label;
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text(
-          value,
-          style: context.bodyLarge.copyWith(
-            color: context.blackColor,
-          ),
-        ),
-        context.g8,
-        const Text(":"),
-        FittedBox(
-          fit: BoxFit.scaleDown,
-          child: Text(
-            label,
-            style: context.bodySmall,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class ToggleOptionWidget extends StatefulWidget {
-  const ToggleOptionWidget(
-      {super.key,
-      required this.options,
-      required this.icons,
-      required this.onOptionSelected,
-      this.initialIndex = 0,
-      this.selectedColor = Colors.blue,
-      this.unselectedColor = Colors.grey,
-      this.selectedTextColor = Colors.white,
-      this.unselectedTextColor = Colors.black,
-      required this.enable});
-
-  final List<String> options; // List of text options
-  final List<IconData> icons; // Corresponding icons for options
-  final int initialIndex; // Default selected index
-  final Color selectedColor; // Color for the selected option
-  final Color unselectedColor; // Color for unselected options
-  final Color selectedTextColor; // Text color for selected option
-  final Color unselectedTextColor; // Text color for unselected option
-  final ValueChanged<int> onOptionSelected; // Callback for option selection
-  final bool enable;
-  @override
-  State<ToggleOptionWidget> createState() => _ToggleOptionWidgetState();
-}
-
-class _ToggleOptionWidgetState extends State<ToggleOptionWidget> {
-  int selectedIndex = 1;
-
-  @override
-  void initState() {
-    super.initState();
-    selectedIndex = widget.initialIndex;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(widget.options.length, (index) {
-        final isSelected = selectedIndex == index;
-        return GestureDetector(
-          onTap: () {
-            if (widget.enable) {
-              setState(() {
-                selectedIndex = index;
-              });
-              widget.onOptionSelected(index);
-            }
-          },
-          child: AnimatedContainer(
-            width: Get.width / 2 - 50,
-            duration: const Duration(milliseconds: 300),
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-            margin: const EdgeInsets.symmetric(horizontal: 6),
-            decoration: BoxDecoration(
-              color: isSelected ? widget.selectedColor : widget.unselectedColor,
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: isSelected
-                  ? [
-                      BoxShadow(
-                        color: widget.selectedColor.withOpacity(0.5),
-                        blurRadius: 10,
-                        offset: const Offset(0, 5),
-                      )
-                    ]
-                  : [],
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              textDirection: TextDirection.rtl,
-              children: [
-                Icon(
-                  widget.icons[index],
-                  color: isSelected
-                      ? widget.selectedTextColor
-                      : widget.unselectedTextColor,
-                  size: 20,
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  widget.options[index],
-                  style: TextStyle(
-                    color: isSelected
-                        ? widget.selectedTextColor
-                        : widget.unselectedTextColor,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      }),
     );
   }
 }

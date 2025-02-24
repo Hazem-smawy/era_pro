@@ -7,6 +7,7 @@ import '../../../../core/services/db/db.dart';
 part 'sand_details_entity.g.dart';
 
 @JsonSerializable()
+// ignore: must_be_immutable
 class SandDetailEntity extends Equatable {
   int? id;
   int sandId;

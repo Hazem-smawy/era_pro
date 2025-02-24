@@ -167,7 +167,7 @@ class _CategoriesWithSearchWidgetState
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(
-                      color: context.secondaryTextColor.withOpacity(0.2),
+                      color: context.secondaryTextColor.withAlpha(50),
                     ),
                   ),
                   child: Center(
@@ -192,7 +192,7 @@ class _CategoriesWithSearchWidgetState
                       ? context.secondary
                       : const Color(0xffF1F2F6),
                   border: Border.all(
-                    color: context.secondaryTextColor.withOpacity(0.2),
+                    color: context.secondaryTextColor.withAlpha(50),
                   ),
                 ),
                 child: GestureDetector(
