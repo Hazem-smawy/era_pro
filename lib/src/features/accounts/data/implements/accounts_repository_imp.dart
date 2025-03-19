@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dartz/dartz.dart';
+import 'package:tailor/src/features/main_info/domain/entities/curency_entity.dart';
 import '../../../../core/constants/share_pref_keys.dart';
 import '../models/account_model.dart';
 
@@ -37,11 +38,14 @@ class AccountsRepositoryImp implements AccountsRepository {
   @override
   Future<Either<Failure, int>> addAccount(AccountEntity account) async {
     try {
-      String userId =
-          sharedPreferencesService.getString(SharedPrefKeys.USERID_KEY) ?? '0';
-      String branchId =
-          sharedPreferencesService.getString(SharedPrefKeys.BRANCHINFO_KEY) ??
-              '0';
+      String userId = sharedPreferencesService.getString(
+            SharedPrefKeys.USERID_KEY,
+          ) ??
+          '0';
+      String branchId = sharedPreferencesService.getString(
+            SharedPrefKeys.BRANCHINFO_KEY,
+          ) ??
+          '0';
 
       int id = await accountsLocalDatasource.addNewAccount(
         account,
@@ -88,8 +92,11 @@ class AccountsRepositoryImp implements AccountsRepository {
           AccountOperationModel.fromEntityArray(accountsOperation));
       return const Right(true);
     } catch (e) {
-      return Left(LocalStorageFailures(
-          message: "can't added the accounts operation :${e.toString()} "));
+      return Left(
+        LocalStorageFailures(
+          message: "can't added the accounts operation :${e.toString()} ",
+        ),
+      );
     }
   }
 

@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 
 import 'src/core/theme/theme_data.dart';
 
-class EraProApp extends StatelessWidget {
-  const EraProApp({super.key});
+class Tailor extends StatelessWidget {
+  const Tailor({super.key});
 
   @override
   Widget build(BuildContext context) {

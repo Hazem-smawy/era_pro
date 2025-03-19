@@ -7,7 +7,7 @@ part of 'curency_model.dart';
 // **************************************************************************
 
 CurencyModel _$CurencyModelFromJson(Map<String, dynamic> json) => CurencyModel(
-      id: (json['id'] as num).toInt(),
+      id: (json['id'] as num?)?.toInt(),
       name: json['name'] as String,
       symbol: json['symbol'] as String,
       subName: json['sub_name'] as String,

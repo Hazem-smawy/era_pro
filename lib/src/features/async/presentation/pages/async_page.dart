@@ -3,7 +3,6 @@ import '../../../../core/extensions/padding_extension.dart';
 import '../getX/async_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../user/presentation/widgets/user_profile_widget.dart';
 
 class AsyncPage extends StatefulWidget {
@@ -79,7 +78,6 @@ class _AsyncPageState extends State<AsyncPage> {
                     },
                     child: Container(
                       width: context.width / 2,
-                      // height: 50,
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),

@@ -19,6 +19,7 @@ abstract class MainInfoLocalDatasource {
 
   Future<void> saveAllSystemDocs(List<SystemDocModel> items);
   Future<List<SystemDocModel>> getAllSystemDocs();
+  Future<void> addNewCurrency(CurencyModel item);
 
   //item alter and barcode
 }
@@ -116,5 +117,11 @@ class MainInfoLocalDatasourceImp implements MainInfoLocalDatasource {
       db.systemDocTable,
       items.map((item) => item.toCompanion()).toList(),
     );
+  }
+
+  @override
+  Future<void> addNewCurrency(CurencyModel item) async {
+    AppDatabase db = AppDatabase.instance();
+    db.saveSingle(db.curencyTable, item.toCurencyTableComapnion());
   }
 }

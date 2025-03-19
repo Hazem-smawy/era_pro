@@ -2,8 +2,17 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
-import 'package:era_pro/src/core/services/db/tables/settings_table.dart';
-import 'package:era_pro/src/features/setting/data/models/setting_model.dart';
+import 'package:tailor/src/core/services/db/tables/choise_option_table.dart';
+import 'package:tailor/src/core/services/db/tables/clothes_type_table.dart';
+import 'package:tailor/src/core/services/db/tables/measurments_table.dart';
+import 'package:tailor/src/core/services/db/tables/models_categories_typle.dart';
+import 'package:tailor/src/core/services/db/tables/settings_table.dart';
+import 'package:tailor/src/core/services/db/tables/th_model_table.dart';
+import 'package:tailor/src/features/setting/data/models/setting_model.dart';
+import 'package:tailor/src/features/store/data/models/model_category_model.dart';
+import '../../../features/store/data/models/choice_option_model.dart';
+import '../../../features/store/data/models/clothes_type_model.dart';
+import '../../../features/store/data/models/measurement_model.dart';
 import 'tables/account_operation_table.dart';
 import 'tables/bill_details_table.dart';
 import 'tables/bill_table.dart';
@@ -60,6 +69,11 @@ part 'db.g.dart';
     ExchangesTable,
     SandDetailsTable,
     CheckOperationsTable,
+    ModelCategoryTable,
+    MeasurementsTable,
+    ClothesTypesTable,
+    ChoiceOptionsTable,
+    ThModelTable,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -92,6 +106,7 @@ class AppDatabase extends _$AppDatabase {
       var id = await db.into(table).insertOnConflictUpdate(model);
       return id;
     } catch (e) {
+      print(e);
       throw LocalStorageException();
     }
   }

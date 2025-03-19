@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 
-import 'package:era_pro/src/core/error/failures.dart';
-import 'package:era_pro/src/features/setting/data/models/setting_model.dart';
-import 'package:era_pro/src/features/setting/data/sources/setting_local_datasource.dart';
-import 'package:era_pro/src/features/setting/domain/entities/entities.dart';
+import 'package:tailor/src/core/error/failures.dart';
+import 'package:tailor/src/features/setting/data/models/setting_model.dart';
+import 'package:tailor/src/features/setting/data/sources/setting_local_datasource.dart';
+import 'package:tailor/src/features/setting/domain/entities/entities.dart';
 
 import '../../../../core/constants/share_pref_keys.dart';
 import '../../../../core/services/shared_preferences.dart';

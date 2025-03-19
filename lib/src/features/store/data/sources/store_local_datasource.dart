@@ -1,9 +1,14 @@
 import 'package:drift/drift.dart';
+import 'package:tailor/src/features/store/data/models/clothes_type_model.dart';
+import 'package:tailor/src/features/store/data/models/measurement_model.dart';
+import 'package:tailor/src/features/store/data/models/model_category_model.dart';
+import 'package:tailor/src/features/store/data/models/th_models_model.dart';
 import '../../../../core/error/exception.dart';
 import '../../../accounts/domain/usecases/delete_account_operation_usecase.dart';
 import '../../domain/entities/item_details_entity.dart';
 
 import '../../../../core/services/db/db.dart';
+import '../models/choice_option_model.dart';
 import '../models/models.dart';
 
 abstract class StoreLocalDatasource {
@@ -39,6 +44,30 @@ abstract class StoreLocalDatasource {
   Future<List<StoreItemDetailsEntity>> getAllItemsWithDetails();
   Future<void> deleteStoreOperations(OperationType op);
   Future<Uint8List?> getItemImageById(int id);
+
+  //new
+  Future<void> addNewUnit(UnitModel item);
+  Future<void> addNewItemUnit(ItemUnitsModel item);
+  Future<int> addNewItem(ItemModel item);
+  Future<void> addNewItemGroup(ItemGroupModel item);
+  Future<void> addNewModelCategory(ModelCategoryModel item);
+  Future<List<ModelCategoryModel>> getAllModelCategory();
+
+  Future<void> addNewMeasurment(MeasurementModel item);
+  Future<List<MeasurementModel>> getAllMeasurments();
+
+  Future<void> addNewClothesType(ClothesTypeModel item);
+  Future<List<ClothesTypeModel>> getAllClothesType();
+
+  Future<void> addNewChoiceOption(ChoiceOptionModel item);
+  Future<List<ChoiceOptionModel>> getAllChoiceOption();
+
+  Future<void> addThModel(ThModelsModel model);
+
+  Future<void> updateThModel(ThModelsModel model);
+
+  Future<List<ThModelsModel>> getAllThModels();
+  Future<List<ItemUnitsModel>> getItemUnitsBy(id);
 }
 
 class StoreLocalDatasourceImpl implements StoreLocalDatasource {
@@ -46,8 +75,7 @@ class StoreLocalDatasourceImpl implements StoreLocalDatasource {
   Future<List<ItemGroupModel>> getAllItemGroups() async {
     AppDatabase db = AppDatabase.instance();
 
-    return await (db.select(db.itemGroupTable)..where((e) => e.type.equals(1)))
-        .get();
+    return await db.getAll(db.itemGroupTable);
   }
 
   @override
@@ -187,13 +215,14 @@ class StoreLocalDatasourceImpl implements StoreLocalDatasource {
           db.itemTable.itemDescription,
           db.itemTable.note,
           db.itemTable.hasAlternated,
-          db.itemTable.newData
+          db.itemTable.newData,
+          // Explicitly select itemGroupTable columns
         ]);
 
       final joinQuery = query.join([
         leftOuterJoin(
           db.itemGroupTable,
-          db.itemGroupTable.code.equalsExp(db.itemTable.itemGroupId),
+          db.itemGroupTable.id.equalsExp(db.itemTable.itemGroupId),
         ),
       ]);
 
@@ -202,6 +231,8 @@ class StoreLocalDatasourceImpl implements StoreLocalDatasource {
       final result = await joinQuery.get();
 
       for (final row in result) {
+        final group = row.readTableOrNull(db.itemGroupTable);
+
         final item = ItemModel(
           id: row.read(db.itemTable.id)!,
           itemGroupId: row.read(db.itemTable.itemGroupId)!,
@@ -224,14 +255,15 @@ class StoreLocalDatasourceImpl implements StoreLocalDatasource {
           newData: row.read(db.itemTable.newData)!,
         );
 
-        final group = row.readTableOrNull(db.itemGroupTable);
+        print(
+            "Item ID: ${row.read(db.itemTable.id)}, Item Group ID: ${row.read(db.itemTable.itemGroupId)}, Group: $group");
 
         final itemAlters = await (db.select(db.itemAlterTable)
-              ..where((alt) => alt.itemId.equals(item.id)))
+              ..where((alt) => alt.itemId.equals(item.id ?? 0)))
             .get();
 
         final itemUnits = await (db.select(db.itemUnitTable)
-              ..where((unit) => unit.itemId.equals(item.id)))
+              ..where((unit) => unit.itemId.equals(item.id ?? 0)))
             .get();
 
         final itemUnitsQuery = db.select(db.itemUnitTable).join([
@@ -240,7 +272,7 @@ class StoreLocalDatasourceImpl implements StoreLocalDatasource {
             db.unitTable.id.equalsExp(db.itemUnitTable.itemUnitId),
           ),
         ])
-          ..where(db.itemUnitTable.itemId.equals(item.id));
+          ..where(db.itemUnitTable.itemId.equals(item.id ?? 0));
 
         final itemUnitDetails = <ItemUnitDetailsEntity>[];
         final itemUnitsResult = await itemUnitsQuery.get();
@@ -251,7 +283,8 @@ class StoreLocalDatasourceImpl implements StoreLocalDatasource {
 
           final operationsQuery = db.select(db.storeOperationTable)
             ..where((table) =>
-                table.unitId.equals(unit.id) & table.itemId.equals(item.id));
+                table.unitId.equals(unit.id ?? 0) &
+                table.itemId.equals(item.id ?? 0));
 
           int totalQuantity = 0;
           final operationsResult = await operationsQuery.get();
@@ -286,7 +319,7 @@ class StoreLocalDatasourceImpl implements StoreLocalDatasource {
           itemUnitsDetails: itemUnitDetails,
         ));
       }
-
+      print(itemDetailsList[0].group);
       return itemDetailsList;
     } catch (e) {
       throw LocalStorageException(message: e.toString());
@@ -427,5 +460,182 @@ class StoreLocalDatasourceImpl implements StoreLocalDatasource {
     }).toList();
   }
 
+  @override
+  Future<void> addNewUnit(UnitModel item) async {
+    AppDatabase db = AppDatabase.instance();
+
+    await db.saveSingle(
+      db.unitTable,
+      item.toCompanion(),
+    );
+  }
+
+  @override
+  Future<void> addNewItemGroup(ItemGroupModel item) async {
+    AppDatabase db = AppDatabase.instance();
+
+    await db.saveSingle(
+      db.itemGroupTable,
+      item.toCompanion(),
+    );
+  }
+
+  @override
+  Future<void> addNewModelCategory(ModelCategoryModel item) async {
+    AppDatabase db = AppDatabase.instance();
+
+    await db.saveSingle(
+      db.modelCategoryTable,
+      item.toCompanion(),
+    );
+  }
+
+  @override
+  Future<List<ModelCategoryModel>> getAllModelCategory() async {
+    AppDatabase db = AppDatabase.instance();
+
+    return await db.getAll(db.modelCategoryTable);
+  }
+
+  @override
+  Future<void> addNewClothesType(ClothesTypeModel item) async {
+    AppDatabase db = AppDatabase.instance();
+
+    await db.saveSingle(
+      db.clothesTypesTable,
+      item.toCompanion(),
+    );
+  }
+
+  @override
+  Future<void> addNewMeasurment(MeasurementModel item) async {
+    AppDatabase db = AppDatabase.instance();
+
+    await db.saveSingle(
+      db.measurementsTable,
+      item.toCompanion(),
+    );
+  }
+
+  @override
+  Future<List<ClothesTypeModel>> getAllClothesType() async {
+    AppDatabase db = AppDatabase.instance();
+
+    return await db.getAll(db.clothesTypesTable);
+  }
+
+  @override
+  Future<List<MeasurementModel>> getAllMeasurments() async {
+    AppDatabase db = AppDatabase.instance();
+
+    return await db.getAll(db.measurementsTable);
+  }
+
+  @override
+  Future<void> addNewChoiceOption(ChoiceOptionModel item) async {
+    AppDatabase db = AppDatabase.instance();
+
+    await db.saveSingle(
+      db.choiceOptionsTable,
+      item.toCompanion(),
+    );
+  }
+
+  @override
+  Future<List<ChoiceOptionModel>> getAllChoiceOption() async {
+    AppDatabase db = AppDatabase.instance();
+
+    return await db.getAll(db.choiceOptionsTable);
+  }
+
   //
+
+  @override
+  Future<void> addThModel(ThModelsModel model) async {
+    AppDatabase db = AppDatabase.instance();
+
+    await db.into(db.thModelTable).insert(
+          ThModelTableCompanion(
+            mcId: Value(model.mcId),
+            modelName: Value(model.modelName),
+            modelProfile: Value(model.modelProfile),
+            modelOrdering: Value(model.modelOrdering),
+            notes: Value(model.notes ?? ""),
+            status: Value(model.status),
+            createdAt: Value(model.createdAt),
+            createdBy: Value(model.createdBy),
+          ),
+        );
+  }
+
+  @override
+  Future<void> updateThModel(ThModelsModel model) async {
+    AppDatabase db = AppDatabase.instance();
+
+    await db.update(db.thModelTable).replace(
+          ThModelTableCompanion(
+            id: Value(model.id!),
+            mcId: Value(model.mcId),
+            modelName: Value(model.modelName),
+            modelProfile: Value(model.modelProfile),
+            modelOrdering: Value(model.modelOrdering),
+            notes: Value(model.notes ?? ""),
+            status: Value(model.status),
+            createdAt: Value(model.createdAt),
+            createdBy: Value(model.createdBy),
+            updatedAt: Value(DateTime.now()),
+            updatedBy: Value(model.updatedBy ?? model.createdBy),
+          ),
+        );
+  }
+
+  @override
+  Future<List<ThModelsModel>> getAllThModels() async {
+    AppDatabase db = AppDatabase.instance();
+
+    final models = await db.select(db.thModelTable).get();
+    return models
+        .map((m) => ThModelsModel(
+              id: m.id,
+              mcId: m.mcId,
+              modelName: m.modelName,
+              modelProfile: m.modelProfile,
+              modelOrdering: m.modelOrdering,
+              notes: m.notes,
+              status: m.status,
+              createdAt: m.createdAt,
+              createdBy: m.createdBy,
+              updatedAt: m.updatedAt,
+              updatedBy: m.updatedBy,
+              deletedAt: m.deletedAt,
+            ))
+        .toList();
+  }
+
+  @override
+  Future<int> addNewItem(ItemModel item) async {
+    AppDatabase db = AppDatabase.instance();
+
+    return await db.saveSingle(
+      db.itemTable,
+      item.toCompanion(),
+    );
+  }
+
+  @override
+  Future<void> addNewItemUnit(ItemUnitsModel item) async {
+    AppDatabase db = AppDatabase.instance();
+
+    await db.saveSingle(
+      db.itemUnitTable,
+      item.toCompanion(),
+    );
+  }
+
+  @override
+  Future<List<ItemUnitsModel>> getItemUnitsBy(id) async {
+    AppDatabase db = AppDatabase.instance();
+    return (db.select(db.itemUnitTable)..where((e) => e.itemId.equals(id)))
+        .get();
+  }
 }

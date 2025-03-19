@@ -1,5 +1,5 @@
-import 'package:era_pro/src/features/home/presentation/getX/home_controller.dart';
-import 'package:era_pro/src/features/home/presentation/pages/statistic_page.dart';
+import 'package:tailor/src/features/home/presentation/getX/home_controller.dart';
+import 'package:tailor/src/features/home/presentation/pages/statistic_page.dart';
 import 'package:get/get.dart';
 
 import '../constants/colors.dart';

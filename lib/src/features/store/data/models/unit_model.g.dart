@@ -7,7 +7,7 @@ part of 'unit_model.dart';
 // **************************************************************************
 
 UnitModel _$UnitModelFromJson(Map<String, dynamic> json) => UnitModel(
-      id: (json['id'] as num).toInt(),
+      id: (json['id'] as num?)?.toInt() ?? 0,
       name: json['name'] as String,
       note: json['note'] as String,
       newData: json['newData'] as bool,

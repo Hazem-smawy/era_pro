@@ -1,10 +1,10 @@
-import 'package:era_pro/src/core/extensions/padding_extension.dart';
-import 'package:era_pro/src/core/utils/dialogs.dart';
-import 'package:era_pro/src/core/widgets/custom_text_field_with_label_widget.dart';
-import 'package:era_pro/src/core/widgets/header_widget.dart';
-import 'package:era_pro/src/features/accounts/presentation/getX/accounts_controller.dart';
-import 'package:era_pro/src/features/accounts/presentation/pages/add_new_customer_sheet.dart';
-import 'package:era_pro/src/features/setting/presentation/getX/setting_controller.dart';
+import 'package:tailor/src/core/extensions/padding_extension.dart';
+import 'package:tailor/src/core/utils/dialogs.dart';
+import 'package:tailor/src/core/widgets/custom_text_field_with_label_widget.dart';
+import 'package:tailor/src/core/widgets/header_widget.dart';
+import 'package:tailor/src/features/accounts/presentation/getX/accounts_controller.dart';
+import 'package:tailor/src/features/accounts/presentation/pages/add_new_customer_sheet.dart';
+import 'package:tailor/src/features/setting/presentation/getX/setting_controller.dart';
 
 import '../../../../core/extensions/context_extensions.dart';
 import '../../../../core/widgets/thin_divider_widget.dart';

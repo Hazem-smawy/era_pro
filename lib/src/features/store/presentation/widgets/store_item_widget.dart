@@ -1,5 +1,8 @@
 import 'dart:typed_data';
 
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tailor/src/core/routes/app_pages.dart';
+
 import '../../../../core/extensions/context_extensions.dart';
 import '../../domain/entities/item_details_entity.dart';
 import '../getX/store_controller.dart';
@@ -9,9 +12,9 @@ import 'package:get/get.dart';
 import '../../../../core/extensions/image_with_error_extension.dart';
 
 class ItemWidget extends StatelessWidget {
-  const ItemWidget({super.key, required this.itemEntity});
+  const ItemWidget({super.key, required this.storeItemDetail});
 
-  final StoreItemDetailsEntity itemEntity;
+  final StoreItemDetailsEntity storeItemDetail;
 
   @override
   Widget build(BuildContext context) {
@@ -29,45 +32,13 @@ class ItemWidget extends StatelessWidget {
                 )
               ]),
               child: StoreItemImageWidget(
-                key: ValueKey(itemEntity.id),
-                itemEntity: itemEntity,
+                key: ValueKey(storeItemDetail.id),
+                itemEntity: storeItemDetail,
               ),
             ),
             const SizedBox(
               height: 10,
             ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.end,
-            //   children: [
-            //     Container(
-            //       width: 50,
-            //       height: 25,
-            //       decoration: BoxDecoration(
-            //         borderRadius: BorderRadius.circular(12),
-            //         color: context.secondary,
-            //       ),
-            //       child: Center(
-            //         child: Text(
-            //           '4',
-            //           style: context.bodyLarge?.copyWith(
-            //             color: context.wightColor,
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //     const SizedBox(
-            //       width: 10,
-            //     ),
-            //     Expanded(
-            //       child: Text(
-            //         itemEntity.item.name,
-            //         textAlign: TextAlign.end,
-            //         style: context.titleMedium,
-            //       ),
-            //     ),
-            //   ],
-            // ),
-
             Container(
               padding: const EdgeInsets.all(5),
               width: double.infinity,
@@ -79,8 +50,9 @@ class ItemWidget extends StatelessWidget {
               // ),
               alignment: Alignment.centerRight,
               child: FittedBox(
+                fit: BoxFit.scaleDown,
                 child: Text(
-                  itemEntity.item.name,
+                  storeItemDetail.item.name,
                   style: context.titleMedium,
                 ),
               ),
@@ -106,9 +78,25 @@ class ItemWidget extends StatelessWidget {
 
             child: Center(
               child: Text(
-                itemEntity.totalQuantityInStore.toString(),
+                storeItemDetail.totalQuantityInStore.toString(),
                 style: context.titleMedium,
               ),
+            ),
+          ),
+        ),
+        Positioned(
+          left: 0,
+          top: -3,
+          child: IconButton(
+            onPressed: () {
+              Get.toNamed(Routes.NEWITEMPAGE, arguments: {
+                'item': storeItemDetail.item,
+                'units': storeItemDetail.itemUnits
+              });
+            },
+            icon: Icon(
+              FontAwesomeIcons.penToSquare,
+              size: 20,
             ),
           ),
         )
@@ -136,7 +124,7 @@ class _StoreItemImageWidgetState extends State<StoreItemImageWidget> {
   @override
   void initState() {
     super.initState();
-    storeController.getItemImage(widget.itemEntity.item.id).then((value) {
+    storeController.getItemImage(widget.itemEntity.item.id ?? 0).then((value) {
       setState(() {
         imageData = value;
       });

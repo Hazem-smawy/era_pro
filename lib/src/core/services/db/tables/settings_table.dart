@@ -1,5 +1,5 @@
 import 'package:drift/drift.dart';
-import 'package:era_pro/src/features/setting/data/models/setting_model.dart';
+import 'package:tailor/src/features/setting/data/models/setting_model.dart';
 
 /*
     "userId": 2,

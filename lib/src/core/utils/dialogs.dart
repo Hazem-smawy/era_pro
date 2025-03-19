@@ -197,10 +197,12 @@ class CustomDialog {
   static void customSnackBar(
       description, SnackPosition? snackPosition, bool? isError) {
     if (Get.isSnackbarOpen) {
-      Get.closeCurrentSnackbar();
-      return;
+      Get.closeAllSnackbars();
+      // return;
     }
+
     Get.rawSnackbar(
+      duration: Duration(seconds: 1),
       borderColor: AppColors.secondaryColor.withAlpha(50),
       backgroundColor: AppColors.whiteColor,
       snackPosition: snackPosition ?? SnackPosition.TOP,

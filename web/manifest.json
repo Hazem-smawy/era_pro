@@ -1,6 +1,6 @@
 {
-    "name": "era_pro",
-    "short_name": "era_pro",
+    "name": "tailor",
+    "short_name": "tailor",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

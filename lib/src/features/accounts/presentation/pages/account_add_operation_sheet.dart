@@ -1,4 +1,4 @@
-import 'package:era_pro/src/features/exchange_receipt/presentation/getX/exchange_binding.dart';
+import 'package:tailor/src/features/exchange_receipt/presentation/getX/exchange_binding.dart';
 
 import '../../../../core/constants/assets.dart';
 import '../../../../core/extensions/context_extensions.dart';

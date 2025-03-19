@@ -7,13 +7,13 @@ import 'package:equatable/equatable.dart';
         "newData": true
  */
 class UnitEnitity extends Equatable {
-  final int id;
+  int? id;
   final String name;
   final String note;
   final bool newData;
 
-  const UnitEnitity({
-    required this.id,
+  UnitEnitity({
+    this.id = 0,
     required this.name,
     required this.note,
     required this.newData,

@@ -1,6 +1,6 @@
 // ignore_for_file: invalid_use_of_protected_member
 
-import 'package:era_pro/src/features/exchange_receipt/presentation/pages/add_new_exchange_sheet.dart';
+import 'package:tailor/src/features/exchange_receipt/presentation/pages/add_new_exchange_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

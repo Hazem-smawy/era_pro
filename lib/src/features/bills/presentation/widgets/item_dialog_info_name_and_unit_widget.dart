@@ -18,7 +18,7 @@ class ItemDialogInfoNameAndUnitWidget extends StatelessWidget {
         onTap: () async {
           final itemDetails = await itemController.getItemStoreDetails(item);
           Get.to(ItemDetailsPage(
-            storeItemDetailsEntity: itemDetails,
+            storeItemDetails: itemDetails,
           ));
         },
         child: Row(

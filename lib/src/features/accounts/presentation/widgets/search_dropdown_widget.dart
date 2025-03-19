@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
-import 'package:era_pro/src/features/setting/presentation/getX/setting_controller.dart';
+import 'package:tailor/src/features/setting/presentation/getX/setting_controller.dart';
 import '../../../../core/extensions/context_extensions.dart';
 import '../../domain/entities/account_entity.dart';
 import '../getX/accounts_controller.dart';

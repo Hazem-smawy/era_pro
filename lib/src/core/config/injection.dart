@@ -1,12 +1,14 @@
 library;
 
-import 'package:era_pro/src/features/setting/data/implements/implements.dart';
-import 'package:era_pro/src/features/setting/data/sources/setting_local_datasource.dart';
-import 'package:era_pro/src/features/setting/data/sources/setting_remote_datasource.dart';
-import 'package:era_pro/src/features/setting/domain/repositories/repositories.dart';
-import 'package:era_pro/src/features/setting/domain/usecases/fetch_settings_usecase.dart';
-import 'package:era_pro/src/features/setting/domain/usecases/get_settings_usecase.dart';
-import 'package:era_pro/src/features/setting/presentation/getX/setting_controller.dart';
+import 'package:tailor/src/features/main_info/domain/usecases/add_currency_usecase.dart';
+import 'package:tailor/src/features/main_info/presentation/getX/currency_controller.dart';
+import 'package:tailor/src/features/setting/data/implements/implements.dart';
+import 'package:tailor/src/features/setting/data/sources/setting_local_datasource.dart';
+import 'package:tailor/src/features/setting/data/sources/setting_remote_datasource.dart';
+import 'package:tailor/src/features/setting/domain/repositories/repositories.dart';
+import 'package:tailor/src/features/setting/domain/usecases/fetch_settings_usecase.dart';
+import 'package:tailor/src/features/setting/domain/usecases/get_settings_usecase.dart';
+import 'package:tailor/src/features/setting/presentation/getX/setting_controller.dart';
 
 import '../api/api.dart';
 import '../api/methods.dart';
@@ -125,6 +127,10 @@ class DependencyInjection {
 //! Features - main-info
     //?controller
     Get.lazyPut(
+      () => CurrencyController(Get.find(), Get.find()),
+      fenix: true,
+    );
+    Get.lazyPut(
       () => MainInfoController(
         getAllCurenciesUsecase: Get.find(),
         getBranchUsecase: Get.find(),
@@ -138,6 +144,18 @@ class DependencyInjection {
 
     //?usecase
 
+    Get.lazyPut(
+      () => GetAllCurenciesUseCase(
+        mainInfoRepository: Get.find(),
+      ),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => AddCurrenctyUsecase(
+        mainInfoRepository: Get.find(),
+      ),
+      fenix: true,
+    );
     Get.lazyPut(
       () => GetAllPaymentsUsecase(
         mainInfoRepository: Get.find(),

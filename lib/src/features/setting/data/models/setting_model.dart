@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
-import 'package:era_pro/src/core/services/db/db.dart';
-import 'package:era_pro/src/features/setting/domain/entities/entities.dart';
+import 'package:tailor/src/core/services/db/db.dart';
+import 'package:tailor/src/features/setting/domain/entities/entities.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'setting_model.g.dart';
 

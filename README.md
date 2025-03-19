@@ -1,4 +1,4 @@
-# era_pro
+# tailor
 
 A new Flutter project.
 

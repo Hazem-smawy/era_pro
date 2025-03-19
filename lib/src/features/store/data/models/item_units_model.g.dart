@@ -8,7 +8,7 @@ part of 'item_units_model.dart';
 
 ItemUnitsModel _$ItemUnitsModelFromJson(Map<String, dynamic> json) =>
     ItemUnitsModel(
-      id: (json['id'] as num).toInt(),
+      id: (json['id'] as num?)?.toInt(),
       itemId: (json['item_id'] as num).toInt(),
       itemUnitId: (json['item_unit_id'] as num).toInt(),
       unitFactor: (json['unit_factor'] as num).toInt(),

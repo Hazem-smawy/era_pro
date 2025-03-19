@@ -1,3 +1,6 @@
+import 'package:tailor/src/core/routes/app_pages.dart';
+import 'package:tailor/src/features/store/domain/entities/item_details_entity.dart';
+
 import '../extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -7,8 +10,10 @@ class CustomAppBarWidget extends StatelessWidget {
   const CustomAppBarWidget({
     super.key,
     required this.title,
+    required this.action,
   });
   final String title;
+  final Function action;
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +24,11 @@ class CustomAppBarWidget extends StatelessWidget {
         children: [
           IconButton(
             onPressed: () {
-              //Get.back();
+              action();
             },
             icon: Icon(
-              Icons.more_vert_rounded,
-              size: 27,
-              color: context.secondaryTextColor,
+              FontAwesomeIcons.penToSquare,
+              size: 20,
             ),
           ),
           Text(

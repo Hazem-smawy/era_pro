@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:tailor/src/features/main_info/domain/entities/main_info_entity.dart';
 import '../../../../core/error/failures.dart';
 import '../entities/account_entity.dart';
 import '../entities/accounts_operations_entity.dart';

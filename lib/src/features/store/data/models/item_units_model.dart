@@ -6,8 +6,8 @@ part 'item_units_model.g.dart';
 
 @JsonSerializable()
 class ItemUnitsModel extends ItemUnitsEntity {
-  const ItemUnitsModel({
-    required super.id,
+  ItemUnitsModel({
+    super.id,
     required super.itemId,
     required super.itemUnitId,
     required super.unitFactor,
@@ -29,7 +29,7 @@ class ItemUnitsModel extends ItemUnitsEntity {
 
   ItemUnitTableCompanion toCompanion() {
     return ItemUnitTableCompanion(
-      id: Value(id),
+      id: Value.absentIfNull(id),
       itemId: Value(itemId),
       itemUnitId: Value(itemUnitId),
       unitFactor: Value(unitFactor),
@@ -56,6 +56,22 @@ class ItemUnitsModel extends ItemUnitsEntity {
       itemDiscount: itemDiscount,
       unitBarcode: unitBarcode,
       newData: newData,
+    );
+  }
+
+  factory ItemUnitsModel.fromEntity(ItemUnitsEntity item) {
+    return ItemUnitsModel(
+      id: item.id,
+      itemId: item.itemId,
+      itemUnitId: item.itemUnitId,
+      unitFactor: item.unitFactor,
+      wholeSaleprice: item.wholeSaleprice,
+      retailPrice: item.retailPrice,
+      spacialPrice: item.spacialPrice,
+      intialCost: item.intialCost,
+      itemDiscount: item.itemDiscount,
+      unitBarcode: item.unitBarcode,
+      newData: item.newData,
     );
   }
 }

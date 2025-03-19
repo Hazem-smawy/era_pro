@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:dartz/dartz.dart';
+import 'package:tailor/src/features/main_info/domain/entities/curency_entity.dart';
 import '../../../../core/constants/share_pref_keys.dart';
 import '../models/main_info_model.dart';
 
@@ -117,6 +118,17 @@ class MainInfoRepositoryImp implements MainInfoRepository {
           message: e.toString(),
         ),
       );
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> addCurrancy(CurencyEntity item) async {
+    try {
+      await mainInfoLocalDatasource
+          .addNewCurrency(CurencyModel.fromEntity(item));
+      return Right(true);
+    } catch (e) {
+      return Left(LocalStorageFailures(message: e.toString()));
     }
   }
 }

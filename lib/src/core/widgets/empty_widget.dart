@@ -11,7 +11,7 @@ class EmptyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       //height: 200,
-      width: Get.width - 50,
+
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         //color: MyColors.bg,

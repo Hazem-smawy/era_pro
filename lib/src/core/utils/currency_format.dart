@@ -1,4 +1,4 @@
-import 'package:era_pro/src/features/setting/presentation/getX/setting_controller.dart';
+import 'package:tailor/src/features/setting/presentation/getX/setting_controller.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 

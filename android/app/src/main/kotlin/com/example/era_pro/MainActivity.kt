@@ -1,4 +1,4 @@
-package com.example.era_pro
+package com.example.tailor
 
 import io.flutter.embedding.android.FlutterActivity
 

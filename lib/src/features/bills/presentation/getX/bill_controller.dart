@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:era_pro/src/features/bills/presentation/widgets/bill_widget/pyment_method_widget.dart';
-import 'package:era_pro/src/features/setting/presentation/getX/setting_controller.dart';
+import 'package:tailor/src/features/bills/presentation/widgets/bill_widget/pyment_method_widget.dart';
+import 'package:tailor/src/features/setting/presentation/getX/setting_controller.dart';
 
 import '../../../../core/constants/colors.dart';
 import '../../../../core/types/status_types.dart';
@@ -242,7 +242,7 @@ class BillController extends GetxController {
 
       UnitDetailsUI unitDetailsUI = UnitDetailsUI(
         note: details.billDetailsEntity.itemNote,
-        id: itemUnitsEntity.id,
+        id: itemUnitsEntity.id ?? 0,
         name: details.unitName,
         quantityRemaining: quantity,
         intialCost: itemUnitsEntity.intialCost,
@@ -269,7 +269,7 @@ class BillController extends GetxController {
       );
 
       return ItemUI(
-        id: item.id,
+        id: item.id ?? 0,
         name: details.itemName,
         image: item.itemImage,
         clearPrice: 0,

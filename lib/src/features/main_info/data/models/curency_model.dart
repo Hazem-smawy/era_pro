@@ -7,19 +7,20 @@ part 'curency_model.g.dart';
 
 @JsonSerializable()
 class CurencyModel extends CurencyEntity {
-  const CurencyModel(
-      {required super.id,
-      required super.name,
-      required super.symbol,
-      required super.subName,
-      required super.value,
-      required super.equivelant,
-      required super.localCurrency,
-      required super.storeCurrency,
-      required super.maxValue,
-      required super.minValue,
-      required super.note,
-      required super.newData});
+  CurencyModel({
+    super.id,
+    required super.name,
+    required super.symbol,
+    required super.subName,
+    required super.value,
+    required super.equivelant,
+    required super.localCurrency,
+    required super.storeCurrency,
+    required super.maxValue,
+    required super.minValue,
+    required super.note,
+    required super.newData,
+  });
 
   factory CurencyModel.fromJson(Map<String, dynamic> json) =>
       _$CurencyModelFromJson(json);
@@ -32,7 +33,7 @@ class CurencyModel extends CurencyEntity {
 
   CurencyTableCompanion toCurencyTableComapnion() {
     return CurencyTableCompanion(
-      id: Value(id),
+      id: Value.absentIfNull(id),
       name: Value(name),
       subName: Value(subName),
       symbol: Value(symbol),
@@ -44,6 +45,42 @@ class CurencyModel extends CurencyEntity {
       equivelant: Value(equivelant),
       localCurrency: Value(localCurrency),
       storeCurrency: Value(storeCurrency),
+    );
+  }
+
+  /// Converts `CurencyEntity` to `CurencyModel`
+  factory CurencyModel.fromEntity(CurencyEntity entity) {
+    return CurencyModel(
+      id: entity.id,
+      name: entity.name,
+      symbol: entity.symbol,
+      subName: entity.subName,
+      value: entity.value,
+      equivelant: entity.equivelant,
+      localCurrency: entity.localCurrency,
+      storeCurrency: entity.storeCurrency,
+      maxValue: entity.maxValue,
+      minValue: entity.minValue,
+      note: entity.note,
+      newData: entity.newData,
+    );
+  }
+
+  /// Converts `CurencyModel` back to `CurencyEntity`
+  CurencyEntity toEntity() {
+    return CurencyEntity(
+      id: id,
+      name: name,
+      symbol: symbol,
+      subName: subName,
+      value: value,
+      equivelant: equivelant,
+      localCurrency: localCurrency,
+      storeCurrency: storeCurrency,
+      maxValue: maxValue,
+      minValue: minValue,
+      note: note,
+      newData: newData,
     );
   }
 }

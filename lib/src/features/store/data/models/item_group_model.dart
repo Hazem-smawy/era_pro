@@ -7,9 +7,9 @@ part 'item_group_model.g.dart';
 
 @JsonSerializable()
 class ItemGroupModel extends ItemGroupEntity {
-  const ItemGroupModel({
-    required super.id,
-    required super.code,
+  ItemGroupModel({
+    super.id,
+    super.code,
     required super.name,
     required super.type,
     required super.parent,
@@ -26,8 +26,8 @@ class ItemGroupModel extends ItemGroupEntity {
 
   ItemGroupTableCompanion toCompanion() {
     return ItemGroupTableCompanion(
-      id: Value(id),
-      code: Value(code),
+      id: Value.absentIfNull(id),
+      code: Value(0),
       name: Value(name),
       type: Value(type),
       parent: Value(parent),
@@ -45,6 +45,18 @@ class ItemGroupModel extends ItemGroupEntity {
       parent: parent,
       note: note,
       newData: newData,
+    );
+  }
+
+  factory ItemGroupModel.fromEntity(ItemGroupEntity entity) {
+    return ItemGroupModel(
+      id: entity.id,
+      code: entity.code,
+      type: 1,
+      name: entity.name,
+      parent: 0,
+      note: entity.note,
+      newData: entity.newData,
     );
   }
 }

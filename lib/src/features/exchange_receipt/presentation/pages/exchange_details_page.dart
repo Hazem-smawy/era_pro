@@ -1,4 +1,4 @@
-import 'package:era_pro/src/features/exchange_receipt/presentation/widgets/exchange_details_item_widget.dart';
+import 'package:tailor/src/features/exchange_receipt/presentation/widgets/exchange_details_item_widget.dart';
 
 import '../../../../core/extensions/context_extensions.dart';
 import '../../../../core/extensions/padding_extension.dart';

@@ -1,5 +1,5 @@
-import 'package:era_pro/era_pro_app.dart';
-import 'package:era_pro/src/core/config/config.dart';
+import 'package:tailor/tailor.dart';
+import 'package:tailor/src/core/config/config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -20,6 +20,6 @@ Future<void> main() async {
     DeviceOrientation.portraitDown, // Optional, if you want reverse portrait
   ]).then((_) async {
     await DependencyInjection.init();
-    runApp(const EraProApp());
+    runApp(const Tailor());
   });
 }

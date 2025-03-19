@@ -1,9 +1,9 @@
-import 'package:era_pro/src/features/bills/domain/usecases/add_bill_details_usecase.dart';
-import 'package:era_pro/src/features/bills/domain/usecases/add_new_bill_usecase.dart';
-import 'package:era_pro/src/features/bills/domain/usecases/get_all_bills_usecase.dart';
-import 'package:era_pro/src/features/bills/domain/usecases/get_bill_details_usecase.dart';
-import 'package:era_pro/src/features/bills/presentation/getX/bill_controller.dart';
-import 'package:era_pro/src/features/bills/presentation/getX/item_controller.dart';
+import 'package:tailor/src/features/bills/domain/usecases/add_bill_details_usecase.dart';
+import 'package:tailor/src/features/bills/domain/usecases/add_new_bill_usecase.dart';
+import 'package:tailor/src/features/bills/domain/usecases/get_all_bills_usecase.dart';
+import 'package:tailor/src/features/bills/domain/usecases/get_bill_details_usecase.dart';
+import 'package:tailor/src/features/bills/presentation/getX/bill_controller.dart';
+import 'package:tailor/src/features/bills/presentation/getX/item_controller.dart';
 import 'package:get/get.dart';
 
 import '../../domain/usecases/delete_bill_details_usecase.dart';

@@ -8,8 +8,8 @@ part of 'item_group_model.dart';
 
 ItemGroupModel _$ItemGroupModelFromJson(Map<String, dynamic> json) =>
     ItemGroupModel(
-      id: (json['id'] as num).toInt(),
-      code: (json['code'] as num).toInt(),
+      id: (json['id'] as num?)?.toInt(),
+      code: (json['code'] as num?)?.toInt(),
       name: json['name'] as String,
       type: (json['type'] as num).toInt(),
       parent: (json['parent'] as num).toInt(),

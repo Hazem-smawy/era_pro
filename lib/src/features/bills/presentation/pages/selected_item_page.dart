@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-import 'package:era_pro/src/core/utils/currency_format.dart';
+import 'package:tailor/src/core/utils/currency_format.dart';
 
 import '../../../../core/extensions/context_extensions.dart';
 import '../../../../core/extensions/padding_extension.dart';
@@ -104,7 +104,7 @@ class SelectedItemsScreen extends StatelessWidget {
                         ? 'فاتورة بيع'
                         : 'تعديل فاتورة'
                     : 'فاتورة مرتجع',
-              ).pr(10),
+              ),
               // const HeaderWidget(
               //   title: 'فاتورة بيع',
               // ).pr(10),

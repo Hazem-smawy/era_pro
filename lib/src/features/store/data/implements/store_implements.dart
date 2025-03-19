@@ -3,6 +3,15 @@
 import 'dart:typed_data';
 
 import 'package:dartz/dartz.dart';
+import 'package:tailor/src/features/store/data/models/choice_option_model.dart';
+import 'package:tailor/src/features/store/data/models/clothes_type_model.dart';
+import 'package:tailor/src/features/store/data/models/measurement_model.dart';
+import 'package:tailor/src/features/store/data/models/model_category_model.dart';
+import 'package:tailor/src/features/store/data/models/th_models_model.dart';
+import 'package:tailor/src/features/store/domain/entities/item_entity.dart';
+import 'package:tailor/src/features/store/domain/entities/item_group_entity.dart';
+import 'package:tailor/src/features/store/domain/entities/item_units_entity.dart';
+import 'package:tailor/src/features/store/domain/entities/unit_enitity.dart';
 import '../../../accounts/domain/usecases/delete_account_operation_usecase.dart';
 import '../sources/store_local_datasource.dart';
 import '../sources/store_remote_datasource.dart';
@@ -216,6 +225,148 @@ class StoreRepositoryImpl implements StoreRepository {
   Future<Either<Failure, Uint8List?>> getItemImage(int id) async {
     try {
       final res = await storeLocalDatasource.getItemImageById(id);
+      return Right(res);
+    } catch (e) {
+      return Left(LocalStorageFailures(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> addNewUnit(UnitEnitity u) async {
+    try {
+      await storeLocalDatasource.addNewUnit(UnitModel.fromEntity(u));
+      return Right(true);
+    } catch (e) {
+      return Left(LocalStorageFailures(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> addNewItemGroup(ItemGroupEntity g) async {
+    try {
+      await storeLocalDatasource.addNewItemGroup(ItemGroupModel.fromEntity(g));
+      return Right(true);
+    } catch (e) {
+      return Left(LocalStorageFailures(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> addNewModelCategory(
+      ModelCategoryModel g) async {
+    try {
+      await storeLocalDatasource.addNewModelCategory(g);
+      return Right(true);
+    } catch (e) {
+      return Left(LocalStorageFailures(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<ModelCategoryModel>>>
+      getAllModelsCategory() async {
+    return fetchArrayOfDataFromLocalStorage<ModelCategoryModel>(
+      fetchFromLocal: storeLocalDatasource.getAllModelCategory,
+      localError: "can't get item units info from local",
+    );
+  }
+
+  @override
+  Future<Either<Failure, bool>> addNewClothesType(ClothesTypeModel g) async {
+    try {
+      await storeLocalDatasource.addNewClothesType(g);
+      return Right(true);
+    } catch (e) {
+      return Left(LocalStorageFailures(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> addNewMeasurment(MeasurementModel g) async {
+    try {
+      await storeLocalDatasource.addNewMeasurment(g);
+      return Right(true);
+    } catch (e) {
+      return Left(LocalStorageFailures(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<ClothesTypeModel>>> getAllClothesType() async {
+    return fetchArrayOfDataFromLocalStorage<ClothesTypeModel>(
+      fetchFromLocal: storeLocalDatasource.getAllClothesType,
+      localError: "can't get item units info from local",
+    );
+  }
+
+  @override
+  Future<Either<Failure, List<MeasurementModel>>> getAllMeasuremnts() async {
+    return fetchArrayOfDataFromLocalStorage<MeasurementModel>(
+      fetchFromLocal: storeLocalDatasource.getAllMeasurments,
+      localError: "can't get item units info from local",
+    );
+  }
+
+  @override
+  Future<Either<Failure, bool>> addNewChoiceOption(ChoiceOptionModel g) async {
+    try {
+      await storeLocalDatasource.addNewChoiceOption(g);
+      return Right(true);
+    } catch (e) {
+      return Left(LocalStorageFailures(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<ChoiceOptionModel>>> getAllChoiceOption() async {
+    return fetchArrayOfDataFromLocalStorage<ChoiceOptionModel>(
+      fetchFromLocal: storeLocalDatasource.getAllChoiceOption,
+      localError: "can't get item units info from local",
+    );
+  }
+
+  @override
+  Future<void> addThModel(ThModelsModel model) async {
+    await storeLocalDatasource.addThModel(model);
+  }
+
+  @override
+  Future<List<ThModelsModel>> getAllThModels() {
+    return storeLocalDatasource.getAllThModels();
+  }
+
+  @override
+  Future<void> updateThModel(ThModelsModel model) async {
+    await storeLocalDatasource.updateThModel(model);
+  }
+
+  @override
+  Future<Either<Failure, int>> addItem(ItemEntity item) async {
+    try {
+      int id =
+          await storeLocalDatasource.addNewItem(ItemModel.fromEntity(item));
+      return Right(id);
+    } catch (e) {
+      return Left(LocalStorageFailures(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> addItemUnit(ItemUnitsEntity itemUnit) async {
+    try {
+      await storeLocalDatasource
+          .addNewItemUnit(ItemUnitsModel.fromEntity(itemUnit));
+      return Right(true);
+    } catch (e) {
+      return Left(LocalStorageFailures(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<ItemUnitsEntity>>> getItemUnitsById(
+      int id) async {
+    try {
+      final res = await storeLocalDatasource.getItemUnitsBy(id);
       return Right(res);
     } catch (e) {
       return Left(LocalStorageFailures(message: e.toString()));

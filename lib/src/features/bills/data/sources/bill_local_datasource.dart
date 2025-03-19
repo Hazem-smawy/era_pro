@@ -135,8 +135,8 @@ class BillLocalDatasourceImp implements BillLocalDatasource {
         billDetailsEntity: billDetails,
         id: billDetails.id ?? 0,
         billId: billDetails.billID,
-        itemId: item.id,
-        unitId: unit.id,
+        itemId: item.id ?? 0,
+        unitId: unit.id ?? 0,
         itemName: item.name,
         unitName: unit.name,
       );

@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dartz/dartz.dart';
-import 'package:era_pro/src/features/setting/domain/entities/entities.dart';
-import 'package:era_pro/src/features/setting/domain/repositories/repositories.dart';
+import 'package:tailor/src/features/setting/domain/entities/entities.dart';
+import 'package:tailor/src/features/setting/domain/repositories/repositories.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../../../core/usecases/usecases.dart';

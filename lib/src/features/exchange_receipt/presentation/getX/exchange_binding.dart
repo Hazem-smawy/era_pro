@@ -1,8 +1,8 @@
-import 'package:era_pro/src/features/exchange_receipt/domain/usecases/delete_all_exchange_usecase.dart';
-import 'package:era_pro/src/features/exchange_receipt/domain/usecases/get_all_exchange_usecase.dart';
-import 'package:era_pro/src/features/exchange_receipt/domain/usecases/get_last_category_usecase.dart';
-import 'package:era_pro/src/features/exchange_receipt/domain/usecases/save_exchange_usecase.dart';
-import 'package:era_pro/src/features/exchange_receipt/presentation/getX/exchange_receipt_controller.dart';
+import 'package:tailor/src/features/exchange_receipt/domain/usecases/delete_all_exchange_usecase.dart';
+import 'package:tailor/src/features/exchange_receipt/domain/usecases/get_all_exchange_usecase.dart';
+import 'package:tailor/src/features/exchange_receipt/domain/usecases/get_last_category_usecase.dart';
+import 'package:tailor/src/features/exchange_receipt/domain/usecases/save_exchange_usecase.dart';
+import 'package:tailor/src/features/exchange_receipt/presentation/getX/exchange_receipt_controller.dart';
 import 'package:get/get.dart';
 
 class ExchangeBinding extends Bindings {

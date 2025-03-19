@@ -13,3 +13,10 @@ String? validateNumber(String? value, bool isRequired) {
 
   return null; // If the input is valid, return null (no error)
 }
+
+String? validateNotEmpty(String? value) {
+  if (value == null || value.trim().isEmpty) {
+    return "يجب ان لايكون فارغ";
+  }
+  return null;
+}

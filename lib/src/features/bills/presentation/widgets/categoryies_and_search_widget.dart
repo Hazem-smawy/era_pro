@@ -113,7 +113,7 @@ class _CategoriesWithSearchWidgetState
                         final group = itemController.groups[index];
                         return GestureDetector(
                           onTap: () {
-                            itemController.filterItemsByGroup(group.code);
+                            itemController.filterItemsByGroup(group.code ?? 0);
                           },
                           child: Container(
                             height: 40,

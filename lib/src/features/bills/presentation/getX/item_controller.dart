@@ -2,7 +2,7 @@
 // import 'dart:nativewrappers/_internal/vm/lib/core_patch.dart';
 // import 'dart:typed_data';
 
-import 'package:era_pro/src/features/setting/presentation/getX/setting_controller.dart';
+import 'package:tailor/src/features/setting/presentation/getX/setting_controller.dart';
 
 import '../../../../core/usecases/usecases.dart';
 import 'package:flutter/material.dart';
@@ -243,7 +243,7 @@ class ItemController extends GetxController {
               intialCost: itemUint.intialCost,
               freeQuantity: oldUnitDetails?.freeQuantity ?? 0,
               updatedQuantity: oldUnitDetails?.updatedQuantity ?? 0,
-              id: itemUint.id,
+              id: itemUint.id ?? 0,
               name: newUnit.name,
               quantityRemaining: (quantity +
                       (billType.value == 8
@@ -289,7 +289,7 @@ class ItemController extends GetxController {
           preTax: item.taxRate,
           allQuantityOfItem: totalQuantity,
           clearPrice: oldItem?.clearPrice ?? 0,
-          id: item.id,
+          id: item.id ?? 0,
           name: item.name,
           image: item.itemImage,
           unitDetails: unitsDetails,

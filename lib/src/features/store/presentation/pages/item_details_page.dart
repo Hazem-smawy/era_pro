@@ -1,3 +1,6 @@
+import 'package:tailor/src/core/constants/strings.dart';
+import 'package:tailor/src/core/routes/app_pages.dart';
+
 import '../../../../core/extensions/context_extensions.dart';
 import '../../../../core/extensions/image_with_error_extension.dart';
 import '../../../../core/extensions/padding_extension.dart';
@@ -13,15 +16,38 @@ import 'dart:typed_data';
 
 import '../../../../core/widgets/custom_appbar_widget.dart';
 
-class ItemDetailsPage extends StatelessWidget {
-  final StoreItemDetailsEntity storeItemDetailsEntity;
-  final StoreController storeController = Get.find();
+class ItemDetailsPage extends StatefulWidget {
+  final StoreItemDetailsEntity storeItemDetails;
 
-  ItemDetailsPage({super.key, required this.storeItemDetailsEntity}) {
+  ItemDetailsPage({super.key, required this.storeItemDetails}) {
     // Initialize selectedPriceIndex for each unit
+  }
+
+  @override
+  State<ItemDetailsPage> createState() => _ItemDetailsPageState();
+}
+
+class _ItemDetailsPageState extends State<ItemDetailsPage> {
+  final StoreController storeController = Get.find();
+  late StoreItemDetailsEntity storeItemDetailsEntity;
+
+  @override
+  void initState() {
+    storeItemDetailsEntity = widget.storeItemDetails;
+    super.initState();
     for (var unitDetail in storeItemDetailsEntity.itemUnitsDetails) {
       storeController.selectedPriceIndex[unitDetail.hashCode] = 0.obs;
     }
+    setState(() {});
+  }
+
+  Future<void> getDataWhenUpdate() async {
+    storeItemDetailsEntity = storeController.allItemsWithDetails.value
+        .firstWhere((e) => e.item.id == widget.storeItemDetails.item.id);
+    for (var unitDetail in storeItemDetailsEntity.itemUnitsDetails) {
+      storeController.selectedPriceIndex[unitDetail.hashCode] = 0.obs;
+    }
+    setState(() {});
   }
 
   @override
@@ -33,7 +59,17 @@ class ItemDetailsPage extends StatelessWidget {
           child: Column(
             children: [
               context.g8,
-              const CustomAppBarWidget(title: 'تفاصيل المنتج'),
+              CustomAppBarWidget(
+                title: 'تفاصيل المنتج',
+                action: () {
+                  Get.toNamed(Routes.NEWITEMPAGE, arguments: {
+                    'item': storeItemDetailsEntity.item,
+                  })?.then((e) {
+                    // await storeController.getAllStoreInfo();
+                    getDataWhenUpdate();
+                  });
+                },
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
@@ -102,25 +138,73 @@ class ItemDetailsPage extends StatelessWidget {
   }
 
   Column _buildUnitsAndPricessWidget(BuildContext context) {
+    bool hasUnitFactorOne =
+        storeItemDetailsEntity.itemUnits!.any((e) => e.unitFactor == 1);
+
     return Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
-      Text(
-        'الوحدات والأسعار',
-        style: context.titleMedium,
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          IconButton(
+            onPressed: () {
+              Get.toNamed(Routes.NEWITEMPAGE, arguments: {
+                'item': storeItemDetailsEntity.item,
+                'tabId': 0
+              })?.then((e) {
+                getDataWhenUpdate();
+
+                // await storeController.getAllStoreInfo();
+              });
+            },
+            icon: Icon(
+              FontAwesomeIcons.penToSquare,
+              color: context.secondaryTextColor,
+              size: 20,
+            ),
+          ),
+          Text(
+            'الوحدات والأسعار',
+            style: context.titleMedium,
+          ),
+        ],
       ),
       context.g12,
       if (storeItemDetailsEntity.itemUnits?.isNotEmpty ?? false)
-        ListView.separated(
-          itemCount: storeItemDetailsEntity.itemUnits!.length,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          separatorBuilder: (BuildContext context, int index) => context.g16,
-          itemBuilder: (BuildContext context, int index) {
-            return ItemUnitsDetailsWidget(
-              item: storeItemDetailsEntity,
-              itemUnitDetails: storeItemDetailsEntity.itemUnitsDetails[index],
-              isMain: true,
-            );
-          },
+        Column(
+          children: [
+            if (!hasUnitFactorOne)
+              Container(
+                margin: EdgeInsets.only(bottom: 4),
+                width: double.infinity,
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.amber[100],
+                ),
+                child: Text(
+                  'قم بتعديل و إدخال اصغر وحدة لهذا المنتج',
+                  textAlign: TextAlign.right,
+                  style: context.bodySmall.copyWith(
+                    color: context.blackColor,
+                  ),
+                ),
+              ),
+            ListView.separated(
+              itemCount: storeItemDetailsEntity.itemUnits!.length,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              separatorBuilder: (BuildContext context, int index) =>
+                  context.g16,
+              itemBuilder: (BuildContext context, int index) {
+                return ItemUnitsDetailsWidget(
+                  item: storeItemDetailsEntity,
+                  itemUnitDetails:
+                      storeItemDetailsEntity.itemUnitsDetails[index],
+                  isMain: true,
+                );
+              },
+            ),
+          ],
         ),
     ]);
   }
@@ -140,7 +224,11 @@ class ItemDetailsPage extends StatelessWidget {
         children: [
           _buildDetailSection(
             title: 'مجموعة الصنف',
-            value: storeItemDetailsEntity.group?.name ?? " ",
+            value: storeController.allItemGroups.value
+                    .firstWhereOrNull(
+                        (e) => e.id == storeItemDetailsEntity.item.itemGroupId)
+                    ?.name ??
+                " ",
             context: context,
           ),
           context.g12,
@@ -188,7 +276,9 @@ class _ItemStoreImageWidgetState extends State<ItemStoreImageWidget> {
   @override
   void initState() {
     super.initState();
-    storeController.getItemImage(widget.storeItemDetailsEntity.item.id).then(
+    storeController
+        .getItemImage(widget.storeItemDetailsEntity.item.id ?? 0)
+        .then(
       (value) {
         setState(() {
           imageData = value;

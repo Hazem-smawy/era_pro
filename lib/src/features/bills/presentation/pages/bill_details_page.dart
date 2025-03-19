@@ -1,6 +1,6 @@
-import 'package:era_pro/src/core/utils/dialogs.dart';
-import 'package:era_pro/src/features/bills/domain/repositories/bill_repository.dart';
-import 'package:era_pro/src/features/main_info/presentation/getX/main_info_controller.dart';
+import 'package:tailor/src/core/utils/dialogs.dart';
+import 'package:tailor/src/features/bills/domain/repositories/bill_repository.dart';
+import 'package:tailor/src/features/main_info/presentation/getX/main_info_controller.dart';
 
 import '../../../../core/extensions/context_extensions.dart';
 import '../../../../core/extensions/padding_extension.dart';

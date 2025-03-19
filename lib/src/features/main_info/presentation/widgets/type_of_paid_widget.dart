@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:era_pro/src/core/utils/currency_format.dart';
+import 'package:tailor/src/core/utils/currency_format.dart';
 
 import '../../../../core/extensions/context_extensions.dart';
 import '../../../../core/utils/arabic_date_formater.dart';

@@ -12,7 +12,7 @@ part 'item_model.g.dart';
 // ignore: must_be_immutable
 class ItemModel extends ItemEntity {
   ItemModel({
-    required super.id,
+    super.id,
     required super.itemGroupId,
     required super.itemCode,
     required super.name,
@@ -51,7 +51,7 @@ class ItemModel extends ItemEntity {
 
   ItemTableCompanion toCompanion() {
     return ItemTableCompanion(
-      id: Value(id),
+      id: Value.absentIfNull(id),
       itemGroupId: Value(itemGroupId),
       itemCode: Value(itemCode),
       name: Value(name),
@@ -93,6 +93,29 @@ class ItemModel extends ItemEntity {
       note: note,
       hasAlternated: hasAlternated,
       newData: newData,
+    );
+  }
+
+  factory ItemModel.fromEntity(ItemEntity itemEntity) {
+    return ItemModel(
+      id: itemEntity.id,
+      itemGroupId: itemEntity.itemGroupId,
+      itemCode: itemEntity.itemCode,
+      name: itemEntity.name,
+      enName: itemEntity.enName,
+      type: itemEntity.type,
+      itemLimit: itemEntity.itemLimit,
+      itemImage: itemEntity.itemImage,
+      notifyBefore: itemEntity.notifyBefore,
+      freeQuantityAllow: itemEntity.freeQuantityAllow,
+      hasTax: itemEntity.hasTax,
+      taxRate: itemEntity.taxRate,
+      itemCompany: itemEntity.itemCompany,
+      orignalCountry: itemEntity.orignalCountry,
+      itemDescription: itemEntity.itemDescription,
+      note: itemEntity.note,
+      hasAlternated: itemEntity.hasAlternated,
+      newData: itemEntity.newData,
     );
   }
 }

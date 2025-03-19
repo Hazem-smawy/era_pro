@@ -301,7 +301,7 @@ class AccountsController extends GetxController {
       AccountsOperationsEntity(
         accountNumber: customerAccount,
         operationDate: DateTime.now(),
-        currencyId: currency.id,
+        currencyId: currency.id ?? 0,
         currencyValue: currency.value,
         operationCredit: type == 2 ? amount : 0,
         operationDebit: type == 1 ? amount : 0,
@@ -313,7 +313,7 @@ class AccountsController extends GetxController {
       AccountsOperationsEntity(
         accountNumber: sellerAccount,
         operationDate: DateTime.now(),
-        currencyId: localCurency.id,
+        currencyId: localCurency.id ?? 0,
         currencyValue: localCurency.value,
         operationCredit: type == 1 ? totalAmount : 0,
         operationDebit: type == 2 ? totalAmount : 0,
@@ -576,7 +576,7 @@ class AccountsController extends GetxController {
     return AccountsOperationsEntity(
       accountNumber: accountNumber,
       operationDate: operationDate,
-      currencyId: currency.id,
+      currencyId: currency.id ?? 0,
       currencyValue: currency.value,
       operationCredit: credit,
       operationDebit: debit,

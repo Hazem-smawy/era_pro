@@ -1,4 +1,4 @@
-import 'package:era_pro/src/core/extensions/context_extensions.dart';
+import 'package:tailor/src/core/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
 
 class ExchangeDetailsItemWidget extends StatelessWidget {

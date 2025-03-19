@@ -1,25 +1,3 @@
-/*
-        "id": 1,
-        "item_group_id": 401,
-        "item_code": 4010001,
-        "name": "محلي",
-        "en_name": "",
-        "type": 0,
-        "item_limit": 5,
-        "item_image": "/9j/4AAQSkZJRgABAQEAeAB4AAD/,
-         "is_expire": true,
-        "notify_before": 30,
-        "free_quantity_allow": false,
-        "has_tax": false,
-        "tax_rate": 0,
-        "item_company": "",
-        "orignal_country": "",
-        "item_description": "",
-        "note": "",
-        "hase_alternated": true,
-        "newData": false
- */
-
 import 'dart:typed_data';
 
 import 'package:equatable/equatable.dart';
@@ -29,7 +7,7 @@ import '../../../../core/utils/image_converter.dart';
 
 // ignore: must_be_immutable
 class ItemEntity extends Equatable {
-  final int id;
+  int? id;
   @JsonKey(name: 'item_group_id')
   final int itemGroupId;
   @JsonKey(name: 'item_code')
@@ -68,7 +46,7 @@ class ItemEntity extends Equatable {
   final bool newData;
 
   ItemEntity({
-    required this.id,
+    this.id,
     required this.itemGroupId,
     required this.itemCode,
     required this.name,

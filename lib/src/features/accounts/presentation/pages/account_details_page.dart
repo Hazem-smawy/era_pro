@@ -46,7 +46,7 @@ class AccountDetailsPage extends StatelessWidget {
                     context.g8,
                     const HeaderWidget(
                       title: '',
-                    ).ph(10),
+                    ),
                     Column(
                       children: [
                         const SizedBox(

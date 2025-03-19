@@ -1,4 +1,4 @@
-import 'package:era_pro/src/features/home/presentation/getX/home_controller.dart';
+import 'package:tailor/src/features/home/presentation/getX/home_controller.dart';
 
 import '../../../../core/extensions/context_extensions.dart';
 import '../../../../core/types/services_type.dart';

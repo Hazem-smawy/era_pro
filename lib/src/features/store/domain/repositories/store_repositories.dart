@@ -1,4 +1,10 @@
 import 'package:dartz/dartz.dart';
+import 'package:tailor/src/core/usecases/usecases.dart';
+import 'package:tailor/src/features/store/data/models/choice_option_model.dart';
+import 'package:tailor/src/features/store/data/models/clothes_type_model.dart';
+import 'package:tailor/src/features/store/data/models/measurement_model.dart';
+import 'package:tailor/src/features/store/data/models/model_category_model.dart';
+import 'package:tailor/src/features/store/data/models/th_models_model.dart';
 import '../../../accounts/domain/usecases/delete_account_operation_usecase.dart';
 import '../entities/item_details_entity.dart';
 
@@ -24,5 +30,27 @@ abstract class StoreRepository {
       getAllItemsWithDetails();
   Future<Either<Failure, int>> deleteStoreOperations(OperationType op);
   Future<Either<Failure, bool>> fetchAllStoreComponents();
-  Future<Either<Failure,Uint8List?>> getItemImage(int id);
+  Future<Either<Failure, Uint8List?>> getItemImage(int id);
+  Future<Either<Failure, List<ItemUnitsEntity>>> getItemUnitsById(int id);
+
+  //new
+  Future<Either<Failure, bool>> addNewUnit(UnitEnitity u);
+  Future<Either<Failure, bool>> addNewItemGroup(ItemGroupEntity g);
+  Future<Either<Failure, bool>> addNewModelCategory(ModelCategoryModel g);
+  Future<Either<Failure, List<ModelCategoryModel>>> getAllModelsCategory();
+
+  Future<Either<Failure, bool>> addNewMeasurment(MeasurementModel g);
+  Future<Either<Failure, List<MeasurementModel>>> getAllMeasuremnts();
+
+  Future<Either<Failure, bool>> addNewClothesType(ClothesTypeModel g);
+  Future<Either<Failure, List<ClothesTypeModel>>> getAllClothesType();
+
+  Future<Either<Failure, bool>> addNewChoiceOption(ChoiceOptionModel g);
+  Future<Either<Failure, List<ChoiceOptionModel>>> getAllChoiceOption();
+
+  Future<void> addThModel(ThModelsModel model);
+  Future<Either<Failure, int>> addItem(ItemEntity item);
+  Future<Either<Failure, bool>> addItemUnit(ItemUnitsEntity itemUnit);
+  Future<void> updateThModel(ThModelsModel model);
+  Future<List<ThModelsModel>> getAllThModels();
 }

@@ -29,7 +29,7 @@ class _AllAccountsOperationState extends State<AllAccountsOperation> {
       body: SafeArea(
         child: Column(
           children: [
-            const HeaderWidget(title: 'كل العمليات').ph(20).pt(10).pb(4),
+            const HeaderWidget(title: 'كل العمليات').ph(20),
             Expanded(
               child: Obx(
                 () => accountsController.accountsOperation.value.isEmpty

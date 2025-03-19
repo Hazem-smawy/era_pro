@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-import 'package:era_pro/src/features/setting/presentation/getX/setting_controller.dart';
+import 'package:tailor/src/features/setting/presentation/getX/setting_controller.dart';
 
 import '../../../../core/utils/arabic_date_formater.dart';
 import '../../../../core/utils/currency_format.dart';
@@ -70,12 +70,10 @@ class _CompleteSellingBillPageState extends State<CompleteSellingBillPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                child: HeaderWidget(
-                  title: 'تأكيد الفاتورة',
-                ),
+              HeaderWidget(
+                title: 'تأكيد الفاتورة',
               ),
+
               context.g12,
               Padding(
                 padding:

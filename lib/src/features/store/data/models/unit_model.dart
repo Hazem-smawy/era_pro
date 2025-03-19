@@ -7,8 +7,8 @@ part 'unit_model.g.dart';
 
 @JsonSerializable()
 class UnitModel extends UnitEnitity {
-  const UnitModel(
-      {required super.id,
+  UnitModel(
+      {super.id,
       required super.name,
       required super.note,
       required super.newData});
@@ -24,10 +24,19 @@ class UnitModel extends UnitEnitity {
 
   UnitTableCompanion toCompanion() {
     return UnitTableCompanion(
-      id: Value(id),
+      id: Value.absentIfNull(id),
       name: Value(name),
       note: Value(note),
       newData: Value(newData),
+    );
+  }
+
+  factory UnitModel.fromEntity(UnitEnitity entity) {
+    return UnitModel(
+      id: entity.id,
+      name: entity.name,
+      note: entity.note,
+      newData: entity.newData,
     );
   }
 }

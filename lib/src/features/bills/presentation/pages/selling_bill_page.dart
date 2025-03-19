@@ -240,7 +240,7 @@ class _SellingBillPageState extends State<SellingBillPage>
                         : billController.billTypeForTitle.value == 0
                             ? 'فاتورة مرتجع'
                             : 'تعديل فاتورة مرتجع',
-                  ).pr(10),
+                  ),
                   context.g12,
                   const CategoriesWithSearchWidget(),
                   context.g4,

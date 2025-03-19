@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 class CurencyEntity extends Equatable {
-  final int id;
+  int? id;
   final String name;
   final String symbol;
   @JsonKey(name: 'sub_name')
@@ -20,8 +20,8 @@ class CurencyEntity extends Equatable {
   final String note;
   final bool newData;
 
-  const CurencyEntity(
-      {required this.id,
+  CurencyEntity(
+      {this.id,
       required this.name,
       required this.symbol,
       required this.subName,
